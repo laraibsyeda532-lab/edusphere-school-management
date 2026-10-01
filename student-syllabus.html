@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Syllabus | Student Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .student-page {
+            padding: 28px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 6px;
+            color: #173b67;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .stat-card h4 {
+            margin: 0 0 8px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .stat-card h2 {
+            margin: 0;
+            color: #173b67;
+            font-size: 25px;
+        }
+
+        .stat-card small {
+            display: block;
+            margin-top: 6px;
+            color: #888;
+            font-size: 11px;
+        }
+
+        .student-info {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .student-info h3 {
+            margin: 0 0 15px;
+            color: #173b67;
+            font-size: 17px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #f7f9fc;
+            padding: 13px;
+            border-radius: 8px;
+        }
+
+        .info-item span {
+            display: block;
+            color: #888;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .info-item strong {
+            color: #333;
+            font-size: 13px;
+        }
+
+        .filters-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 12px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            outline: none;
+            background: white;
+        }
+
+        .syllabus-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .subject-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .subject-header h2 {
+            margin: 0 0 5px;
+            color: #173b67;
+            font-size: 18px;
+        }
+
+        .teacher-name {
+            color: #888;
+            font-size: 11px;
+        }
+
+        .progress-percentage {
+            font-size: 18px;
+            font-weight: 700;
+            color: #173b67;
+        }
+
+        .progress-bar {
+            height: 9px;
+            background: #e8edf2;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .progress-bar span {
+            display: block;
+            height: 100%;
+            background: #285b8f;
+            border-radius: 20px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .completed {
+            background: #e8f7ee;
+            color: #248a52;
+        }
+
+        .in-progress {
+            background: #fff4df;
+            color: #b36b00;
+        }
+
+        .not-started {
+            background: #edf2f8;
+            color: #173b67;
+        }
+
+        .topics-title {
+            color: #555;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 9px;
+        }
+
+        .topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .topic {
+            background: #f7f9fc;
+            border: 1px solid #e8ebef;
+            border-radius: 6px;
+            padding: 6px 9px;
+            color: #666;
+            font-size: 10px;
+        }
+
+        .no-results {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            text-align: center;
+            color: #777;
+            grid-column: 1 / -1;
+        }
+
+        .note-box {
+            margin-top: 22px;
+            background: #f7f9fc;
+            border-radius: 10px;
+            padding: 16px;
+            color: #666;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 1000px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .syllabus-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .student-page {
+                padding: 18px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Student Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="student-dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="student-profile.html">
+                👤 My Profile
+            </a>
+
+            <a href="student-attendance.html">
+                ✓ Attendance
+            </a>
+
+            <a href="student-homework.html">
+                📝 Homework & Diary
+            </a>
+
+            <a href="student-syllabus.html" class="active">
+                📚 Syllabus
+            </a>
+
+            <a href="student-date-sheet.html">
+                📅 Date Sheet
+            </a>
+
+            <a href="student-results.html">
+                📈 Results
+            </a>
+
+            <a href="student-timetable.html">
+                🕐 Timetable
+            </a>
+
+            <a href="student-notices.html">
+                🔔 Notices
+            </a>
+
+            <a href="index.html">
+                🌐 Back to Website
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                Syllabus
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">
+                    MA
+                </div>
+
+                <div>
+                    <strong>Muhammad Ahmed</strong>
+                    <small>Grade 8-A</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="student-page">
+
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        My Syllabus
+                    </h1>
+
+                    <p>
+                        View subject-wise syllabus and current completion progress.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <h4>Total Subjects</h4>
+
+                    <h2>
+                        6
+                    </h2>
+
+                    <small>
+                        Current academic year
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>Completed</h4>
+
+                    <h2>
+                        2
+                    </h2>
+
+                    <small>
+                        Subjects completed
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>In Progress</h4>
+
+                    <h2>
+                        3
+                    </h2>
+
+                    <small>
+                        Currently being taught
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>Overall Progress</h4>
+
+                    <h2>
+                        72%
+                    </h2>
+
+                    <small>
+                        Average syllabus progress
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT INFO -->
+            <div class="student-info">
+
+                <h3>
+                    Student Information
+                </h3>
+
+                <div class="info-grid">
+
+                    <div class="info-item">
+                        <span>Student</span>
+                        <strong>Muhammad Ahmed</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Class</span>
+                        <strong>Grade 8-A</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Admission No.</span>
+                        <strong>ES-2026-1024</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Academic Year</span>
+                        <strong>2026</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="filters-card">
+
+                <div class="filters">
+
+                    <input
+                        type="text"
+                        id="searchSubject"
+                        placeholder="Search subject or topic..."
+                        onkeyup="filterSyllabus()"
+                    >
+
+
+                    <select
+                        id="statusFilter"
+                        onchange="filterSyllabus()"
+                    >
+
+                        <option value="">
+                            All Status
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                        <option value="In Progress">
+                            In Progress
+                        </option>
+
+                        <option value="Not Started">
+                            Not Started
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- SYLLABUS CARDS -->
+            <div class="syllabus-grid" id="syllabusGrid">
+
+
+                <!-- MATHEMATICS -->
+                <div
+                    class="subject-card"
+                    data-status="In Progress"
+                >
+
+                    <div class="subject-header">
+
+                        <div>
+
+                            <h2>
+                                Mathematics
+                            </h2>
+
+                            <span class="teacher-name">
+                                Teacher: Mr. Bilal
+                            </span>
+
+                        </div>
+
+                        <div class="progress-percentage">
+                            78%
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+                        <span style="width:78%;"></span>
+                    </div>
+
+
+                    <span class="status-badge in-progress">
+                        In Progress
+                    </span>
+
+
+                    <div class="topics-title">
+                        Topics Covered
+                    </div>
+
+                    <div class="topics">
+
+                        <span class="topic">
+                            Algebra
+                        </span>
+
+                        <span class="topic">
+                            Linear Equations
+                        </span>
+
+                        <span class="topic">
+                            Geometry
+                        </span>
+
+                        <span class="topic">
+                            Fractions
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- COMPUTER SCIENCE -->
+                <div
+                    class="subject-card"
+                    data-status="In Progress"
+                >
+
+                    <div class="subject-header">
+
+                        <div>
+
+                            <h2>
+                                Computer Science
+                            </h2>
+
+                            <span class="teacher-name">
+                                Teacher: Ms. Sarah
+                            </span>
+
+                        </div>
+
+                        <div class="progress-percentage">
+                            88%
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+                        <span style="width:88%;"></span>
+                    </div>
+
+
+                    <span class="status-badge in-progress">
+                        In Progress
+                    </span>
+
+
+                    <div class="topics-title">
+                        Topics Covered
+                    </div>
+
+                    <div class="topics">
+
+                        <span class="topic">
+                            HTML
+                        </span>
+
+                        <span class="topic">
+                            CSS
+                        </span>
+
+                        <span class="topic">
+                            Algorithms
+                        </span>
+
+                        <span class="topic">
+                            Programming
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ENGLISH -->
+                <div
+                    class="subject-card"
+                    data-status="Completed"
+                >
+
+                    <div class="subject-header">
+
+                        <div>
+
+                            <h2>
+                                English
+                            </h2>
+
+                            <span class="teacher-name">
+                                Teacher: Ms. Ayesha
+                            </span>
+
+                        </div>
+
+                        <div class="progress-percentage">
+                            100%
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+                        <span style="width:100%;"></span>
+                    </div>
+
+
+                    <span class="status-badge completed">
+                        Completed
+                    </span>
+
+
+                    <div class="topics-title">
+                        Topics Covered
+                    </div>
+
+                    <div class="topics">
+
+                        <span class="topic">
+                            Grammar
+                        </span>
+
+                        <span class="topic">
+                            Essay Writing
+                        </span>
+
+                        <span class="topic">
+                            Comprehension
+                        </span>
+
+                        <span class="topic">
+                            Vocabulary
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHYSICS -->
+                <div
+                    class="subject-card"
+                    data-status="In Progress"
+                >
+
+                    <div class="subject-header">
+
+                        <div>
+
+                            <h2>
+                                Physics
+                            </h2>
+
+                            <span class="teacher-name">
+                                Teacher: Mr. Hamza
+                            </span>
+
+                        </div>
+
+                        <div class="progress-percentage">
+                            65%
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+                        <span style="width:65%;"></span>
+                    </div>
+
+
+                    <span class="status-badge in-progress">
+                        In Progress
+                    </span>
+
+
+                    <div class="topics-title">
+                        Topics Covered
+                    </div>
+
+                    <div class="topics">
+
+                        <span class="topic">
+                            Motion
+                        </span>
+
+                        <span class="topic">
+                            Force
+                        </span>
+
+                        <span class="topic">
+                            Energy
+                        </span>
+
+                        <span class="topic">
+                            Work
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- URDU -->
+                <div
+                    class="subject-card"
+                    data-status="Completed"
+                >
+
+                    <div class="subject-header">
+
+                        <div>
+
+                            <h2>
+                                Urdu
+                            </h2>
+
+                            <span class="teacher-name">
+                                Teacher: Ms. Nadia
+                            </span>
+
+                        </div>
+
+                        <div class="progress-percentage">
+                            100%
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+                        <span style="width:100%;"></span>
+                    </div>
+
+
+                    <span class="status-badge completed">
+                        Completed
+                    </span>
+
+
+                    <div class="topics-title">
+                        Topics Covered
+                    </div>
+
+                    <div class="topics">
+
+                        <span class="topic">
+                            Grammar
+                        </span>
+
+                        <span class="topic">
+                            Poetry
+                        </span>
+
+                        <span class="topic">
+                            Essays
+                        </span>
+
+                        <span class="topic">
+                            Literature
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ISLAMIAT -->
+                <div
+                    class="subject-card"
+                    data-status="Not Started"
+                >
+
+                    <div class="subject-header">
+
+                        <div>
+
+                            <h2>
+                                Islamiat
+                            </h2>
+
+                            <span class="teacher-name">
+                                Teacher: Ms. Fatima
+                            </span>
+
+                        </div>
+
+                        <div class="progress-percentage">
+                            30%
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+                        <span style="width:30%;"></span>
+                    </div>
+
+
+                    <span class="status-badge not-started">
+                        Not Started
+                    </span>
+
+
+                    <div class="topics-title">
+                        Topics Covered
+                    </div>
+
+                    <div class="topics">
+
+                        <span class="topic">
+                            Seerah
+                        </span>
+
+                        <span class="topic">
+                            Hadith
+                        </span>
+
+                        <span class="topic">
+                            Islamic History
+                        </span>
+
+                        <span class="topic">
+                            Ethics
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="no-results"
+                    id="noResults"
+                >
+                    No syllabus record found.
+                </div>
+
+            </div>
+
+
+            <div class="note-box">
+
+                <strong>Note:</strong>
+                Syllabus progress is currently demo data.
+                After the backend is connected, progress and topics
+                will be automatically updated by teachers and displayed
+                here for the logged-in student.
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("open");
+
+    }
+
+
+    function filterSyllabus() {
+
+        const search =
+            document
+                .getElementById("searchSubject")
+                .value
+                .toLowerCase();
+
+        const status =
+            document
+                .getElementById("statusFilter")
+                .value;
+
+
+        const cards =
+            document.querySelectorAll(
+                ".subject-card"
+            );
+
+
+        let visible = 0;
+
+
+        cards.forEach(function(card) {
+
+            const text =
+                card.innerText.toLowerCase();
+
+            const cardStatus =
+                card.dataset.status;
+
+
+            const searchMatch =
+                text.includes(search);
+
+            const statusMatch =
+                !status ||
+                cardStatus === status;
+
+
+            if (
+                searchMatch &&
+                statusMatch
+            ) {
+
+                card.style.display = "";
+
+                visible++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        const noResults =
+            document.getElementById("noResults");
+
+
+        if (visible === 0) {
+
+            noResults.style.display = "block";
+
+        } else {
+
+            noResults.style.display = "none";
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

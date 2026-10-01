@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admissions - EduSphere</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background: #0f172a;
+    color: white;
+    padding: 25px 15px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 35px;
+    padding-left: 10px;
+}
+
+.sidebar a {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 12px 14px;
+    margin: 5px 0;
+    border-radius: 8px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #1e293b;
+    color: white;
+}
+
+.main {
+    flex: 1;
+    padding: 30px;
+}
+
+h1 {
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    margin-bottom: 25px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.add-btn {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 10px 17px;
+    border-radius: 7px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.delete-btn {
+    border: none;
+    background: #dc2626;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 13px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+th {
+    background: #f8fafc;
+}
+
+.message {
+    margin-top: 10px;
+}
+
+.cv-link {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media(max-width:800px) {
+
+    .sidebar {
+        width: 190px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main {
+        padding: 15px;
+    }
+
+    table {
+        min-width: 1000px;
+    }
+
+    .card {
+        overflow-x: auto;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<aside class="sidebar">
+
+<div class="logo">EduSphere</div>
+
+<a href="admin-dashboard.html">🏠 Dashboard</a>
+<a href="students.html">👨‍🎓 Students</a>
+<a href="teachers.html">👨‍🏫 Teachers</a>
+<a href="classes.html">🏫 Classes</a>
+<a href="attendance.html">📋 Attendance</a>
+<a href="homework.html">📚 Homework</a>
+<a href="syllabus.html">📖 Syllabus</a>
+<a href="date-sheet.html">📅 Date Sheet</a>
+<a href="results.html">📊 Results</a>
+<a href="fees.html">💳 Fees</a>
+<a href="notices.html">📢 Notices</a>
+<a href="admissions.html" class="active">📄 Admissions</a>
+
+<a href="index.html">← Back to Website</a>
+<a href="login.html">↪ Logout</a>
+
+</aside>
+
+
+<main class="main">
+
+<h1>Admissions / Applications</h1>
+
+
+<div class="card">
+
+<h2>New Admission Application</h2>
+
+<br>
+
+<form id="admissionForm">
+
+<div class="form-grid">
+
+<input
+type="text"
+id="student_name"
+placeholder="Student Name"
+required
+>
+
+<input
+type="text"
+id="father_name"
+placeholder="Father Name"
+>
+
+<input
+type="text"
+id="phone"
+placeholder="Phone Number"
+>
+
+<input
+type="email"
+id="email"
+placeholder="Email Address"
+>
+
+<input
+type="text"
+id="class_applied"
+placeholder="Class Applied For"
+>
+
+<input
+type="text"
+id="previous_school"
+placeholder="Previous School"
+>
+
+<textarea
+id="address"
+class="full"
+placeholder="Home Address"
+></textarea>
+
+<input
+type="date"
+id="application_date"
+>
+
+<input
+type="file"
+id="cv"
+accept=".pdf,.doc,.docx"
+>
+
+</div>
+
+
+<button
+type="submit"
+class="add-btn">
+Submit Application
+</button>
+
+</form>
+
+<div id="message" class="message"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Admission Applications</h2>
+
+<br>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Student</th>
+<th>Father</th>
+<th>Phone</th>
+<th>Class</th>
+<th>Previous School</th>
+<th>CV</th>
+<th>Date</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody id="admissionsTable"></tbody>
+
+</table>
+
+</div>
+
+</main>
+
+</div>
+
+
+<script>
+
+async function loadAdmissions() {
+
+try {
+
+const response =
+await fetch("/api/admissions");
+
+const data =
+await response.json();
+
+const table =
+document.getElementById("admissionsTable");
+
+table.innerHTML = "";
+
+data.forEach(application => {
+
+const row =
+document.createElement("tr");
+
+let cv = "-";
+
+if(application.cv_filename) {
+
+cv = `
+<a
+class="cv-link"
+href="/uploads/cvs/${application.cv_filename}"
+target="_blank">
+View CV
+</a>
+`;
+
+}
+
+row.innerHTML = `
+
+<td>${application.student_name || "-"}</td>
+
+<td>${application.father_name || "-"}</td>
+
+<td>${application.phone || "-"}</td>
+
+<td>${application.class_applied || "-"}</td>
+
+<td>${application.previous_school || "-"}</td>
+
+<td>${cv}</td>
+
+<td>${application.application_date || "-"}</td>
+
+<td>${application.status || "Pending"}</td>
+
+<td>
+
+<button
+class="delete-btn"
+onclick="deleteAdmission(${application.id})">
+Delete
+</button>
+
+</td>
+
+`;
+
+table.appendChild(row);
+
+});
+
+} catch(error) {
+
+console.error(error);
+
+}
+
+}
+
+
+document
+.getElementById("admissionForm")
+.addEventListener("submit", async function(event) {
+
+event.preventDefault();
+
+
+const formData =
+new FormData();
+
+formData.append(
+"student_name",
+document.getElementById("student_name").value
+);
+
+formData.append(
+"father_name",
+document.getElementById("father_name").value
+);
+
+formData.append(
+"phone",
+document.getElementById("phone").value
+);
+
+formData.append(
+"email",
+document.getElementById("email").value
+);
+
+formData.append(
+"class_applied",
+document.getElementById("class_applied").value
+);
+
+formData.append(
+"address",
+document.getElementById("address").value
+);
+
+formData.append(
+"previous_school",
+document.getElementById("previous_school").value
+);
+
+formData.append(
+"application_date",
+document.getElementById("application_date").value
+);
+
+
+const cvFile =
+document.getElementById("cv").files[0];
+
+if(cvFile) {
+
+formData.append("cv", cvFile);
+
+}
+
+
+try {
+
+const response =
+await fetch("/api/admissions", {
+
+method: "POST",
+
+body: formData
+
+});
+
+
+const result =
+await response.json();
+
+
+if(response.ok) {
+
+document.getElementById("message").innerText =
+"Application submitted successfully.";
+
+document.getElementById("admissionForm").reset();
+
+loadAdmissions();
+
+} else {
+
+document.getElementById("message").innerText =
+result.error || "Failed to submit application.";
+
+}
+
+} catch(error) {
+
+console.error(error);
+
+document.getElementById("message").innerText =
+"Server error.";
+
+}
+
+});
+
+
+async function deleteAdmission(id) {
+
+if(!confirm("Delete this application?")) {
+return;
+}
+
+try {
+
+const response =
+await fetch(
+"/api/admissions/" + id,
+{
+method: "DELETE"
+}
+);
+
+if(response.ok) {
+
+loadAdmissions();
+
+} else {
+
+alert("Could not delete application.");
+
+}
+
+} catch(error) {
+
+console.error(error);
+
+}
+
+}
+
+
+loadAdmissions();
+
+</script>
+
+</body>
+</html>

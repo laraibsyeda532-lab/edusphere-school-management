@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classes - EduSphere</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 35px auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #172554;
+        }
+
+        .back-btn {
+            background: #172554;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 7px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: #172554;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 6px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            outline: none;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #172554;
+        }
+
+        .button-area {
+            margin-top: 20px;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            padding: 10px 18px;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .add-btn {
+            background: #172554;
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #e5e7eb;
+            margin-left: 8px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            background: #172554;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .edit-btn {
+            background: #2563eb;
+            color: white;
+            margin-right: 5px;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 650px;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            color: #172554;
+        }
+
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Classes Management</h1>
+        <a href="admin-dashboard.html" class="back-btn">← Dashboard</a>
+    </div>
+
+
+    <!-- ADD CLASS -->
+
+    <div class="card">
+
+        <h2>Add Class</h2>
+
+        <form id="classForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Class Name *</label>
+                    <input
+                        type="text"
+                        id="class_name"
+                        placeholder="e.g. Grade 8"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Section</label>
+                    <input
+                        type="text"
+                        id="section"
+                        placeholder="e.g. A"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Class Teacher</label>
+
+                    <select id="class_teacher_id">
+                        <option value="">Select Teacher</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="button-area">
+
+                <button type="submit" class="add-btn">
+                    Add Class
+                </button>
+
+            </div>
+
+            <div id="message" class="message"></div>
+
+        </form>
+
+    </div>
+
+
+    <!-- CLASS LIST -->
+
+    <div class="card">
+
+        <h2>Classes List</h2>
+
+        <input
+            type="text"
+            id="searchInput"
+            class="search-box"
+            placeholder="Search by class, section or teacher..."
+        >
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Class Name</th>
+                        <th>Section</th>
+                        <th>Class Teacher</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="classesTableBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- EDIT MODAL -->
+
+<div class="modal" id="editModal">
+
+    <div class="modal-content">
+
+        <h2>Edit Class</h2>
+
+        <form id="editClassForm">
+
+            <input type="hidden" id="edit_id">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Class Name *</label>
+                    <input
+                        type="text"
+                        id="edit_class_name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Section</label>
+                    <input
+                        type="text"
+                        id="edit_section"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Class Teacher</label>
+
+                    <select id="edit_class_teacher_id">
+                        <option value="">Select Teacher</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="button-area">
+
+                <button type="submit" class="add-btn">
+                    Update Class
+                </button>
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeModal()"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let allClasses = [];
+
+let allTeachers = [];
+
+
+// =====================================
+// LOAD TEACHERS
+// =====================================
+
+async function loadTeachers() {
+
+    try {
+
+        const response = await fetch("/api/teachers");
+
+        allTeachers = await response.json();
+
+        const addSelect =
+            document.getElementById("class_teacher_id");
+
+        const editSelect =
+            document.getElementById("edit_class_teacher_id");
+
+        addSelect.innerHTML =
+            '<option value="">Select Teacher</option>';
+
+        editSelect.innerHTML =
+            '<option value="">Select Teacher</option>';
+
+
+        allTeachers.forEach(teacher => {
+
+            const option1 =
+                document.createElement("option");
+
+            option1.value = teacher.id;
+
+            option1.textContent =
+                teacher.name + " (" + teacher.employee_id + ")";
+
+            addSelect.appendChild(option1);
+
+
+            const option2 =
+                document.createElement("option");
+
+            option2.value = teacher.id;
+
+            option2.textContent =
+                teacher.name + " (" + teacher.employee_id + ")";
+
+            editSelect.appendChild(option2);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Could not load teachers.");
+
+    }
+}
+
+
+// =====================================
+// LOAD CLASSES
+// =====================================
+
+async function loadClasses() {
+
+    try {
+
+        const response =
+            await fetch("/api/classes");
+
+        allClasses =
+            await response.json();
+
+        displayClasses(allClasses);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Could not load classes.");
+
+    }
+}
+
+
+// =====================================
+// DISPLAY CLASSES
+// =====================================
+
+function displayClasses(classes) {
+
+    const tableBody =
+        document.getElementById("classesTableBody");
+
+    tableBody.innerHTML = "";
+
+
+    if (classes.length === 0) {
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align:center;">
+                    No classes found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    classes.forEach(item => {
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>${item.id}</td>
+
+            <td>${item.class_name || ""}</td>
+
+            <td>${item.section || ""}</td>
+
+            <td>${item.teacher_name || "Not Assigned"}</td>
+
+            <td>
+
+                <button
+                    class="edit-btn"
+                    onclick="editClass(${item.id})"
+                >
+                    Edit
+                </button>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteClass(${item.id})"
+                >
+                    Delete
+                </button>
+
+            </td>
+
+        `;
+
+
+        tableBody.appendChild(row);
+
+    });
+
+}
+
+
+// =====================================
+// ADD CLASS
+// =====================================
+
+document
+    .getElementById("classForm")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+
+        const data = {
+
+            class_name:
+                document.getElementById("class_name").value,
+
+            section:
+                document.getElementById("section").value,
+
+            class_teacher_id:
+                document.getElementById("class_teacher_id").value
+
+        };
+
+
+        try {
+
+            const response =
+                await fetch("/api/classes", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(data)
+
+                });
+
+
+            const result =
+                await response.json();
+
+
+            if (result.success) {
+
+                const message =
+                    document.getElementById("message");
+
+                message.textContent =
+                    "Class added successfully!";
+
+                message.style.color =
+                    "green";
+
+
+                document
+                    .getElementById("classForm")
+                    .reset();
+
+
+                loadClasses();
+
+            } else {
+
+                const message =
+                    document.getElementById("message");
+
+                message.textContent =
+                    result.message;
+
+                message.style.color =
+                    "red";
+
+            }
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Something went wrong.");
+
+        }
+
+    });
+
+
+// =====================================
+// SEARCH
+// =====================================
+
+document
+    .getElementById("searchInput")
+    .addEventListener("input", function() {
+
+        const searchText =
+            this.value.toLowerCase();
+
+
+        const filtered =
+            allClasses.filter(item => {
+
+                return (
+
+                    (item.class_name || "")
+                        .toLowerCase()
+                        .includes(searchText)
+
+                    ||
+
+                    (item.section || "")
+                        .toLowerCase()
+                        .includes(searchText)
+
+                    ||
+
+                    (item.teacher_name || "")
+                        .toLowerCase()
+                        .includes(searchText)
+
+                );
+
+            });
+
+
+        displayClasses(filtered);
+
+    });
+
+
+// =====================================
+// EDIT CLASS
+// =====================================
+
+function editClass(id) {
+
+    const item =
+        allClasses.find(c => c.id === id);
+
+
+    if (!item) {
+        return;
+    }
+
+
+    document.getElementById("edit_id").value =
+        item.id;
+
+    document.getElementById("edit_class_name").value =
+        item.class_name || "";
+
+    document.getElementById("edit_section").value =
+        item.section || "";
+
+    document.getElementById("edit_class_teacher_id").value =
+        item.class_teacher_id || "";
+
+
+    document.getElementById("editModal").style.display =
+        "flex";
+
+}
+
+
+// =====================================
+// UPDATE CLASS
+// =====================================
+
+document
+    .getElementById("editClassForm")
+    .addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+
+        const id =
+            document.getElementById("edit_id").value;
+
+
+        const data = {
+
+            class_name:
+                document.getElementById("edit_class_name").value,
+
+            section:
+                document.getElementById("edit_section").value,
+
+            class_teacher_id:
+                document.getElementById("edit_class_teacher_id").value
+
+        };
+
+
+        try {
+
+            const response =
+                await fetch(`/api/classes/${id}`, {
+
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(data)
+
+                });
+
+
+            const result =
+                await response.json();
+
+
+            if (result.success) {
+
+                closeModal();
+
+                loadClasses();
+
+                alert("Class updated successfully!");
+
+            } else {
+
+                alert(result.message);
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Something went wrong.");
+
+        }
+
+    });
+
+
+// =====================================
+// DELETE CLASS
+// =====================================
+
+async function deleteClass(id) {
+
+    const confirmDelete =
+        confirm("Are you sure you want to delete this class?");
+
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(`/api/classes/${id}`, {
+
+                method: "DELETE"
+
+            });
+
+
+        const result =
+            await response.json();
+
+
+        if (result.success) {
+
+            loadClasses();
+
+            alert("Class deleted successfully!");
+
+        } else {
+
+            alert(result.message);
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Something went wrong.");
+
+    }
+
+}
+
+
+// =====================================
+// CLOSE MODAL
+// =====================================
+
+function closeModal() {
+
+    document.getElementById("editModal").style.display =
+        "none";
+
+}
+
+
+// =====================================
+// INITIAL LOAD
+// =====================================
+
+loadTeachers();
+
+loadClasses();
+
+</script>
+
+</body>
+</html>

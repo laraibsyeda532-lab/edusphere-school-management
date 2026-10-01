@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fee Status | Parent Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .fees-page {
+            padding: 28px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 6px;
+            color: #173b67;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            border: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .primary-btn {
+            background: #173b67;
+            color: white;
+        }
+
+        .secondary-btn {
+            background: #eef2f7;
+            color: #173b67;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.06);
+        }
+
+        .stat-card h4 {
+            margin: 0 0 9px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .stat-card h2 {
+            margin: 0;
+            color: #173b67;
+            font-size: 24px;
+        }
+
+        .paid-text {
+            color: #218838 !important;
+        }
+
+        .pending-text {
+            color: #c47a00 !important;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            margin-bottom: 22px;
+        }
+
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .summary-header h2 {
+            margin: 0;
+            color: #173b67;
+            font-size: 19px;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .student-item {
+            background: #f7f9fc;
+            padding: 14px;
+            border-radius: 8px;
+        }
+
+        .student-item span {
+            display: block;
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .student-item strong {
+            color: #333;
+            font-size: 14px;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            margin-bottom: 22px;
+        }
+
+        .table-card h2 {
+            margin: 0 0 18px;
+            color: #173b67;
+            font-size: 19px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .fees-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        .fees-table th,
+        .fees-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .fees-table th {
+            background: #f7f9fc;
+            color: #666;
+        }
+
+        .fees-table td {
+            color: #444;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .status-paid {
+            background: #eaf7ee;
+            color: #218838;
+        }
+
+        .status-pending {
+            background: #fff4dd;
+            color: #b36b00;
+        }
+
+        .status-partial {
+            background: #e9f1ff;
+            color: #2463b5;
+        }
+
+        .action-btn {
+            border: none;
+            background: #eef2f7;
+            color: #173b67;
+            padding: 7px 11px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .action-btn:hover {
+            background: #dfe7f0;
+        }
+
+        .payment-note {
+            background: #f7f9fc;
+            border-left: 4px solid #173b67;
+            padding: 16px;
+            border-radius: 8px;
+            color: #666;
+            line-height: 1.6;
+            font-size: 13px;
+        }
+
+        .voucher-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 20px;
+        }
+
+        .voucher {
+            background: white;
+            width: 100%;
+            max-width: 650px;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        .voucher-header {
+            text-align: center;
+            border-bottom: 2px solid #173b67;
+            padding-bottom: 18px;
+            margin-bottom: 20px;
+        }
+
+        .voucher-header h2 {
+            margin: 0 0 5px;
+            color: #173b67;
+        }
+
+        .voucher-header p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .voucher-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .voucher-info div {
+            padding: 10px;
+            background: #f7f9fc;
+            border-radius: 6px;
+        }
+
+        .voucher-info span {
+            display: block;
+            color: #888;
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+
+        .voucher-info strong {
+            font-size: 13px;
+        }
+
+        .voucher-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-top: 1px solid #ddd;
+            font-size: 15px;
+        }
+
+        .voucher-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            .voucher,
+            .voucher * {
+                visibility: visible;
+            }
+
+            .voucher {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+            }
+
+            .voucher-actions {
+                display: none;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .student-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .fees-page {
+                padding: 18px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .student-info {
+                grid-template-columns: 1fr;
+            }
+
+            .voucher-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Parent Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="parent-dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="parent-profile.html">
+                👤 Child Profile
+            </a>
+
+            <a href="parent-fees.html" class="active">
+                💳 Fee Status
+            </a>
+
+            <a href="parent-attendance.html">
+                ✓ Attendance
+            </a>
+
+            <a href="parent-homework.html">
+                📝 Diary & Homework
+            </a>
+
+            <a href="parent-syllabus.html">
+                📚 Syllabus
+            </a>
+
+            <a href="parent-date-sheet.html">
+                📅 Date Sheet
+            </a>
+
+            <a href="parent-results.html">
+                📈 Results
+            </a>
+
+            <a href="parent-notices.html">
+                🔔 Notices
+            </a>
+
+            <a href="index.html">
+                🌐 Back to Website
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                Fee Status
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">
+                    LA
+                </div>
+
+                <div>
+                    <strong>Mr. Ahmed Ali</strong>
+                    <small>Parent</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="fees-page">
+
+            <!-- HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <h1>Fee Status</h1>
+
+                    <p>
+                        View your child's fee payments, balances and vouchers.
+                    </p>
+
+                </div>
+
+                <button
+                    class="primary-btn"
+                    onclick="openVoucher('October 2026', 15000, 0, 'Pending')"
+                >
+                    🧾 Current Fee Voucher
+                </button>
+
+            </div>
+
+
+            <!-- STATS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <h4>Total Annual Fee</h4>
+
+                    <h2>
+                        PKR 180,000
+                    </h2>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>Total Paid</h4>
+
+                    <h2 class="paid-text">
+                        PKR 135,000
+                    </h2>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>Outstanding Balance</h4>
+
+                    <h2 class="pending-text">
+                        PKR 45,000
+                    </h2>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>Current Month</h4>
+
+                    <h2 class="pending-text">
+                        Pending
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT SUMMARY -->
+            <div class="summary-card">
+
+                <div class="summary-header">
+
+                    <h2>Student Information</h2>
+
+                </div>
+
+
+                <div class="student-info">
+
+                    <div class="student-item">
+
+                        <span>Student</span>
+
+                        <strong>
+                            Muhammad Ahmed
+                        </strong>
+
+                    </div>
+
+
+                    <div class="student-item">
+
+                        <span>Admission No.</span>
+
+                        <strong>
+                            ES-2026-1024
+                        </strong>
+
+                    </div>
+
+
+                    <div class="student-item">
+
+                        <span>Class</span>
+
+                        <strong>
+                            Grade 8-A
+                        </strong>
+
+                    </div>
+
+
+                    <div class="student-item">
+
+                        <span>Academic Year</span>
+
+                        <strong>
+                            2026–2027
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FEE TABLE -->
+            <div class="table-card">
+
+                <h2>
+                    Monthly Fee History
+                </h2>
+
+
+                <div class="table-wrapper">
+
+                    <table class="fees-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+                                <th>Month</th>
+                                <th>Fee Amount</th>
+                                <th>Paid Amount</th>
+                                <th>Balance</th>
+                                <th>Status</th>
+                                <th>Payment Date</th>
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr>
+
+                                <td>1</td>
+
+                                <td>April 2026</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 0</td>
+
+                                <td>
+                                    <span class="status status-paid">
+                                        Paid
+                                    </span>
+                                </td>
+
+                                <td>05 Apr 2026</td>
+
+                                <td>
+                                    <button
+                                        class="action-btn"
+                                        onclick="openVoucher('April 2026',15000,15000,'Paid')"
+                                    >
+                                        Voucher
+                                    </button>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>2</td>
+
+                                <td>May 2026</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 0</td>
+
+                                <td>
+                                    <span class="status status-paid">
+                                        Paid
+                                    </span>
+                                </td>
+
+                                <td>04 May 2026</td>
+
+                                <td>
+                                    <button
+                                        class="action-btn"
+                                        onclick="openVoucher('May 2026',15000,15000,'Paid')"
+                                    >
+                                        Voucher
+                                    </button>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>3</td>
+
+                                <td>June 2026</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 0</td>
+
+                                <td>
+                                    <span class="status status-paid">
+                                        Paid
+                                    </span>
+                                </td>
+
+                                <td>03 Jun 2026</td>
+
+                                <td>
+                                    <button
+                                        class="action-btn"
+                                        onclick="openVoucher('June 2026',15000,15000,'Paid')"
+                                    >
+                                        Voucher
+                                    </button>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>4</td>
+
+                                <td>July 2026</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 0</td>
+
+                                <td>
+                                    <span class="status status-paid">
+                                        Paid
+                                    </span>
+                                </td>
+
+                                <td>06 Jul 2026</td>
+
+                                <td>
+                                    <button
+                                        class="action-btn"
+                                        onclick="openVoucher('July 2026',15000,15000,'Paid')"
+                                    >
+                                        Voucher
+                                    </button>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>5</td>
+
+                                <td>August 2026</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 0</td>
+
+                                <td>
+                                    <span class="status status-paid">
+                                        Paid
+                                    </span>
+                                </td>
+
+                                <td>05 Aug 2026</td>
+
+                                <td>
+                                    <button
+                                        class="action-btn"
+                                        onclick="openVoucher('August 2026',15000,15000,'Paid')"
+                                    >
+                                        Voucher
+                                    </button>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>6</td>
+
+                                <td>September 2026</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 0</td>
+
+                                <td>
+                                    <span class="status status-paid">
+                                        Paid
+                                    </span>
+                                </td>
+
+                                <td>04 Sep 2026</td>
+
+                                <td>
+                                    <button
+                                        class="action-btn"
+                                        onclick="openVoucher('September 2026',15000,15000,'Paid')"
+                                    >
+                                        Voucher
+                                    </button>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>7</td>
+
+                                <td>October 2026</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 0</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>
+                                    <span class="status status-pending">
+                                        Pending
+                                    </span>
+                                </td>
+
+                                <td>—</td>
+
+                                <td>
+                                    <button
+                                        class="action-btn"
+                                        onclick="openVoucher('October 2026',15000,0,'Pending')"
+                                    >
+                                        Voucher
+                                    </button>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>8</td>
+
+                                <td>November 2026</td>
+
+                                <td>PKR 15,000</td>
+
+                                <td>PKR 7,500</td>
+
+                                <td>PKR 7,500</td>
+
+                                <td>
+                                    <span class="status status-partial">
+                                        Partial
+                                    </span>
+                                </td>
+
+                                <td>—</td>
+
+                                <td>
+                                    <button
+                                        class="action-btn"
+                                        onclick="openVoucher('November 2026',15000,7500,'Partial')"
+                                    >
+                                        Voucher
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAYMENT NOTE -->
+            <div class="summary-card">
+
+                <div class="payment-note">
+
+                    <strong>
+                        Payment Information
+                    </strong>
+
+                    <br>
+
+                    Please submit fee payments through the school's
+                    approved payment method. After payment, keep the
+                    receipt for your records. The fee status will be
+                    updated by the school administration.
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- VOUCHER MODAL -->
+
+<div class="voucher-modal" id="voucherModal">
+
+    <div class="voucher">
+
+        <div class="voucher-header">
+
+            <h2>
+                EduSphere School
+            </h2>
+
+            <p>
+                Student Fee Voucher
+            </p>
+
+        </div>
+
+
+        <div class="voucher-info">
+
+            <div>
+
+                <span>Student Name</span>
+
+                <strong>
+                    Muhammad Ahmed
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>Admission Number</span>
+
+                <strong>
+                    ES-2026-1024
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>Class</span>
+
+                <strong>
+                    Grade 8-A
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>Fee Month</span>
+
+                <strong id="voucherMonth">
+                    October 2026
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="voucher-total">
+
+            <span>
+                Fee Amount
+            </span>
+
+            <strong id="voucherAmount">
+                PKR 15,000
+            </strong>
+
+        </div>
+
+
+        <div class="voucher-total">
+
+            <span>
+                Paid Amount
+            </span>
+
+            <strong id="voucherPaid">
+                PKR 0
+            </strong>
+
+        </div>
+
+
+        <div class="voucher-total">
+
+            <span>
+                Balance
+            </span>
+
+            <strong id="voucherBalance">
+                PKR 15,000
+            </strong>
+
+        </div>
+
+
+        <div class="voucher-total">
+
+            <span>
+                Status
+            </span>
+
+            <strong id="voucherStatus">
+                Pending
+            </strong>
+
+        </div>
+
+
+        <div class="voucher-actions">
+
+            <button
+                class="secondary-btn"
+                onclick="closeVoucher()"
+            >
+                Close
+            </button>
+
+            <button
+                class="primary-btn"
+                onclick="printVoucher()"
+            >
+                🖨 Print Voucher
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("open");
+
+    }
+
+
+    function openVoucher(month, amount, paid, status) {
+
+        const balance = amount - paid;
+
+
+        document.getElementById("voucherMonth")
+            .textContent = month;
+
+
+        document.getElementById("voucherAmount")
+            .textContent = "PKR " + amount.toLocaleString();
+
+
+        document.getElementById("voucherPaid")
+            .textContent = "PKR " + paid.toLocaleString();
+
+
+        document.getElementById("voucherBalance")
+            .textContent = "PKR " + balance.toLocaleString();
+
+
+        document.getElementById("voucherStatus")
+            .textContent = status;
+
+
+        document.getElementById("voucherModal")
+            .style.display = "flex";
+
+    }
+
+
+    function closeVoucher() {
+
+        document.getElementById("voucherModal")
+            .style.display = "none";
+
+    }
+
+
+    function printVoucher() {
+
+        window.print();
+
+    }
+
+
+    window.onclick = function(event) {
+
+        const modal =
+            document.getElementById("voucherModal");
+
+        if (event.target === modal) {
+
+            closeVoucher();
+
+        }
+
+    };
+
+</script>
+
+</body>
+</html>

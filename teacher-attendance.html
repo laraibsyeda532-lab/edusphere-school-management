@@ -1,0 +1,323 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance | EduSphere</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .attendance-container {
+            padding: 25px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .filters select,
+        .filters input {
+            padding: 11px 14px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .btn {
+            border: none;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #163fae;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .summary-card h3 {
+            margin: 0 0 8px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .summary-card p {
+            margin: 0;
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .attendance-table {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f7f9fc;
+            color: #555;
+        }
+
+        .status-btn {
+            padding: 7px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 5px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .present {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .absent {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .late {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .selected {
+            outline: 2px solid #333;
+        }
+
+        @media (max-width: 900px) {
+            .summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .attendance-container {
+                padding: 15px;
+            }
+
+            table {
+                min-width: 800px;
+            }
+
+            .attendance-table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h2>EduSphere</h2>
+            <p>Teacher Portal</p>
+        </div>
+
+        <nav>
+            <a href="teacher-dashboard.html">Dashboard</a>
+            <a href="teacher-classes.html">My Classes</a>
+            <a href="teacher-attendance.html" class="active">Attendance</a>
+            <a href="teacher-homework.html">Homework</a>
+            <a href="teacher-syllabus.html">Syllabus</a>
+            <a href="teacher-results.html">Results</a>
+            <a href="teacher-date-sheet.html">Date Sheet</a>
+            <a href="teacher-notices.html">Notices</a>
+            <a href="teacher-profile.html">My Profile</a>
+        </nav>
+
+        <button onclick="logout()" class="logout-btn">Logout</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="attendance-container">
+
+            <div class="page-header">
+                <div>
+                    <h1>Attendance</h1>
+                    <p>Mark and manage student attendance</p>
+                </div>
+
+                <button class="btn btn-primary" onclick="saveAttendance()">
+                    Save Attendance
+                </button>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+
+                <select id="classSelect" onchange="loadStudents()">
+                    <option value="8A">Grade 8 - A</option>
+                    <option value="8B">Grade 8 - B</option>
+                    <option value="9A">Grade 9 - A</option>
+                    <option value="9B">Grade 9 - B</option>
+                </select>
+
+                <input type="date" id="attendanceDate">
+
+                <button class="btn btn-primary" onclick="loadStudents()">
+                    Load Attendance
+                </button>
+
+            </div>
+
+            <!-- Summary -->
+            <div class="summary">
+
+                <div class="summary-card">
+                    <h3>Total Students</h3>
+                    <p id="totalStudents">10</p>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Present</h3>
+                    <p id="presentCount">8</p>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Absent</h3>
+                    <p id="absentCount">1</p>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Late</h3>
+                    <p id="lateCount">1</p>
+                </div>
+
+            </div>
+
+            <!-- Attendance Table -->
+            <div class="attendance-table">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Class</th>
+                            <th>Attendance Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="attendanceBody">
+
+                        <tr>
+                            <td>1</td>
+                            <td>ST-001</td>
+                            <td>Ali Khan</td>
+                            <td>8-A</td>
+                            <td>
+                                <button class="status-btn present selected" onclick="setStatus(this,'Present')">Present</button>
+                                <button class="status-btn absent" onclick="setStatus(this,'Absent')">Absent</button>
+                                <button class="status-btn late" onclick="setStatus(this,'Late')">Late</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>ST-002</td>
+                            <td>Ayesha Noor</td>
+                            <td>8-A</td>
+                            <td>
+                                <button class="status-btn present selected" onclick="setStatus(this,'Present')">Present</button>
+                                <button class="status-btn absent" onclick="setStatus(this,'Absent')">Absent</button>
+                                <button class="status-btn late" onclick="setStatus(this,'Late')">Late</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>ST-003</td>
+                            <td>Hassan Ahmed</td>
+                            <td>8-A</td>
+                            <td>
+                                <button class="status-btn present selected" onclick="setStatus(this,'Present')">Present</button>
+                                <button class="status-btn absent" onclick="setStatus(this,'Absent')">Absent</button>
+                                <button class="status-btn late" onclick="setStatus(this,'Late')">Late</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>4</td>
+                            <td>ST-004</td>
+                            <td>Fatima Zahra</td>
+                            <td>8-A</td>
+                            <td>
+                                <button class="status-btn present selected" onclick="setStatus(this,'Present')">Present</button>
+                                <button class="status-btn absent" onclick="setStatus(this,'Absent')">Absent</button>
+                                <button class="status-btn late" onclick="setStatus(this,'Late')">Late</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>5</td>
+                            <td>ST-005</td>
+                            <td>Hamza Ali</td>
+                            <td>8-A</td>
+                            <td>
+                                <button class="status-btn present selected" onclick="setStatus(this,'Present')">Present</button>
+                                <button class="status-btn absent" onclick="setStatus(this,'Absent')">Absent</button>
+                                <button class="status-btn late" onclick="setStatus(this,'Late')">Late</button>
+                            </td>
+                        </tr>
+
+                        <tr>
+```

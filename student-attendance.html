@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Attendance | Student Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .student-page {
+            padding: 28px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 6px;
+            color: #173b67;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .stat-card h4 {
+            margin: 0 0 8px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .stat-card h2 {
+            margin: 0;
+            color: #173b67;
+            font-size: 25px;
+        }
+
+        .stat-card small {
+            display: block;
+            margin-top: 6px;
+            color: #888;
+            font-size: 11px;
+        }
+
+        .attendance-overview {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            margin-bottom: 22px;
+        }
+
+        .attendance-overview h2 {
+            margin: 0 0 20px;
+            color: #173b67;
+            font-size: 18px;
+        }
+
+        .overview-content {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .attendance-circle {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: conic-gradient(#285b8f 0 94%, #e7ebef 94% 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .attendance-inner {
+            width: 95px;
+            height: 95px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .attendance-inner strong {
+            color: #173b67;
+            font-size: 25px;
+        }
+
+        .attendance-inner span {
+            color: #888;
+            font-size: 10px;
+        }
+
+        .overview-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            flex: 1;
+        }
+
+        .overview-item {
+            background: #f7f9fc;
+            padding: 16px;
+            border-radius: 9px;
+        }
+
+        .overview-item span {
+            display: block;
+            color: #888;
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+
+        .overview-item strong {
+            color: #173b67;
+            font-size: 19px;
+        }
+
+        .filters-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            margin-bottom: 22px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            outline: none;
+            background: white;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            overflow-x: auto;
+        }
+
+        .table-card h2 {
+            margin: 0 0 20px;
+            color: #173b67;
+            font-size: 18px;
+        }
+
+        .attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        .attendance-table th,
+        .attendance-table td {
+            padding: 13px 10px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .attendance-table th {
+            color: #777;
+            font-size: 11px;
+        }
+
+        .student-name {
+            font-weight: 700;
+            color: #173b67;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .present {
+            background: #e8f7ee;
+            color: #248a52;
+        }
+
+        .absent {
+            background: #fdecea;
+            color: #c0392b;
+        }
+
+        .late {
+            background: #fff4df;
+            color: #b36b00;
+        }
+
+        .month-summary {
+            margin-top: 22px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .month-card {
+            background: #f7f9fc;
+            padding: 15px;
+            border-radius: 9px;
+        }
+
+        .month-card h4 {
+            margin: 0 0 7px;
+            color: #173b67;
+            font-size: 13px;
+        }
+
+        .month-card p {
+            margin: 0;
+            color: #777;
+            font-size: 11px;
+        }
+
+        .month-progress {
+            height: 6px;
+            background: #e5e8ec;
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .month-progress span {
+            display: block;
+            height: 100%;
+            background: #285b8f;
+            border-radius: 10px;
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 25px;
+            color: #777;
+        }
+
+        @media (max-width: 1000px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .overview-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .overview-details {
+                width: 100%;
+            }
+
+            .month-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .student-page {
+                padding: 18px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .overview-details {
+                grid-template-columns: 1fr;
+            }
+
+            .month-summary {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Student Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="student-dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="student-profile.html">
+                👤 My Profile
+            </a>
+
+            <a href="student-attendance.html" class="active">
+                ✓ Attendance
+            </a>
+
+            <a href="student-homework.html">
+                📝 Homework & Diary
+            </a>
+
+            <a href="student-syllabus.html">
+                📚 Syllabus
+            </a>
+
+            <a href="student-date-sheet.html">
+                📅 Date Sheet
+            </a>
+
+            <a href="student-results.html">
+                📈 Results
+            </a>
+
+            <a href="student-timetable.html">
+                🕐 Timetable
+            </a>
+
+            <a href="student-notices.html">
+                🔔 Notices
+            </a>
+
+            <a href="index.html">
+                🌐 Back to Website
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                Attendance
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">
+                    MA
+                </div>
+
+                <div>
+                    <strong>Muhammad Ahmed</strong>
+                    <small>Grade 8-A</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="student-page">
+
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        My Attendance
+                    </h1>
+
+                    <p>
+                        View your daily and monthly attendance record.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <h4>Attendance Rate</h4>
+                    <h2 id="attendanceRate">94%</h2>
+                    <small>Overall attendance</small>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Present</h4>
+                    <h2 id="presentCount">112</h2>
+                    <small>Days present</small>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Absent</h4>
+                    <h2 id="absentCount">5</h2>
+                    <small>Days absent</small>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Late</h4>
+                    <h2 id="lateCount">2</h2>
+                    <small>Late arrivals</small>
+                </div>
+
+            </div>
+
+
+            <!-- OVERVIEW -->
+            <div class="attendance-overview">
+
+                <h2>
+                    Attendance Overview
+                </h2>
+
+                <div class="overview-content">
+
+                    <div class="attendance-circle">
+
+                        <div class="attendance-inner">
+                            <strong>94%</strong>
+                            <span>Attendance</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="overview-details">
+
+                        <div class="overview-item">
+                            <span>Total School Days</span>
+                            <strong>119</strong>
+                        </div>
+
+                        <div class="overview-item">
+                            <span>Present Days</span>
+                            <strong>112</strong>
+                        </div>
+
+                        <div class="overview-item">
+                            <span>Absent + Late</span>
+                            <strong>7</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="filters-card">
+
+                <div class="filters">
+
+                    <input
+                        type="date"
+                        id="dateFilter"
+                        onchange="filterAttendance()"
+                    >
+
+                    <select
+                        id="statusFilter"
+                        onchange="filterAttendance()"
+                    >
+
+                        <option value="">
+                            All Status
+                        </option>
+
+                        <option value="Present">
+                            Present
+                        </option>
+
+                        <option value="Absent">
+                            Absent
+                        </option>
+
+                        <option value="Late">
+                            Late
+                        </option>
+
+                    </select>
+
+
+                    <select
+                        id="monthFilter"
+                        onchange="filterAttendance()"
+                    >
+
+                        <option value="">
+                            All Months
+                        </option>
+
+                        <option value="September">
+                            September 2026
+                        </option>
+
+                        <option value="August">
+                            August 2026
+                        </option>
+
+                        <option value="July">
+                            July 2026
+                        </option>
+
+                        <option value="June">
+                            June 2026
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- TABLE -->
+            <div class="table-card">
+
+                <h2>
+                    Attendance Record
+                </h2>
+
+
+                <table class="attendance-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Date</th>
+                            <th>Day</th>
+                            <th>Class</th>
+                            <th>Status</th>
+                            <th>Remarks</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="attendanceTable">
+
+                        <tr
+                            data-date="2026-09-30"
+                            data-month="September"
+                            data-status="Present"
+                        >
+                            <td>30 Sep 2026</td>
+                            <td>Wednesday</td>
+                            <td>Grade 8-A</td>
+                            <td>
+                                <span class="status-badge present">
+                                    Present
+                                </span>
+                            </td>
+                            <td>Regular attendance</td>
+                        </tr>
+
+
+                        <tr
+                            data-date="2026-09-29"
+                            data-month="September"
+                            data-status="Present"
+                        >
+                            <td>29 Sep 2026</td>
+                            <td>Tuesday</td>
+                            <td>Grade 8-A</td>
+                            <td>
+                                <span class="status-badge present">
+                                    Present
+                                </span>
+                            </td>
+                            <td>Regular attendance</td>
+                        </tr>
+
+
+                        <tr
+                            data-date="2026-09-28"
+                            data-month="September"
+                            data-status="Late"
+                        >
+                            <td>28 Sep 2026</td>
+                            <td>Monday</td>
+                            <td>Grade 8-A</td>
+                            <td>
+                                <span class="status-badge late">
+                                    Late
+                                </span>
+                            </td>
+                            <td>Arrived 10 minutes late</td>
+                        </tr>
+
+
+                        <tr
+                            data-date="2026-09-25"
+                            data-month="September"
+                            data-status="Present"
+                        >
+                            <td>25 Sep 2026</td>
+                            <td>Friday</td>
+                            <td>Grade 8-A</td>
+                            <td>
+                                <span class="status-badge present">
+                                    Present
+                                </span>
+                            </td>
+                            <td>Regular attendance</td>
+                        </tr>
+
+
+                        <tr
+                            data-date="2026-09-24"
+                            data-month="September"
+                            data-status="Absent"
+                        >
+                            <td>24 Sep 2026</td>
+                            <td>Thursday</td>
+                            <td>Grade 8-A</td>
+                            <td>
+                                <span class="status-badge absent">
+                                    Absent
+                                </span>
+                            </td>
+                            <td>Leave reported</td>
+                        </tr>
+
+
+                        <tr
+                            data-date="2026-09-23"
+                            data-month="September"
+                            data-status="Present"
+                        >
+                            <td>23 Sep 2026</td>
+                            <td>Wednesday</td>
+                            <td>Grade 8-A</td>
+                            <td>
+                                <span class="status-badge present">
+                                    Present
+                                </span>
+                            </td>
+                            <td>Regular attendance</td>
+                        </tr>
+
+
+                        <tr
+                            data-date="2026-09-22"
+                            data-month="September"
+                            data-status="Present"
+                        >
+                            <td>22 Sep 2026</td>
+                            <td>Tuesday</td>
+                            <td>Grade 8-A</td>
+                            <td>
+                                <span class="status-badge present">
+                                    Present
+                                </span>
+                            </td>
+                            <td>Regular attendance</td>
+                        </tr>
+
+
+                        <tr
+                            data-date="2026-09-21"
+                            data-month="September"
+                            data-status="Present"
+                        >
+                            <td>21 Sep 2026</td>
+                            <td>Monday</td>
+                            <td>Grade 8-A</td>
+                            <td>
+                                <span class="status-badge present">
+                                    Present
+                                </span>
+                            </td>
+                            <td>Regular attendance</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+
+                <div
+                    class="no-results"
+                    id="noResults"
+                >
+                    No attendance record found.
+                </div>
+
+
+                <!-- MONTHLY SUMMARY -->
+                <div class="month-summary">
+
+                    <div class="month-card">
+
+                        <h4>September</h4>
+
+                        <p>
+                            94% attendance
+                        </p>
+
+                        <div class="month-progress">
+                            <span style="width:94%;"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="month-card">
+
+                        <h4>August</h4>
+
+                        <p>
+                            96% attendance
+                        </p>
+
+                        <div class="month-progress">
+                            <span style="width:96%;"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="month-card">
+
+                        <h4>July</h4>
+
+                        <p>
+                            92% attendance
+                        </p>
+
+                        <div class="month-progress">
+                            <span style="width:92%;"></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="month-card">
+
+                        <h4>June</h4>
+
+                        <p>
+                            95% attendance
+                        </p>
+
+                        <div class="month-progress">
+                            <span style="width:95%;"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("open");
+
+    }
+
+
+    function filterAttendance() {
+
+        const date =
+            document
+                .getElementById("dateFilter")
+                .value;
+
+        const status =
+            document
+                .getElementById("statusFilter")
+                .value;
+
+        const month =
+            document
+                .getElementById("monthFilter")
+                .value;
+
+
+        const rows =
+            document.querySelectorAll(
+                "#attendanceTable tr"
+            );
+
+
+        let visible = 0;
+
+
+        rows.forEach(function(row) {
+
+            const rowDate =
+                row.dataset.date;
+
+            const rowStatus =
+                row.dataset.status;
+
+            const rowMonth =
+                row.dataset.month;
+
+
+            const dateMatch =
+                !date ||
+                rowDate === date;
+
+            const statusMatch =
+                !status ||
+                rowStatus === status;
+
+            const monthMatch =
+                !month ||
+                rowMonth === month;
+
+
+            if (
+                dateMatch &&
+                statusMatch &&
+                monthMatch
+            ) {
+
+                row.style.display = "";
+
+                visible++;
+
+            } else {
+
+                row.style.display = "none";
+
+            }
+
+        });
+
+
+        const noResults =
+            document.getElementById("noResults");
+
+
+        if (visible === 0) {
+
+            noResults.style.display = "block";
+
+        } else {
+
+            noResults.style.display = "none";
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

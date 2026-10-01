@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | EduSphere</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-page">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+
+            <div class="sidebar-logo">
+                <div class="logo">
+                    Edu<span>Sphere</span>
+                </div>
+
+                <small>SMART SCHOOL MANAGEMENT</small>
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <p class="sidebar-title">MAIN</p>
+
+                <a href="admin-dashboard.html" class="sidebar-link active">
+                    <span>▣</span>
+                    Dashboard
+                </a>
+
+
+                <p class="sidebar-title">ACADEMIC</p>
+
+                <a href="students.html" class="sidebar-link">
+                    <span>👨‍🎓</span>
+                    Students
+                </a>
+
+                <a href="teachers.html" class="sidebar-link">
+                    <span>👩‍🏫</span>
+                    Teachers
+                </a>
+
+                <a href="classes.html" class="sidebar-link">
+                    <span>▦</span>
+                    Classes
+                </a>
+
+                <a href="attendance.html" class="sidebar-link">
+                    <span>✓</span>
+                    Attendance
+                </a>
+
+                <a href="homework.html" class="sidebar-link">
+                    <span>📝</span>
+                    Homework & Diary
+                </a>
+
+                <a href="syllabus.html" class="sidebar-link">
+                    <span>📚</span>
+                    Syllabus
+                </a>
+
+                <a href="date-sheet.html" class="sidebar-link">
+                    <span>📅</span>
+                    Date Sheet
+                </a>
+
+                <a href="results.html" class="sidebar-link">
+                    <span>📊</span>
+                    Results
+                </a>
+
+
+                <p class="sidebar-title">ADMINISTRATION</p>
+
+                <a href="fees.html" class="sidebar-link">
+                    <span>💳</span>
+                    Fees
+                </a>
+
+                <a href="notices.html" class="sidebar-link">
+                    <span>📢</span>
+                    Notices
+                </a>
+
+                <a href="teacher-applications.html" class="sidebar-link">
+                    <span>📄</span>
+                    Teacher Applications
+                    <b class="notification-count">5</b>
+                </a>
+
+                <a href="messages.html" class="sidebar-link">
+                    <span>✉</span>
+                    Messages
+                    <b class="notification-count">8</b>
+                </a>
+
+
+                <p class="sidebar-title">SYSTEM</p>
+
+                <a href="settings.html" class="sidebar-link">
+                    <span>⚙</span>
+                    Settings
+                </a>
+
+                <a href="index.html" class="sidebar-link">
+                    <span>←</span>
+                    Back to Website
+                </a>
+
+                <a href="login.html" class="sidebar-link logout-link">
+                    <span>↪</span>
+                    Logout
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- MAIN AREA -->
+
+        <main class="dashboard-main">
+
+
+            <!-- TOP BAR -->
+
+            <header class="dashboard-topbar">
+
+                <button class="menu-toggle" id="menuToggle">
+                    ☰
+                </button>
+
+
+                <div class="topbar-left">
+
+                    <h2>Admin Dashboard</h2>
+
+                    <p>
+                        Manage your school from one place
+                    </p>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <button class="notification-button">
+                        🔔
+                        <span>3</span>
+                    </button>
+
+
+                    <div class="admin-profile">
+
+                        <div class="profile-avatar">
+                            A
+                        </div>
+
+                        <div>
+                            <strong>Admin</strong>
+                            <small>Administrator</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- DASHBOARD CONTENT -->
+
+            <section class="dashboard-content" id="dashboard">
+
+
+                <!-- WELCOME -->
+
+                <div class="dashboard-welcome">
+
+                    <div>
+
+                        <span class="dashboard-label">
+                            SCHOOL ADMINISTRATION
+                        </span>
+
+                        <h1>
+                            Good Morning, Admin 👋
+                        </h1>
+
+                        <p>
+                            Here is what's happening in your school today.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dashboard-date">
+
+                        <strong>30 September 2026</strong>
+
+                        <span>Wednesday</span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STATS -->
+
+                <div class="dashboard-stats">
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="stat-icon blue">
+                            👨‍🎓
+                        </div>
+
+                        <div>
+
+                            <span>Total Students</span>
+
+                            <h2>1,248</h2>
+
+                            <small class="positive">
+                                ↑ 4.8% this month
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="stat-icon purple">
+                            👩‍🏫
+                        </div>
+
+                        <div>
+
+                            <span>Total Teachers</span>
+
+                            <h2>86</h2>
+
+                            <small class="positive">
+                                ↑ 3 new this month
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="stat-icon green">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <span>Today's Attendance</span>
+
+                            <h2>94.6%</h2>
+
+                            <small class="positive">
+                                ↑ 1.2% from yesterday
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="stat-icon orange">
+                            💳
+                        </div>
+
+                        <div>
+
+                            <span>Pending Fees</span>
+
+                            <h2>18</h2>
+
+                            <small class="warning-text">
+                                Students pending
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MAIN GRID -->
+
+                <div class="dashboard-grid">
+
+
+                    <!-- RECENT STUDENTS -->
+
+                    <div class="dashboard-card large-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>Recent Students</h3>
+
+                                <p>
+                                    Recently registered students
+                                </p>
+
+                            </div>
+
+                            <a href="students.html">
+                                View All
+                            </a>
+
+                        </div>
+
+
+                        <div class="table-wrapper">
+
+                            <table class="data-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>Student</th>
+                                        <th>Class</th>
+                                        <th>Admission No.</th>
+                                        <th>Status</th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>
+                                            <div class="table-person">
+
+                                                <div class="mini-avatar">
+                                                    AH
+                                                </div>
+
+                                                <span>
+                                                    Ahmad Hassan
+                                                </span>
+
+                                            </div>
+                                        </td>
+
+                                        <td>Grade 8</td>
+
+                                        <td>ES-2026-1024</td>
+
+                                        <td>
+                                            <span class="status-badge active-status">
+                                                Active
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>
+                                            <div class="table-person">
+
+                                                <div class="mini-avatar">
+                                                    MA
+                                                </div>
+
+                                                <span>
+                                                    Maryam Ali
+                                                </span>
+
+                                            </div>
+                                        </td>
+
+                                        <td>Grade 6</td>
+
+                                        <td>ES-2026-1025</td>
+
+                                        <td>
+                                            <span class="status-badge active-status">
+                                                Active
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>
+                                            <div class="table-person">
+
+                                                <div class="mini-avatar">
+                                                    ZA
+                                                </div>
+
+                                                <span>
+                                                    Zain Ahmed
+                                                </span>
+
+                                            </div>
+                                        </td>
+
+                                        <td>Grade 5</td>
+
+                                        <td>ES-2026-1026</td>
+
+                                        <td>
+                                            <span class="status-badge pending-status">
+                                                Pending
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>
+                                            <div class="table-person">
+
+                                                <div class="mini-avatar">
+                                                    SA
+                                                </div>
+
+                                                <span>
+                                                    Sara Ahmed
+                                                </span>
+
+                                            </div>
+                                        </td>
+
+                                        <td>Grade 9</td>
+
+                                        <td>ES-2026-1027</td>
+
+                                        <td>
+                                            <span class="status-badge active-status">
+                                                Active
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ATTENDANCE -->
+
+                    <div class="dashboard-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>Attendance Today</h3>
+
+                                <p>
+                                    School attendance summary
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="attendance-circle">
+
+                            <div>
+
+                                <strong>94.6%</strong>
+
+                                <span>Present</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="attendance-details">
+
+                            <div>
+                                <span class="dot present-dot"></span>
+                                Present
+                                <strong>1,181</strong>
+                            </div>
+
+                            <div>
+                                <span class="dot absent-dot"></span>
+                                Absent
+                                <strong>42</strong>
+                            </div>
+
+                            <div>
+                                <span class="dot leave-dot"></span>
+                                Leave
+                                <strong>25</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- FEE OVERVIEW -->
+
+                    <div class="dashboard-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>Fee Overview</h3>
+
+                                <p>
+                                    Current month
+                                </p>
+
+                            </div>
+
+                            <a href="fees.html">
+                                Details
+                            </a>
+
+                        </div>
+
+
+                        <div class="fee-summary">
+
+                            <div>
+
+                                <span>Collected</span>
+
+                                <strong>
+                                    Rs. 2.84M
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>Pending</span>
+
+                                <strong>
+                                    Rs. 420K
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="progress-bar">
+
+                            <div style="width: 87%;"></div>
+
+                        </div>
+
+
+                        <p class="progress-text">
+                            87% fees collected this month
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- TEACHER APPLICATIONS -->
+
+                    <div class="dashboard-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>Teacher Applications</h3>
+
+                                <p>
+                                    Recent applications
+                                </p>
+
+                            </div>
+
+                            <a href="teacher-applications.html">
+                                View All
+                            </a>
+
+                        </div>
+
+
+                        <div class="application-list">
+
+
+                            <div class="application-item">
+
+                                <div class="mini-avatar">
+                                    MK
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Maria Khan
+                                    </strong>
+
+                                    <span>
+                                        English Teacher
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge pending-status">
+                                    New
+                                </span>
+
+                            </div>
+
+
+                            <div class="application-item">
+
+                                <div class="mini-avatar">
+                                    HS
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Hamza Shah
+                                    </strong>
+
+                                    <span>
+                                        Computer Science
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge pending-status">
+                                    New
+                                </span>
+
+                            </div>
+
+
+                            <div class="application-item">
+
+                                <div class="mini-avatar">
+                                    FN
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Fatima Noor
+                                    </strong>
+
+                                    <span>
+                                        Mathematics
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge review-status">
+                                    Review
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- QUICK ACTIONS -->
+
+                <div class="dashboard-card quick-actions-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>Quick Actions</h3>
+
+                            <p>
+                                Frequently used school management actions
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-actions">
+
+
+                        <a href="students.html" class="quick-action">
+
+                            <span>➕</span>
+
+                            <strong>
+                                Add Student
+                            </strong>
+
+                            <small>
+                                Register a new student
+                            </small>
+
+                        </a>
+
+
+                        <a href="teachers.html" class="quick-action">
+
+                            <span>👩‍🏫</span>
+
+                            <strong>
+                                Add Teacher
+                            </strong>
+
+                            <small>
+                                Create teacher profile
+                            </small>
+
+                        </a>
+
+
+                        <a href="notices.html" class="quick-action">
+
+                            <span>📢</span>
+
+                            <strong>
+                                Create Notice
+                            </strong>
+
+                            <small>
+                                Publish school notice
+                            </small>
+
+                        </a>
+
+
+                        <a href="results.html" class="quick-action">
+
+                            <span>📊</span>
+
+                            <strong>
+                                Enter Results
+                            </strong>
+
+                            <small>
+                                Manage examination results
+                            </small>
+
+                        </a>
+
+
+                        <a href="fees.html" class="quick-action">
+
+                            <span>💳</span>
+
+                            <strong>
+                                Fee Management
+                            </strong>
+
+                            <small>
+                                View fee records
+                            </small>
+
+                        </a>
+
+
+                        <a href="messages.html" class="quick-action">
+
+                            <span>✉</span>
+
+                            <strong>
+                                Messages
+                            </strong>
+
+                            <small>
+                                View parent messages
+                            </small>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- NOTICE -->
+
+                <div class="dashboard-card notice-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>Recent Notices</h3>
+
+                            <p>
+                                Latest school announcements
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="notice-list">
+
+
+                        <div class="notice-item">
+
+                            <div class="notice-icon">
+                                📢
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Mid-Term Examination Schedule
+                                </strong>
+
+                                <p>
+                                    Examination schedule has been uploaded for all classes.
+                                </p>
+
+                                <small>
+                                    Posted today
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="notice-item">
+
+                            <div class="notice-icon">
+                                📅
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Parent-Teacher Meeting
+                                </strong>
+
+                                <p>
+                                    Parent-teacher meeting will be held next Saturday.
+                                </p>
+
+                                <small>
+                                    Posted 2 days ago
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+        </main>
+
+    </div>
+<script>
+    // Mobile sidebar
+    const menuToggle = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("dashboardSidebar");
+
+    menuToggle.addEventListener("click", function () {
+        sidebar.classList.toggle("sidebar-open");
+    });
+
+
+    // Sidebar active links
+    const sidebarLinks = document.querySelectorAll(".sidebar-link");
+
+    sidebarLinks.forEach(function (link) {
+
+        link.addEventListener("click", function () {
+
+            sidebarLinks.forEach(function (item) {
+                item.classList.remove("active");
+            });
+
+            this.classList.add("active");
+
+        });
+
+    });
+
+
+    // =====================================================
+    // LOAD DASHBOARD STATISTICS
+    // =====================================================
+
+    async function loadDashboardStats() {
+
+        try {
+
+            const response = await fetch("/api/dashboard/stats");
+
+            const data = await response.json();
+
+            if (!data.success) {
+                console.log("Could not load dashboard statistics");
+                return;
+            }
+
+
+            // Get all dashboard stat cards
+            const statCards =
+                document.querySelectorAll(".dashboard-stat");
+
+
+            // -------------------------------------------------
+            // TOTAL STUDENTS
+            // -------------------------------------------------
+
+            if (statCards[0]) {
+
+                const studentNumber =
+                    statCards[0].querySelector("h2");
+
+                if (studentNumber) {
+                    studentNumber.textContent =
+                        data.total_students.toLocaleString();
+                }
+
+            }
+
+
+            // -------------------------------------------------
+            // TOTAL TEACHERS
+            // -------------------------------------------------
+
+            if (statCards[1]) {
+
+                const teacherNumber =
+                    statCards[1].querySelector("h2");
+
+                if (teacherNumber) {
+                    teacherNumber.textContent =
+                        data.total_teachers.toLocaleString();
+                }
+
+            }
+
+
+            // -------------------------------------------------
+            // TODAY'S ATTENDANCE
+            // -------------------------------------------------
+
+            if (statCards[2]) {
+
+                const attendanceNumber =
+                    statCards[2].querySelector("h2");
+
+                if (attendanceNumber) {
+
+                    attendanceNumber.textContent =
+                        data.attendance_percentage + "%";
+
+                }
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "Dashboard stats error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    // Load data when dashboard opens
+    loadDashboardStats();
+
+</script>
+
+
+    
+        
+                
+
+</body>
+
+</html>

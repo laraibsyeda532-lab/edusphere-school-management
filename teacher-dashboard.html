@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teacher Dashboard | EduSphere</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-page">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+
+            <div class="sidebar-logo">
+
+                <div class="logo">
+                    Edu<span>Sphere</span>
+                </div>
+
+                <small>SMART SCHOOL MANAGEMENT</small>
+
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <p class="sidebar-title">MAIN</p>
+
+                <a href="teacher-dashboard.html" class="sidebar-link active">
+                    <span>▣</span>
+                    Dashboard
+                </a>
+
+
+                <p class="sidebar-title">TEACHING</p>
+
+                <a href="teacher-classes.html" class="sidebar-link">
+                    <span>🏫</span>
+                    My Classes
+                </a>
+
+                <a href="teacher-attendance.html" class="sidebar-link">
+                    <span>✓</span>
+                    Attendance
+                </a>
+
+                <a href="teacher-homework.html" class="sidebar-link">
+                    <span>📝</span>
+                    Daily Diary & Homework
+                </a>
+
+                <a href="teacher-syllabus.html" class="sidebar-link">
+                    <span>📚</span>
+                    Syllabus
+                </a>
+
+                <a href="teacher-results.html" class="sidebar-link">
+                    <span>📊</span>
+                    Marks & Results
+                </a>
+
+                <a href="teacher-timetable.html" class="sidebar-link">
+                    <span>🗓️</span>
+                    Timetable
+                </a>
+
+
+                <p class="sidebar-title">TEACHER SERVICES</p>
+
+                <a href="teacher-leave.html" class="sidebar-link">
+                    <span>📅</span>
+                    Leave Request
+                </a>
+
+                <a href="teacher-notices.html" class="sidebar-link">
+                    <span>📢</span>
+                    Notices
+                </a>
+
+                <a href="teacher-profile.html" class="sidebar-link">
+                    <span>👤</span>
+                    My Profile
+                </a>
+
+
+                <p class="sidebar-title">SYSTEM</p>
+
+                <a href="index.html" class="sidebar-link">
+                    <span>←</span>
+                    Back to Website
+                </a>
+
+                <a href="login.html" class="sidebar-link logout-link">
+                    <span>↪</span>
+                    Logout
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- MAIN AREA -->
+
+        <main class="dashboard-main">
+
+            <!-- TOP BAR -->
+
+            <header class="dashboard-topbar">
+
+                <button class="menu-toggle" id="menuToggle">
+                    ☰
+                </button>
+
+
+                <div class="topbar-left">
+
+                    <h2>Teacher Dashboard</h2>
+
+                    <p>
+                        Manage your classes and teaching activities
+                    </p>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <button class="notification-button">
+                        🔔
+                        <span>3</span>
+                    </button>
+
+
+                    <div class="admin-profile">
+
+                        <div class="profile-avatar">
+                            SK
+                        </div>
+
+                        <div>
+
+                            <strong>Sarah Khan</strong>
+
+                            <small>
+                                Computer Science Teacher
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- DASHBOARD CONTENT -->
+
+            <section class="dashboard-content">
+
+
+                <!-- WELCOME -->
+
+                <div class="dashboard-welcome">
+
+                    <div>
+
+                        <span class="dashboard-label">
+                            TEACHER PORTAL
+                        </span>
+
+                        <h1>
+                            Good Morning, Sarah 👋
+                        </h1>
+
+                        <p>
+                            Here is your teaching overview for today.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dashboard-date">
+
+                        <strong>30 September 2026</strong>
+
+                        <span>Wednesday</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATS -->
+
+                <div class="dashboard-stats">
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="stat-icon blue">
+                            🏫
+                        </div>
+
+                        <div>
+
+                            <span>My Classes</span>
+
+                            <h2>4</h2>
+
+                            <small>
+                                Assigned classes
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="stat-icon purple">
+                            👨‍🎓
+                        </div>
+
+                        <div>
+
+                            <span>Total Students</span>
+
+                            <h2>126</h2>
+
+                            <small>
+                                Across my classes
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="stat-icon orange">
+                            📝
+                        </div>
+
+                        <div>
+
+                            <span>Pending Homework</span>
+
+                            <h2>8</h2>
+
+                            <small>
+                                Need attention
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="stat-icon green">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <span>Attendance</span>
+
+                            <h2>94%</h2>
+
+                            <small class="positive">
+                                Current average
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MAIN GRID -->
+
+                <div class="dashboard-grid">
+
+
+                    <!-- TODAY'S CLASSES -->
+
+                    <div class="dashboard-card large-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>Today's Classes</h3>
+
+                                <p>
+                                    Wednesday, 30 September 2026
+                                </p>
+
+                            </div>
+
+                            <a href="teacher-timetable.html">
+                                Full Timetable
+                            </a>
+
+                        </div>
+
+
+                        <div class="table-wrapper">
+
+                            <table class="data-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>Time</th>
+                                        <th>Class</th>
+                                        <th>Subject</th>
+                                        <th>Room</th>
+                                        <th>Status</th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>08:00 - 08:45</td>
+
+                                        <td>Grade 8-A</td>
+
+                                        <td>Computer Science</td>
+
+                                        <td>Computer Lab 1</td>
+
+                                        <td>
+                                            <span class="status-badge active-status">
+                                                Completed
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>09:00 - 09:45</td>
+
+                                        <td>Grade 8-B</td>
+
+                                        <td>Computer Science</td>
+
+                                        <td>Computer Lab 1</td>
+
+                                        <td>
+                                            <span class="status-badge active-status">
+                                                Completed
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>10:30 - 11:15</td>
+
+                                        <td>Grade 9-A</td>
+
+                                        <td>Computer Science</td>
+
+                                        <td>Computer Lab 2</td>
+
+                                        <td>
+                                            <span class="status-badge pending-status">
+                                                Upcoming
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>12:00 - 12:45</td>
+
+                                        <td>Grade 9-B</td>
+
+                                        <td>Mathematics</td>
+
+                                        <td>Room 12</td>
+
+                                        <td>
+                                            <span class="status-badge pending-status">
+                                                Upcoming
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ATTENDANCE -->
+
+                    <div class="dashboard-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>Attendance Summary</h3>
+
+                                <p>
+                                    Today's attendance
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="attendance-circle">
+
+                            <div>
+
+                                <strong>94%</strong>
+
+                                <span>Present</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="attendance-details">
+
+                            <div>
+
+                                <span class="dot present-dot"></span>
+
+                                Present
+
+                                <strong>118</strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span class="dot absent-dot"></span>
+
+                                Absent
+
+                                <strong>5</strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span class="dot leave-dot"></span>
+
+                                Leave
+
+                                <strong>3</strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUICK ACTIONS -->
+
+                    <div class="dashboard-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>Quick Actions</h3>
+
+                                <p>
+                                    Frequently used actions
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="quick-actions">
+
+
+                            <a href="teacher-attendance.html"
+                               class="quick-action">
+
+                                <span>✓</span>
+
+                                <strong>
+                                    Mark Attendance
+                                </strong>
+
+                                <small>
+                                    Record today's attendance
+                                </small>
+
+                            </a>
+
+
+                            <a href="teacher-homework.html"
+                               class="quick-action">
+
+                                <span>📝</span>
+
+                                <strong>
+                                    Add Homework
+                                </strong>
+
+                                <small>
+                                    Give new homework
+                                </small>
+
+                            </a>
+
+
+                            <a href="teacher-results.html"
+                               class="quick-action">
+
+                                <span>📊</span>
+
+                                <strong>
+                                    Enter Marks
+                                </strong>
+
+                                <small>
+                                    Manage student results
+                                </small>
+
+                            </a>
+
+
+                            <a href="teacher-leave.html"
+                               class="quick-action">
+
+                                <span>📅</span>
+
+                                <strong>
+                                    Apply Leave
+                                </strong>
+
+                                <small>
+                                    Submit leave request
+                                </small>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RECENT HOMEWORK -->
+
+                    <div class="dashboard-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>Recent Homework</h3>
+
+                                <p>
+                                    Latest homework activities
+                                </p>
+
+                            </div>
+
+                            <a href="teacher-homework.html">
+                                View All
+                            </a>
+
+                        </div>
+
+
+                        <div class="application-list">
+
+
+                            <div class="application-item">
+
+                                <div class="mini-avatar">
+                                    CS
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Computer Networks
+                                    </strong>
+
+                                    <span>
+                                        Grade 8-A • Due 02 Oct
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge pending-status">
+                                    Pending
+                                </span>
+
+                            </div>
+
+
+                            <div class="application-item">
+
+                                <div class="mini-avatar">
+                                    CS
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        HTML & CSS Practice
+                                    </strong>
+
+                                    <span>
+                                        Grade 8-B • Due 03 Oct
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge active-status">
+                                    Active
+                                </span>
+
+                            </div>
+
+
+                            <div class="application-item">
+
+                                <div class="mini-avatar">
+                                    MT
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Algebra Questions
+                                    </strong>
+
+                                    <span>
+                                        Grade 9-B • Due 04 Oct
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge active-status">
+                                    Active
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SCHOOL NOTICES -->
+
+                <div class="dashboard-card notice-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>School Notices</h3>
+
+                            <p>
+                                Latest announcements for teachers
+                            </p>
+
+                        </div>
+
+                        <a href="teacher-notices.html">
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="notice-list">
+
+
+                        <div class="notice-item">
+
+                            <div class="notice-icon">
+                                📢
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Mid-Term Examination Schedule
+                                </strong>
+
+                                <p>
+                                    Teachers should review the examination schedule.
+                                </p>
+
+                                <small>
+                                    Posted today
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="notice-item">
+
+                            <div class="notice-icon">
+                                📅
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Parent-Teacher Meeting
+                                </strong>
+
+                                <p>
+                                    Parent-teacher meeting will be held next Saturday.
+                                </p>
+
+                                <small>
+                                    Posted 2 days ago
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROFILE SUMMARY -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>My Profile</h3>
+
+                            <p>
+                                Teacher account information
+                            </p>
+
+                        </div>
+
+                        <a href="teacher-profile.html">
+                            Edit Profile
+                        </a>
+
+                    </div>
+
+
+                    <div class="application-list">
+
+                        <div class="application-item">
+
+                            <div class="mini-avatar">
+                                SK
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Sarah Khan
+                                </strong>
+
+                                <span>
+                                    Computer Science Teacher
+                                </span>
+
+                            </div>
+
+                            <span class="status-badge active-status">
+                                Active
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        const menuToggle =
+            document.getElementById("menuToggle");
+
+        const sidebar =
+            document.getElementById("dashboardSidebar");
+
+
+        menuToggle.addEventListener("click", function () {
+
+            sidebar.classList.toggle("sidebar-open");
+
+        });
+
+
+        const sidebarLinks =
+            document.querySelectorAll(".sidebar-link");
+
+
+        sidebarLinks.forEach(function(link) {
+
+            link.addEventListener("click", function() {
+
+                sidebarLinks.forEach(function(item) {
+
+                    item.classList.remove("active");
+
+                });
+
+                this.classList.add("active");
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>

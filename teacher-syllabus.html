@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syllabus | Teacher Portal</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .page-content {
+            padding: 30px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            margin-top: 6px;
+        }
+
+        .primary-btn {
+            border: none;
+            background: #1e3a8a;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .primary-btn:hover {
+            background: #172554;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+        }
+
+        .summary-card h3 {
+            margin: 0 0 8px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .summary-card strong {
+            font-size: 27px;
+            color: #1e293b;
+        }
+
+        .filters-box {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 7px;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #dbe1ea;
+            border-radius: 8px;
+            outline: none;
+            background: white;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            border-color: #1e3a8a;
+        }
+
+        .table-box {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            overflow-x: auto;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 950px;
+        }
+
+        th,
+        td {
+            padding: 15px 18px;
+            text-align: left;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        td {
+            font-size: 14px;
+            color: #334155;
+        }
+
+        .subject-name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .topics {
+            max-width: 250px;
+            color: #64748b;
+        }
+
+        .progress-wrapper {
+            min-width: 150px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #1e3a8a;
+            border-radius: 20px;
+        }
+
+        .progress-low {
+            background: #dc2626;
+        }
+
+        .progress-medium {
+            background: #d97706;
+        }
+
+        .progress-high {
+            background: #16a34a;
+        }
+
+        .action-btn {
+            border: none;
+            padding: 7px 10px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+
+        .view-btn {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .edit-btn {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* MODAL */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 16px;
+            padding: 25px;
+            box-sizing: border-box;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .close-btn {
+            border: none;
+            background: #f1f5f9;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #dbe1ea;
+            border-radius: 8px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .cancel-btn {
+            border: none;
+            background: #f1f5f9;
+            color: #334155;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .save-btn {
+            border: none;
+            background: #1e3a8a;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1000px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .page-content {
+                padding: 18px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid,
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Teacher Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="teacher-dashboard.html">
+                <span>🏠</span>
+                Dashboard
+            </a>
+
+            <a href="teacher-classes.html">
+                <span>📚</span>
+                My Classes
+            </a>
+
+            <a href="teacher-attendance.html">
+                <span>📝</span>
+                Attendance
+            </a>
+
+            <a href="teacher-homework.html">
+                <span>📖</span>
+                Daily Diary & Homework
+            </a>
+
+            <a href="teacher-syllabus.html" class="active">
+                <span>📋</span>
+                Syllabus
+            </a>
+
+            <a href="teacher-results.html">
+                <span>📊</span>
+                Marks & Results
+            </a>
+
+            <a href="teacher-timetable.html">
+                <span>🕒</span>
+                Timetable
+            </a>
+
+            <a href="teacher-leave.html">
+                <span>📩</span>
+                Leave Request
+            </a>
+
+            <a href="teacher-notices.html">
+                <span>📢</span>
+                Notices
+            </a>
+
+            <a href="teacher-profile.html">
+                <span>👤</span>
+                My Profile
+            </a>
+
+            <a href="index.html">
+                <span>🌐</span>
+                Back to Website
+            </a>
+
+            <a href="login.html">
+                <span>🚪</span>
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+            <div class="topbar-title">
+                <h2>Syllabus</h2>
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">SK</div>
+
+                <div>
+                    <strong>Sarah Khan</strong>
+                    <small>Computer Science Teacher</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="page-content">
+
+            <!-- HEADER -->
+            <div class="page-header">
+
+                <div>
+                    <h1>My Syllabus</h1>
+                    <p>Track syllabus progress for your assigned classes.</p>
+                </div>
+
+                <button
+                    class="primary-btn"
+                    onclick="openSyllabusModal()"
+                >
+                    + Add Syllabus
+                </button>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+            <div class="summary-grid">
+
+                <div class="summary-card">
+                    <h3>Total Subjects</h3>
+                    <strong id="totalSubjects">6</strong>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Completed</h3>
+                    <strong id="completedSubjects">2</strong>
+                </div>
+
+                <div class="summary-card">
+                    <h3>In Progress</h3>
+                    <strong id="inProgressSubjects">3</strong>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Average Progress</h3>
+                    <strong id="averageProgress">67%</strong>
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="filters-box">
+
+                <div class="filters-grid">
+
+                    <div class="filter-group">
+
+                        <label>Search</label>
+
+                        <input
+                            type="text"
+                            id="searchSyllabus"
+                            placeholder="Search subject, class or teacher..."
+                            oninput="filterSyllabus()"
+                        >
+
+                    </div>
+
+
+                    <div class="filter-group">
+
+                        <label>Class</label>
+
+                        <select
+                            id="classFilter"
+                            onchange="filterSyllabus()"
+                        >
+
+                            <option value="all">All Classes</option>
+                            <option value="Grade 8 - A">Grade 8 - A</option>
+                            <option value="Grade 8 - B">Grade 8 - B</option>
+                            <option value="Grade 9 - A">Grade 9 - A</option>
+                            <option value="Grade 9 - B">Grade 9 - B</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="filter-group">
+
+                        <label>Subject</label>
+
+                        <select
+                            id="subjectFilter"
+                            onchange="filterSyllabus()"
+                        >
+
+                            <option value="all">All Subjects</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="English">English</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TABLE -->
+            <div class="table-box">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>#</th>
+                            <th>Subject</th>
+                            <th>Class</th>
+                            <th>Topics</th>
+                            <th>Progress</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="syllabusTableBody">
+
+                        <tr
+                            data-subject="Computer Science"
+                            data-class="Grade 8 - A"
+                        >
+
+                            <td>1</td>
+
+                            <td class="subject-name">
+                                Computer Science
+                            </td>
+
+                            <td>Grade 8 - A</td>
+
+                            <td class="topics">
+                                HTML, CSS, Internet Basics
+                            </td>
+
+                            <td>
+
+                                <div class="progress-wrapper">
+
+                                    <div class="progress-info">
+                                        <span>80%</span>
+                                        <span>Good</span>
+                                    </div>
+
+                                    <div class="progress-bar">
+
+                                        <div
+                                            class="progress-fill progress-high"
+                                            style="width:80%"
+                                        ></div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>30 Sep 2026</td>
+
+                            <td>
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewSyllabus(this)"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editSyllabus(this)"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteSyllabus(this)"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-subject="Computer Science"
+                            data-class="Grade 8 - B"
+                        >
+
+                            <td>2</td>
+
+                            <td class="subject-name">
+                                Computer Science
+                            </td>
+
+                            <td>Grade 8 - B</td>
+
+                            <td class="topics">
+                                Computer Hardware, Software
+                            </td>
+
+                            <td>
+
+                                <div class="progress-wrapper">
+
+                                    <div class="progress-info">
+                                        <span>65%</span>
+                                        <span>In Progress</span>
+                                    </div>
+
+                                    <div class="progress-bar">
+
+                                        <div
+                                            class="progress-fill progress-medium"
+                                            style="width:65%"
+                                        ></div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>29 Sep 2026</td>
+
+                            <td>
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewSyllabus(this)"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editSyllabus(this)"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteSyllabus(this)"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-subject="Mathematics"
+                            data-class="Grade 9 - A"
+                        >
+
+                            <td>3</td>
+
+                            <td class="subject-name">
+                                Mathematics
+                            </td>
+
+                            <td>Grade 9 - A</td>
+
+                            <td class="topics">
+                                Algebra, Equations, Polynomials
+                            </td>
+
+                            <td>
+
+                                <div class="progress-wrapper">
+
+                                    <div class="progress-info">
+                                        <span>72%</span>
+                                        <span>In Progress</span>
+                                    </div>
+
+                                    <div class="progress-bar">
+
+                                        <div
+                                            class="progress-fill progress-medium"
+                                            style="width:72%"
+                                        ></div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>28 Sep 2026</td>
+
+                            <td>
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewSyllabus(this)"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editSyllabus(this)"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteSyllabus(this)"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-subject="English"
+                            data-class="Grade 8 - A"
+                        >
+
+                            <td>4</td>
+
+                            <td class="subject-name">
+                                English
+                            </td>
+
+                            <td>Grade 8 - A</td>
+
+                            <td class="topics">
+                                Grammar, Essay Writing, Comprehension
+                            </td>
+
+                            <td>
+
+                                <div class="progress-wrapper">
+
+                                    <div class="progress-info">
+                                        <span>55%</span>
+                                        <span>In Progress</span>
+                                    </div>
+
+                                    <div class="progress-bar">
+
+                                        <div
+                                            class="progress-fill progress-medium"
+                                            style="width:55%"
+                                        ></div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>27 Sep 2026</td>
+
+                            <td>
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewSyllabus(this)"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editSyllabus(this)"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteSyllabus(this)"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-subject="Computer Science"
+                            data-class="Grade 9 - A"
+                        >
+
+                            <td>5</td>
+
+                            <td class="subject-name">
+                                Computer Science
+                            </td>
+
+                            <td>Grade 9 - A</td>
+
+                            <td class="topics">
+                                Python Basics, Variables, Conditions
+                            </td>
+
+                            <td>
+
+                                <div class="progress-wrapper">
+
+                                    <div class="progress-info">
+                                        <span>100%</span>
+                                        <span>Completed</span>
+                                    </div>
+
+                                    <div class="progress-bar">
+
+                                        <div
+                                            class="progress-fill progress-high"
+                                            style="width:100%"
+                                        ></div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>25 Sep 2026</td>
+
+                            <td>
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewSyllabus(this)"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editSyllabus(this)"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteSyllabus(this)"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-subject="Mathematics"
+                            data-class="Grade 9 - B"
+                        >
+
+                            <td>6</td>
+
+                            <td class="subject-name">
+                                Mathematics
+                            </td>
+
+                            <td>Grade 9 - B</td>
+
+                            <td class="topics">
+                                Geometry, Triangles, Circles
+                            </td>
+
+                            <td>
+
+                                <div class="progress-wrapper">
+
+                                    <div class="progress-info">
+                                        <span>30%</span>
+                                        <span>Started</span>
+                                    </div>
+
+                                    <div class="progress-bar">
+
+                                        <div
+                                            class="progress-fill progress-low"
+                                            style="width:30%"
+                                        ></div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>24 Sep 2026</td>
+
+                            <td>
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewSyllabus(this)"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn edit-btn"
+                                    onclick="editSyllabus(this)"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteSyllabus(this)"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ADD SYLLABUS MODAL -->
+
+<div class="modal" id="syllabusModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Add Syllabus</h2>
+
+            <button
+                class="close-btn"
+                onclick="closeSyllabusModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="syllabusForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>Subject</label>
+
+                    <select id="syllabusSubject" required>
+
+                        <option value="">
+                            Select Subject
+                        </option>
+
+                        <option value="Computer Science">
+                            Computer Science
+                        </option>
+
+                        <option value="Mathematics">
+                            Mathematics
+                        </option>
+
+                        <option value="English">
+                            English
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Class</label>
+
+                    <select id="syllabusClass" required>
+
+                        <option value="">
+                            Select Class
+                        </option>
+
+                        <option value="Grade 8 - A">
+                            Grade 8 - A
+                        </option>
+
+                        <option value="Grade 8 - B">
+                            Grade 8 - B
+                        </option>
+
+                        <option value="Grade 9 - A">
+                            Grade 9 - A
+                        </option>
+
+                        <option value="Grade 9 - B">
+                            Grade 9 - B
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Progress (%)</label>
+
+                    <input
+                        type="number"
+                        id="syllabusProgress"
+                        min="0"
+                        max="100"
+                        value="0"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Last Updated</label>
+
+                    <input
+                        type="date"
+                        id="syllabusDate"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>Topics Covered</label>
+
+                    <textarea
+                        id="syllabusTopics"
+                        placeholder="Example: HTML, CSS, Forms..."
+                        required
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeSyllabusModal()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    Add Syllabus
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function toggleSidebar() {
+
+    document
+        .querySelector(".sidebar")
+        .classList.toggle("active");
+
+}
+
+
+function openSyllabusModal() {
+
+    document.getElementById("syllabusModal").style.display = "flex";
+
+}
+
+
+function closeSyllabusModal() {
+
+    document.getElementById("syllabusModal").style.display = "none";
+
+}
+
+
+document
+    .getElementById("syllabusForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const subject =
+            document.getElementById("syllabusSubject").value;
+
+        const className =
+            document.getElementById("syllabusClass").value;
+
+        const progress =
+            parseInt(
+                document.getElementById("syllabusProgress").value
+            );
+
+        const date =
+            document.getElementById("syllabusDate").value;
+
+        const topics =
+            document.getElementById("syllabusTopics").value;
+
+        const tableBody =
+            document.getElementById("syllabusTableBody");
+
+        const row =
+            document.createElement("tr");
+
+        row.setAttribute("data-subject", subject);
+        row.setAttribute("data-class", className);
+
+        const rowNumber =
+            tableBody.querySelectorAll("tr").length + 1;
+
+        let progressClass = "progress-low";
+        let progressText = "Started";
+
+        if (progress >= 80) {
+
+            progressClass = "progress-high";
+            progressText =
+                progress === 100
+                    ? "Completed"
+                    : "Good";
+
+        }
+
+        else if (progress >= 50) {
+
+            progressClass = "progress-medium";
+            progressText = "In Progress";
+
+        }
+
+        row.innerHTML = `
+
+            <td>${rowNumber}</td>
+
+            <td class="subject-name">
+                ${subject}
+            </td>
+
+            <td>${className}</td>
+
+            <td class="topics">
+                ${topics}
+            </td>
+
+            <td>
+
+                <div class="progress-wrapper">
+
+                    <div class="progress-info">
+
+                        <span>${progress}%</span>
+
+                        <span>${progressText}</span>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill ${progressClass}"
+                            style="width:${progress}%"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </td>
+
+            <td>
+                ${formatDate(date)}
+            </td>
+
+            <td>
+
+                <button
+                    class="action-btn view-btn"
+                    onclick="viewSyllabus(this)"
+                >
+                    View
+                </button>
+
+                <button
+                    class="action-btn edit-btn"
+                    onclick="editSyllabus(this)"
+                >
+                    Edit
+                </button>
+
+                <button
+                    class="action-btn delete-btn"
+                    onclick="deleteSyllabus(this)"
+                >
+                    Delete
+                </button>
+
+            </td>
+
+        `;
+
+        tableBody.appendChild(row);
+
+        updateSummary();
+
+        alert("Syllabus added successfully!");
+
+        document.getElementById("syllabusForm").reset();
+
+        closeSyllabusModal();
+
+    });
+
+
+function viewSyllabus(button) {
+
+    const row =
+        button.closest("tr");
+
+    const subject =
+        row.children[1].textContent.trim();
+
+    const className =
+        row.children[2].textContent.trim();
+
+    const topics =
+        row.children[3].textContent.trim();
+
+    const progress =
+        row.querySelector(".progress-info span").textContent;
+
+    alert(
+        "Syllabus Details\n\n" +
+        "Subject: " + subject +
+        "\nClass: " + className +
+        "\nProgress: " + progress +
+        "\n\nTopics:\n" + topics
+    );
+
+}
+
+
+function editSyllabus(button) {
+
+    const row =
+        button.closest("tr");
+
+    const subject =
+        row.children[1].textContent.trim();
+
+    const className =
+        row.children[2].textContent.trim();
+
+    alert(
+        "Edit Syllabus\n\n" +
+        "Subject: " + subject +
+        "\nClass: " + className +
+        "\n\nFull editing form will be connected with the database later."
+    );
+
+}
+
+
+function deleteSyllabus(button) {
+
+    const row =
+        button.closest("tr");
+
+    const subject =
+        row.children[1].textContent.trim();
+
+    const className =
+        row.children[2].textContent.trim();
+
+    const confirmDelete =
+        confirm(
+            "Delete syllabus for " +
+            subject +
+            " - " +
+            className +
+            "?"
+        );
+
+    if (confirmDelete) {
+
+        row.remove();
+
+        updateRowNumbers();
+
+        updateSummary();
+
+    }
+
+}
+
+
+function updateRowNumbers() {
+
+    const rows =
+        document.querySelectorAll(
+            "#syllabusTableBody tr"
+        );
+
+    rows.forEach(function(row, index) {
+
+        row.children[0].textContent =
+            index + 1;
+
+    });
+
+}
+
+
+function updateSummary() {
+
+    const rows =
+        document.querySelectorAll(
+            "#syllabusTableBody tr"
+        );
+
+    let total = rows.length;
+    let completed = 0;
+    let progressTotal = 0;
+
+    rows.forEach(function(row) {
+
+        const progressText =
+            row.querySelector(
+                ".progress-info span"
+            ).textContent;
+
+        const progress =
+            parseInt(progressText);
+
+        progressTotal += progress;
+
+        if (progress === 100) {
+            completed++;
+        }
+
+    });
+
+    const inProgress =
+        total - completed;
+
+    const average =
+        total > 0
+            ? Math.round(progressTotal / total)
+            : 0;
+
+    document.getElementById("totalSubjects").textContent =
+        total;
+
+    document.getElementById("completedSubjects").textContent =
+        completed;
+
+    document.getElementById("inProgressSubjects").textContent =
+        inProgress;
+
+    document.getElementById("averageProgress").textContent =
+        average + "%";
+
+}
+
+
+function filterSyllabus() {
+
+    const search =
+        document
+            .getElementById("searchSyllabus")
+            .value
+            .toLowerCase();
+
+    const classFilter =
+        document.getElementById("classFilter").value;
+
+    const subjectFilter =
+        document.getElementById("subjectFilter").value;
+
+    const rows =
+        document.querySelectorAll(
+            "#syllabusTableBody tr"
+        );
+
+    rows.forEach(function(row) {
+
+        const text =
+            row.textContent.toLowerCase();
+
+        const className =
+            row.getAttribute("data-class");
+
+        const subject =
+            row.getAttribute("data-subject");
+
+        const matchesSearch =
+            text.includes(search);
+
+        const matchesClass =
+            classFilter === "all" ||
+            className === classFilter;
+
+        const matchesSubject =
+            subjectFilter === "all" ||
+            subject === subjectFilter;
+
+        if (
+            matchesSearch &&
+            matchesClass &&
+            matchesSubject
+        ) {
+
+            row.style.display = "";
+
+        } else {
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+function formatDate(dateString) {
+
+    if (!dateString) {
+        return "";
+    }
+
+    const date =
+        new Date(dateString);
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+window.onclick = function(event) {
+
+    const modal =
+        document.getElementById("syllabusModal");
+
+    if (event.target === modal) {
+
+        closeSyllabusModal();
+
+    }
+
+};
+
+
+</script>
+
+</body>
+</html>

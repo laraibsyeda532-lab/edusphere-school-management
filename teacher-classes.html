@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Classes | EduSphere</title>
+    <link rel="stylesheet" href="style.css">
+
+```
+<style>
+    .page-content {
+        padding: 30px;
+    }
+
+    .page-header {
+        margin-bottom: 25px;
+    }
+
+    .page-header h1 {
+        margin: 0;
+        font-size: 28px;
+    }
+
+    .page-header p {
+        color: #64748b;
+        margin-top: 6px;
+    }
+
+    .teacher-class-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 25px;
+    }
+
+    .class-card {
+        background: white;
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        border: 1px solid #e5e7eb;
+        transition: 0.2s;
+    }
+
+    .class-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.09);
+    }
+
+    .class-card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+    }
+
+    .class-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: #eef2ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }
+
+    .class-badge {
+        background: #dcfce7;
+        color: #15803d;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .class-card h3 {
+        margin: 0 0 6px;
+        font-size: 20px;
+    }
+
+    .class-card .subject {
+        color: #64748b;
+        margin-bottom: 18px;
+    }
+
+    .class-info {
+        border-top: 1px solid #e5e7eb;
+        padding-top: 15px;
+    }
+
+    .class-info-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 11px;
+        font-size: 14px;
+        gap: 10px;
+    }
+
+    .class-info-row span:first-child {
+        color: #64748b;
+    }
+
+    .class-info-row span:last-child {
+        font-weight: 600;
+        color: #1e293b;
+        text-align: right;
+    }
+
+    .view-class-btn {
+        width: 100%;
+        margin-top: 15px;
+        padding: 11px;
+        border: none;
+        border-radius: 9px;
+        background: #1e3a8a;
+        color: white;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .view-class-btn:hover {
+        background: #172554;
+    }
+
+    .class-summary {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-bottom: 25px;
+    }
+
+    .summary-card {
+        background: white;
+        padding: 20px;
+        border-radius: 14px;
+        box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+        border: 1px solid #e5e7eb;
+    }
+
+    .summary-card h3 {
+        margin: 0 0 8px;
+        font-size: 14px;
+        color: #64748b;
+    }
+
+    .summary-card strong {
+        font-size: 27px;
+        color: #1e293b;
+    }
+
+    /* MODAL */
+
+    .class-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.55);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .class-modal.show {
+        display: flex;
+    }
+
+    .modal-box {
+        background: white;
+        width: 100%;
+        max-width: 850px;
+        max-height: 85vh;
+        overflow-y: auto;
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+        margin: 0;
+        color: #1e293b;
+    }
+
+    .close-btn {
+        border: none;
+        background: #f1f5f9;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .students-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .students-table th,
+    .students-table td {
+        padding: 12px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+    }
+
+    .students-table th {
+        background: #f8fafc;
+        color: #475569;
+    }
+
+    @media (max-width: 1000px) {
+        .teacher-class-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .class-summary {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 650px) {
+        .page-content {
+            padding: 18px;
+        }
+
+        .teacher-class-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .class-summary {
+            grid-template-columns: 1fr;
+        }
+
+        .students-table {
+            font-size: 12px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+```
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-logo">
+        <h2>EduSphere</h2>
+        <span>Teacher Portal</span>
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <a href="teacher-dashboard.html">
+            <span>🏠</span>
+            Dashboard
+        </a>
+
+        <a href="teacher-classes.html" class="active">
+            <span>📚</span>
+            My Classes
+        </a>
+
+        <a href="teacher-attendance.html">
+            <span>📝</span>
+            Attendance
+        </a>
+
+        <a href="teacher-homework.html">
+            <span>📖</span>
+            Daily Diary & Homework
+        </a>
+
+        <a href="teacher-syllabus.html">
+            <span>📋</span>
+            Syllabus
+        </a>
+
+        <a href="teacher-results.html">
+            <span>📊</span>
+            Marks & Results
+        </a>
+
+        <a href="teacher-timetable.html">
+            <span>🕒</span>
+            Timetable
+        </a>
+
+        <a href="teacher-leave.html">
+            <span>📩</span>
+            Leave Request
+        </a>
+
+        <a href="teacher-notices.html">
+            <span>📢</span>
+            Notices
+        </a>
+
+        <a href="teacher-profile.html">
+            <span>👤</span>
+            My Profile
+        </a>
+
+        <a href="index.html">
+            <span>🌐</span>
+            Back to Website
+        </a>
+
+        <a href="login.html">
+            <span>🚪</span>
+            Logout
+        </a>
+
+    </nav>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main-content">
+
+    <header class="topbar">
+
+        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+        <div class="topbar-title">
+            <h2>My Classes</h2>
+        </div>
+
+        <div class="topbar-profile">
+
+            <div class="profile-avatar">
+                SK
+            </div>
+
+            <div>
+                <strong>Sana</strong>
+                <small>Teacher Portal</small>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <section class="page-content">
+
+        <div class="page-header">
+
+            <h1>My Classes</h1>
+
+            <p>
+                View and manage the classes assigned to you.
+            </p>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+
+        <div class="class-summary">
+
+            <div class="summary-card">
+                <h3>Total Classes</h3>
+                <strong>4</strong>
+            </div>
+
+            <div class="summary-card">
+                <h3>Total Students</h3>
+                <strong>126</strong>
+            </div>
+
+            <div class="summary-card">
+                <h3>Subjects</h3>
+                <strong>2</strong>
+            </div>
+
+            <div class="summary-card">
+                <h3>Class Teacher</h3>
+                <strong>2
+```

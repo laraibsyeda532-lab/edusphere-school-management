@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduSphere - Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef4ff, #dfeaff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .logo h1 {
+            color: #183b67;
+            font-size: 30px;
+        }
+
+        .logo p {
+            color: #777;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d5dce5;
+            border-radius: 9px;
+            outline: none;
+            font-size: 15px;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #315f91;
+            box-shadow: 0 0 0 3px rgba(49, 95, 145, 0.1);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: #183b67;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #102d50;
+        }
+
+        button:disabled {
+            background: #8a9bb0;
+            cursor: not-allowed;
+        }
+
+        #message {
+            display: none;
+            margin-top: 18px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .error {
+            display: block !important;
+            background: #ffe8e8;
+            color: #b42318;
+        }
+
+        .success {
+            display: block !important;
+            background: #e7f8ed;
+            color: #18733a;
+        }
+
+        .hint {
+            margin-top: 18px;
+            text-align: center;
+            color: #777;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="login-box">
+
+        <div class="logo">
+            <h1>EduSphere</h1>
+            <p>School Management System</p>
+        </div>
+
+        <form id="loginForm">
+
+            <div class="form-group">
+                <label for="role">Login As</label>
+
+                <select id="role" required>
+                    <option value="">Select Role</option>
+                    <option value="admin">Admin</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="parent">Parent</option>
+                    <option value="student">Student</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="username">
+                    Email / Employee ID
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Enter email or employee ID"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    required
+                >
+            </div>
+
+            <button type="submit" id="loginButton">
+                Login
+            </button>
+
+            <div id="message"></div>
+
+        </form>
+
+        <div class="hint">
+            EduSphere School Management System
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const loginForm = document.getElementById("loginForm");
+const loginButton = document.getElementById("loginButton");
+const messageBox = document.getElementById("message");
+
+function showMessage(message, type) {
+
+    messageBox.textContent = message;
+
+    messageBox.className = "";
+
+    if (type === "error") {
+        messageBox.classList.add("error");
+    }
+
+    if (type === "success") {
+        messageBox.classList.add("success");
+    }
+}
+
+loginForm.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const role = document.getElementById("role").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!role) {
+        showMessage("Please select your role.", "error");
+        return;
+    }
+
+    if (!username) {
+        showMessage("Please enter your email or employee ID.", "error");
+        return;
+    }
+
+    if (!password) {
+        showMessage("Please enter your password.", "error");
+        return;
+    }
+
+    loginButton.disabled = true;
+    loginButton.textContent = "Logging in...";
+
+    showMessage("Please wait...", "success");
+
+    try {
+
+        const response = await fetch("/api/login", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            credentials: "same-origin",
+
+            body: JSON.stringify({
+                username: username,
+                email: username,
+                password: password,
+                role: role
+            })
+        });
+
+        const data = await response.json();
+
+        console.log("LOGIN RESPONSE:", data);
+
+        if (!response.ok) {
+
+            showMessage(
+                data.message || "Invalid email/employee ID or password.",
+                "error"
+            );
+
+            loginButton.disabled = false;
+            loginButton.textContent = "Login";
+
+            return;
+        }
+
+        /*
+            IMPORTANT:
+            We do NOT depend on data.success here.
+            The backend may return only the user object.
+        */
+
+        if (!data.user) {
+
+            showMessage(
+                data.message || "Login failed. User information was not returned.",
+                "error"
+            );
+
+            loginButton.disabled = false;
+            loginButton.textContent = "Login";
+
+            return;
+        }
+
+        const loggedInUser = data.user;
+
+        /*
+            Save login information
+        */
+
+        localStorage.setItem(
+            "edusphere_user",
+            JSON.stringify(loggedInUser)
+        );
+
+        sessionStorage.setItem(
+            "edusphere_user",
+            JSON.stringify(loggedInUser)
+        );
+
+        showMessage("Login successful. Opening dashboard...", "success");
+
+        /*
+            Redirect according to ACTUAL role
+        */
+
+        setTimeout(function() {
+
+            if (loggedInUser.role === "admin") {
+
+                window.location.href = "/admin-dashboard.html";
+
+            }
+            else if (loggedInUser.role === "teacher") {
+
+                window.location.href = "/teacher-dashboard.html";
+
+            }
+            else if (loggedInUser.role === "parent") {
+
+                window.location.href = "/parent-dashboard.html";
+
+            }
+            else if (loggedInUser.role === "student") {
+
+                window.location.href = "/student-dashboard.html";
+
+            }
+            else {
+
+                showMessage(
+                    "Login successful, but user role is not recognized.",
+                    "error"
+                );
+
+                loginButton.disabled = false;
+                loginButton.textContent = "Login";
+            }
+
+        }, 500);
+
+    }
+
+    catch (error) {
+
+        console.error("LOGIN ERROR:", error);
+
+        showMessage(
+            "Cannot connect to server. Please make sure Flask is running.",
+            "error"
+        );
+
+        loginButton.disabled = false;
+        loginButton.textContent = "Login";
+    }
+
+});
+
+</script>
+
+</body>
+</html>

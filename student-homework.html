@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Homework & Diary | Student Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .student-page {
+            padding: 28px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 6px;
+            color: #173b67;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .stat-card h4 {
+            margin: 0 0 8px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .stat-card h2 {
+            margin: 0;
+            color: #173b67;
+            font-size: 25px;
+        }
+
+        .stat-card small {
+            display: block;
+            margin-top: 6px;
+            color: #888;
+            font-size: 11px;
+        }
+
+        .filters-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            margin-bottom: 22px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            outline: none;
+            background: white;
+        }
+
+        .homework-layout {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 22px;
+            margin-bottom: 22px;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .content-card h2 {
+            margin: 0 0 20px;
+            color: #173b67;
+            font-size: 18px;
+        }
+
+        .homework-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .homework-item {
+            border: 1px solid #e8ebef;
+            border-radius: 11px;
+            padding: 17px;
+        }
+
+        .homework-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .homework-title {
+            color: #173b67;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .subject-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #edf2f8;
+            color: #173b67;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .pending {
+            background: #fff4df;
+            color: #b36b00;
+        }
+
+        .completed {
+            background: #e8f7ee;
+            color: #248a52;
+        }
+
+        .overdue {
+            background: #fdecea;
+            color: #c0392b;
+        }
+
+        .homework-description {
+            margin: 12px 0;
+            color: #666;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .homework-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: #888;
+            font-size: 10px;
+        }
+
+        .diary-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .diary-item {
+            padding: 14px;
+            background: #f7f9fc;
+            border-radius: 9px;
+            border-left: 4px solid #285b8f;
+        }
+
+        .diary-item strong {
+            color: #173b67;
+            font-size: 13px;
+        }
+
+        .diary-item p {
+            margin: 7px 0;
+            color: #666;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .diary-item span {
+            color: #999;
+            font-size: 10px;
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        .help-box {
+            background: #f7f9fc;
+            border-radius: 10px;
+            padding: 16px;
+            color: #666;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 1000px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .homework-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .student-page {
+                padding: 18px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .homework-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Student Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="student-dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="student-profile.html">
+                👤 My Profile
+            </a>
+
+            <a href="student-attendance.html">
+                ✓ Attendance
+            </a>
+
+            <a href="student-homework.html" class="active">
+                📝 Homework & Diary
+            </a>
+
+            <a href="student-syllabus.html">
+                📚 Syllabus
+            </a>
+
+            <a href="student-date-sheet.html">
+                📅 Date Sheet
+            </a>
+
+            <a href="student-results.html">
+                📈 Results
+            </a>
+
+            <a href="student-timetable.html">
+                🕐 Timetable
+            </a>
+
+            <a href="student-notices.html">
+                🔔 Notices
+            </a>
+
+            <a href="index.html">
+                🌐 Back to Website
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                Homework & Diary
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">
+                    MA
+                </div>
+
+                <div>
+                    <strong>Muhammad Ahmed</strong>
+                    <small>Grade 8-A</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="student-page">
+
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        Homework & Daily Diary
+                    </h1>
+
+                    <p>
+                        Check your homework, assignments and daily class diary.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <h4>Total Homework</h4>
+
+                    <h2 id="totalHomework">
+                        8
+                    </h2>
+
+                    <small>
+                        Assigned this month
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>Pending</h4>
+
+                    <h2 id="pendingHomework">
+                        2
+                    </h2>
+
+                    <small>
+                        Need completion
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>Completed</h4>
+
+                    <h2 id="completedHomework">
+                        4
+                    </h2>
+
+                    <small>
+                        Successfully completed
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>Overdue</h4>
+
+                    <h2 id="overdueHomework">
+                        2
+                    </h2>
+
+                    <small>
+                        Past due date
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="filters-card">
+
+                <div class="filters">
+
+                    <input
+                        type="text"
+                        id="searchHomework"
+                        placeholder="Search homework..."
+                        onkeyup="filterHomework()"
+                    >
+
+
+                    <select
+                        id="subjectFilter"
+                        onchange="filterHomework()"
+                    >
+
+                        <option value="">
+                            All Subjects
+                        </option>
+
+                        <option value="Mathematics">
+                            Mathematics
+                        </option>
+
+                        <option value="Computer Science">
+                            Computer Science
+                        </option>
+
+                        <option value="English">
+                            English
+                        </option>
+
+                        <option value="Physics">
+                            Physics
+                        </option>
+
+                        <option value="Urdu">
+                            Urdu
+                        </option>
+
+                        <option value="Islamiat">
+                            Islamiat
+                        </option>
+
+                    </select>
+
+
+                    <select
+                        id="statusFilter"
+                        onchange="filterHomework()"
+                    >
+
+                        <option value="">
+                            All Status
+                        </option>
+
+                        <option value="Pending">
+                            Pending
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                        <option value="Overdue">
+                            Overdue
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- HOMEWORK + DIARY -->
+            <div class="homework-layout">
+
+                <!-- HOMEWORK -->
+                <div class="content-card">
+
+                    <h2>
+                        My Homework
+                    </h2>
+
+
+                    <div class="homework-list" id="homeworkList">
+
+
+                        <!-- 1 -->
+                        <div
+                            class="homework-item"
+                            data-subject="Mathematics"
+                            data-status="Pending"
+                        >
+
+                            <div class="homework-top">
+
+                                <div>
+
+                                    <div class="homework-title">
+                                        Algebra Exercises
+                                    </div>
+
+                                    <span class="subject-badge">
+                                        Mathematics
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge pending">
+                                    Pending
+                                </span>
+
+                            </div>
+
+
+                            <div class="homework-description">
+
+                                Complete exercises 1 to 10 from
+                                Chapter 4 and show all working steps.
+
+                            </div>
+
+
+                            <div class="homework-meta">
+
+                                <span>
+                                    📅 Due: 02 Oct 2026
+                                </span>
+
+                                <span>
+                                    👩‍🏫 Mr. Bilal
+                                </span>
+
+                                <span>
+                                    🎓 Grade 8-A
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- 2 -->
+                        <div
+                            class="homework-item"
+                            data-subject="Computer Science"
+                            data-status="Pending"
+                        >
+
+                            <div class="homework-top">
+
+                                <div>
+
+                                    <div class="homework-title">
+                                        HTML Assignment
+                                    </div>
+
+                                    <span class="subject-badge">
+                                        Computer Science
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge pending">
+                                    Pending
+                                </span>
+
+                            </div>
+
+
+                            <div class="homework-description">
+
+                                Create a simple HTML page using headings,
+                                paragraphs, lists and links.
+
+                            </div>
+
+
+                            <div class="homework-meta">
+
+                                <span>
+                                    📅 Due: 03 Oct 2026
+                                </span>
+
+                                <span>
+                                    👩‍🏫 Ms. Sarah
+                                </span>
+
+                                <span>
+                                    🎓 Grade 8-A
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- 3 -->
+                        <div
+                            class="homework-item"
+                            data-subject="English"
+                            data-status="Completed"
+                        >
+
+                            <div class="homework-top">
+
+                                <div>
+
+                                    <div class="homework-title">
+                                        Essay Writing
+                                    </div>
+
+                                    <span class="subject-badge">
+                                        English
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge completed">
+                                    Completed
+                                </span>
+
+                            </div>
+
+
+                            <div class="homework-description">
+
+                                Write a 300-word essay on the importance
+                                of education.
+
+                            </div>
+
+
+                            <div class="homework-meta">
+
+                                <span>
+                                    📅 Due: 28 Sep 2026
+                                </span>
+
+                                <span>
+                                    👩‍🏫 Ms. Ayesha
+                                </span>
+
+                                <span>
+                                    🎓 Grade 8-A
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- 4 -->
+                        <div
+                            class="homework-item"
+                            data-subject="Physics"
+                            data-status="Overdue"
+                        >
+
+                            <div class="homework-top">
+
+                                <div>
+
+                                    <div class="homework-title">
+                                        Motion Questions
+                                    </div>
+
+                                    <span class="subject-badge">
+                                        Physics
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge overdue">
+                                    Overdue
+                                </span>
+
+                            </div>
+
+
+                            <div class="homework-description">
+
+                                Solve questions related to speed,
+                                distance and acceleration from Chapter 3.
+
+                            </div>
+
+
+                            <div class="homework-meta">
+
+                                <span>
+                                    📅 Due: 25 Sep 2026
+                                </span>
+
+                                <span>
+                                    👩‍🏫 Mr. Hamza
+                                </span>
+
+                                <span>
+                                    🎓 Grade 8-A
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- 5 -->
+                        <div
+                            class="homework-item"
+                            data-subject="Urdu"
+                            data-status="Completed"
+                        >
+
+                            <div class="homework-top">
+
+                                <div>
+
+                                    <div class="homework-title">
+                                        Urdu Essay
+                                    </div>
+
+                                    <span class="subject-badge">
+                                        Urdu
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge completed">
+                                    Completed
+                                </span>
+
+                            </div>
+
+
+                            <div class="homework-description">
+
+                                Write an essay on "The Value of Time"
+                                in your Urdu notebook.
+
+                            </div>
+
+
+                            <div class="homework-meta">
+
+                                <span>
+                                    📅 Due: 24 Sep 2026
+                                </span>
+
+                                <span>
+                                    👩‍🏫 Ms. Nadia
+                                </span>
+
+                                <span>
+                                    🎓 Grade 8-A
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- 6 -->
+                        <div
+                            class="homework-item"
+                            data-subject="Islamiat"
+                            data-status="Completed"
+                        >
+
+                            <div class="homework-top">
+
+                                <div>
+
+                                    <div class="homework-title">
+                                        Islamiat Questions
+                                    </div>
+
+                                    <span class="subject-badge">
+                                        Islamiat
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge completed">
+                                    Completed
+                                </span>
+
+                            </div>
+
+
+                            <div class="homework-description">
+
+                                Prepare short questions from the
+                                current chapter for class discussion.
+
+                            </div>
+
+
+                            <div class="homework-meta">
+
+                                <span>
+                                    📅 Due: 22 Sep 2026
+                                </span>
+
+                                <span>
+                                    👩‍🏫 Ms. Fatima
+                                </span>
+
+                                <span>
+                                    🎓 Grade 8-A
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div
+                        class="no-results"
+                        id="noResults"
+                    >
+                        No homework found.
+                    </div>
+
+                </div>
+
+
+                <!-- DAILY DIARY -->
+                <div class="content-card">
+
+                    <h2>
+                        Daily Class Diary
+                    </h2>
+
+
+                    <div class="diary-list">
+
+
+                        <div class="diary-item">
+
+                            <strong>
+                                30 Sep — Wednesday
+                            </strong>
+
+                            <p>
+                                Mathematics: Algebraic expressions
+                                and simplification.
+                            </p>
+
+                            <span>
+                                Teacher: Mr. Bilal
+                            </span>
+
+                        </div>
+
+
+                        <div class="diary-item">
+
+                            <strong>
+                                29 Sep — Tuesday
+                            </strong>
+
+                            <p>
+                                Computer Science: Introduction to
+                                HTML elements.
+                            </p>
+
+                            <span>
+                                Teacher: Ms. Sarah
+                            </span>
+
+                        </div>
+
+
+                        <div class="diary-item">
+
+                            <strong>
+                                28 Sep — Monday
+                            </strong>
+
+                            <p>
+                                English: Essay structure and
+                                paragraph writing.
+                            </p>
+
+                            <span>
+                                Teacher: Ms. Ayesha
+                            </span>
+
+                        </div>
+
+
+                        <div class="diary-item">
+
+                            <strong>
+                                25 Sep — Friday
+                            </strong>
+
+                            <p>
+                                Physics: Speed, distance and
+                                time calculations.
+                            </p>
+
+                            <span>
+                                Teacher: Mr. Hamza
+                            </span>
+
+                        </div>
+
+
+                        <div class="help-box">
+
+                            <strong>
+                                Note:
+                            </strong>
+
+                            Homework and diary information is currently
+                            demo data. After connecting the backend,
+                            this information will automatically load
+                            according to the logged-in student.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("open");
+
+    }
+
+
+    function filterHomework() {
+
+        const search =
+            document
+                .getElementById("searchHomework")
+                .value
+                .toLowerCase();
+
+        const subject =
+            document
+                .getElementById("subjectFilter")
+                .value;
+
+        const status =
+            document
+                .getElementById("statusFilter")
+                .value;
+
+
+        const items =
+            document.querySelectorAll(
+                ".homework-item"
+            );
+
+
+        let visible = 0;
+
+
+        items.forEach(function(item) {
+
+            const text =
+                item.innerText.toLowerCase();
+
+            const itemSubject =
+                item.dataset.subject;
+
+            const itemStatus =
+                item.dataset.status;
+
+
+            const searchMatch =
+                text.includes(search);
+
+            const subjectMatch =
+                !subject ||
+                itemSubject === subject;
+
+            const statusMatch =
+                !status ||
+                itemStatus === status;
+
+
+            if (
+                searchMatch &&
+                subjectMatch &&
+                statusMatch
+            ) {
+
+                item.style.display = "";
+
+                visible++;
+
+            } else {
+
+                item.style.display = "none";
+
+            }
+
+        });
+
+
+        const noResults =
+            document.getElementById("noResults");
+
+
+        if (visible === 0) {
+
+            noResults.style.display = "block";
+
+        } else {
+
+            noResults.style.display = "none";
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

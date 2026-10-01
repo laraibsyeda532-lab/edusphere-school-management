@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | EduSphere</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+            background: #f5f7fb;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: #0f172a;
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-logo {
+            padding: 25px 20px;
+            font-size: 22px;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-logo span {
+            color: #38bdf8;
+        }
+
+        .sidebar-menu {
+            padding: 20px 12px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            margin-bottom: 6px;
+            color: #cbd5e1;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: #1e293b;
+            color: white;
+        }
+
+        .sidebar-menu a.active {
+            border-left: 3px solid #38bdf8;
+        }
+
+        .main-content {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+        }
+
+        .topbar {
+            height: 72px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .menu-btn {
+            display: none;
+            border: none;
+            background: #0f172a;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .student-profile-mini {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            background: #e0f2fe;
+            color: #0369a1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .page-content {
+            padding: 30px;
+        }
+
+        .welcome-card {
+            background: linear-gradient(135deg, #0f172a, #1e3a5f);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-card h1 {
+            margin: 0 0 8px;
+        }
+
+        .welcome-card p {
+            margin: 0;
+            color: #dbeafe;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-card h3 {
+            margin: 0 0 8px;
+            font-size: 28px;
+        }
+
+        .stat-card p {
+            margin: 0;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card h2 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .schedule-item,
+        .homework-item,
+        .notice-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 14px 0;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .schedule-item:last-child,
+        .homework-item:last-child,
+        .notice-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .item-small {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-green {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-yellow {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-red {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .quick-actions a {
+            text-decoration: none;
+            padding: 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            color: #334155;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .quick-actions a:hover {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 94%;
+            background: #22c55e;
+        }
+
+        @media (max-width: 1000px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: 0.3s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .topbar {
+                padding: 0 15px;
+            }
+
+            .page-content {
+                padding: 20px 15px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            Edu<span>Sphere</span>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="student-dashboard.html" class="active">
+                🏠 Dashboard
+            </a>
+
+            <a href="student-profile.html">
+                👤 My Profile
+            </a>
+
+            <a href="student-attendance.html">
+                ✅ Attendance
+            </a>
+
+            <a href="student-homework.html">
+                📝 Homework & Diary
+            </a>
+
+            <a href="student-syllabus.html">
+                📚 Syllabus
+            </a>
+
+            <a href="student-date-sheet.html">
+                📅 Date Sheet
+            </a>
+
+            <a href="student-results.html">
+                📊 Results
+            </a>
+
+            <a href="student-timetable.html">
+                🕐 Timetable
+            </a>
+
+            <a href="student-notices.html">
+                📢 Notices
+            </a>
+
+            <a href="index.html">
+                🌐 Back to Website
+            </a>
+
+            <a href="login.html">
+                🚪 Logout
+            </a>
+
+        </nav>
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div>
+                <strong>Student Portal</strong>
+            </div>
+
+            <div class="student-profile-mini">
+                <div>
+                    <strong>Muhammad Ahmed</strong><br>
+                    <small>Grade 8-A</small>
+                </div>
+
+                <div class="avatar">
+                    MA
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- PAGE CONTENT -->
+        <section class="page-content">
+
+            <!-- WELCOME -->
+            <div class="welcome-card">
+
+                <h1>Welcome back, Muhammad! 👋</h1>
+
+                <p>
+                    Here is your academic overview and latest school information.
+                </p>
+
+            </div>
+
+
+            <!-- STATS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <h3>94%</h3>
+                    <p>Attendance</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>87%</h3>
+                    <p>Average Result</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>2</h3>
+                    <p>Pending Homework</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Paid</h3>
+                    <p>September Fee</p>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <!-- LEFT COLUMN -->
+                <div>
+
+                    <!-- STUDENT INFO -->
+                    <div class="dashboard-card">
+
+                        <h2>My Information</h2>
+
+                        <div class="schedule-item">
+
+                            <div>
+                                <div class="item-title">Admission Number</div>
+                                <div class="item-small">ES-2026-1024</div>
+                            </div>
+
+                            <div>
+                                <span class="badge badge-green">Active</span>
+                            </div>
+
+                        </div>
+
+                        <div class="schedule-item">
+
+                            <div>
+                                <div class="item-title">Class</div>
+                                <div class="item-small">Grade 8-A</div>
+                            </div>
+
+                            <div>
+                                <div class="item-title">Roll No.</div>
+                                <div class="item-small">08</div>
+                            </div>
+
+                        </div>
+
+                        <div class="schedule-item">
+
+                            <div>
+                                <div class="item-title">Class Teacher</div>
+                                <div class="item-small">Sarah Khan</div>
+                            </div>
+
+                            <div>
+                                <div class="item-title">Academic Year</div>
+                                <div class="item-small">2026</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TODAY'S CLASSES -->
+                    <div class="dashboard-card">
+
+                        <h2>Today's Classes</h2>
+
+                        <div class="schedule-item">
+
+                            <div>
+                                <div class="item-title">
+                                    Mathematics
+                                </div>
+
+                                <div class="item-small">
+                                    08:00 AM - 08:45 AM · Room 12
+                                </div>
+                            </div>
+
+                            <span class="badge badge-green">
+                                Completed
+                            </span>
+
+                        </div>
+
+
+                        <div class="schedule-item">
+
+                            <div>
+                                <div class="item-title">
+                                    English
+                                </div>
+
+                                <div class="item-small">
+                                    08:45 AM - 09:30 AM · Room 12
+                                </div>
+                            </div>
+
+                            <span class="badge badge-green">
+                                Completed
+                            </span>
+
+                        </div>
+
+
+                        <div class="schedule-item">
+
+                            <div>
+                                <div class="item-title">
+                                    Computer Science
+                                </div>
+
+                                <div class="item-small">
+                                    10:00 AM - 10:45 AM · Computer Lab
+                                </div>
+                            </div>
+
+                            <span class="badge badge-yellow">
+                                Upcoming
+                            </span>
+
+                        </div>
+
+
+                        <div class="schedule-item">
+
+                            <div>
+                                <div class="item-title">
+                                    Physics
+                                </div>
+
+                                <div class="item-small">
+                                    10:45 AM - 11:30 AM · Lab 2
+                                </div>
+                            </div>
+
+                            <span class="badge badge-yellow">
+                                Upcoming
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RECENT HOMEWORK -->
+                    <div class="dashboard-card">
+
+                        <h2>Recent Homework</h2>
+
+                        <div class="homework-item">
+
+                            <div>
+                                <div class="item-title">
+                                    Mathematics Assignment
+                                </div>
+
+                                <div class="item-small">
+                                    Chapter 5 · Due 02 Oct 2026
+                                </div>
+                            </div>
+
+                            <span class="badge badge-red">
+                                Pending
+                            </span>
+
+                        </div>
+
+
+                        <div class="homework-item">
+
+                            <div>
+                                <div class="item-title">
+                                    Computer Science Task
+                                </div>
+
+                                <div class="item-small">
+                                    HTML & CSS Practice · Due 03 Oct 2026
+                                </div>
+                            </div>
+
+                            <span class="badge badge-red">
+                                Pending
+                            </span>
+
+                        </div>
+
+
+                        <div class="homework-item">
+
+                            <div>
+                                <div class="item-title">
+                                    English Essay
+                                </div>
+
+                                <div class="item-small">
+                                    Essay Writing · Submitted 29 Sep 2026
+                                </div>
+                            </div>
+
+                            <span class="badge badge-green">
+                                Completed
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT COLUMN -->
+                <div>
+
+                    <!-- ATTENDANCE -->
+                    <div class="dashboard-card">
+
+                        <h2>Attendance</h2>
+
+                        <h3 style="font-size:32px; margin-bottom:5px;">
+                            94%
+                        </h3>
+
+                        <p style="color:#64748b; font-size:13px;">
+                            Current academic year attendance
+                        </p>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+
+                        <p style="font-size:13px; color:#64748b;">
+                            Present: 112 &nbsp; | &nbsp;
+                            Absent: 5 &nbsp; | &nbsp;
+                            Late: 2
+                        </p>
+
+                        <a href="student-attendance.html"
+                           style="display:inline-block; margin-top:8px;">
+                            View Attendance →
+                        </a>
+
+                    </div>
+
+
+                    <!-- SCHOOL NOTICES -->
+                    <div class="dashboard-card">
+
+                        <h2>School Notices</h2>
+
+                        <div class="notice-item">
+
+                            <div>
+                                <div class="item-title">
+                                    Mid-Term Examination
+                                </div>
+
+                                <div class="item-small">
+                                    28 Sep 2026
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="notice-item">
+
+                            <div>
+                                <div class="item-title">
+                                    School Activity Day
+                                </div>
+
+                                <div class="item-small">
+                                    25 Sep 2026
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="notice-item">
+
+                            <div>
+                                <div class="item-title">
+                                    Fee Submission Reminder
+                                </div>
+
+                                <div class="item-small">
+                                    20 Sep 2026
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <a href="student-notices.html">
+                            View All Notices →
+                        </a>
+
+                    </div>
+
+
+                    <!-- FEE STATUS -->
+                    <div class="dashboard-card">
+
+                        <h2>Fee Status</h2>
+
+                        <div style="margin-bottom:15px;">
+
+                            <div class="item-title">
+                                September 2026
+                            </div>
+
+                            <div class="item-small">
+                                Monthly Tuition Fee
+                            </div>
+
+                        </div>
+
+                        <span class="badge badge-green">
+                            Paid
+                        </span>
+
+                        <br>
+
+                        <a href="parent-fees.html"
+                           style="display:inline-block; margin-top:12px;">
+                            View Fee Details →
+                        </a>
+
+                    </div>
+
+
+                    <!-- QUICK ACTIONS -->
+                    <div class="dashboard-card">
+
+                        <h2>Quick Actions</h2>
+
+                        <div class="quick-actions">
+
+                            <a href="student-attendance.html">
+                                Attendance
+                            </a>
+
+                            <a href="student-homework.html">
+                                Homework
+                            </a>
+
+                            <a href="student-results.html">
+                                Results
+                            </a>
+
+                            <a href="student-timetable.html">
+                                Timetable
+                            </a>
+
+                            <a href="student-syllabus.html">
+                                Syllabus
+                            </a>
+
+                            <a href="student-profile.html">
+                                My Profile
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("open");
+}
+
+</script>
+
+</body>
+</html>

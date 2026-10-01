@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages | EduSphere</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <div class="logo-icon">E</div>
+            <div>
+                <h2>EduSphere</h2>
+                <span>Smart School</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="admin-dashboard.html">🏠 Dashboard</a>
+            <a href="students.html">👨‍🎓 Students</a>
+            <a href="teachers.html">👩‍🏫 Teachers</a>
+            <a href="classes.html">🏫 Classes</a>
+            <a href="attendance.html">📋 Attendance</a>
+            <a href="homework.html">📚 Homework & Diary</a>
+            <a href="syllabus.html">📖 Syllabus</a>
+            <a href="date-sheet.html">🗓 Date Sheet</a>
+            <a href="results.html">📊 Results</a>
+            <a href="fees.html">💰 Fees</a>
+            <a href="notices.html">📢 Notices</a>
+            <a href="teacher-applications.html">📝 Teacher Applications</a>
+
+            <a href="messages.html" class="active">
+                💬 Messages
+            </a>
+
+            <a href="#">⚙️ Settings</a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="index.html">🌐 Back to Website</a>
+            <a href="login.html">🚪 Logout</a>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+            <div class="topbar-right">
+
+                <div class="notification">
+                    🔔
+                    <span class="notification-dot"></span>
+                </div>
+
+                <div class="admin-profile">
+                    <div class="profile-avatar">A</div>
+
+                    <div>
+                        <strong>Admin</strong>
+                        <small>Administrator</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- PAGE -->
+        <section class="page-content">
+
+            <div class="page-header">
+
+                <div>
+                    <h1>Messages</h1>
+                    <p>Manage messages received from parents, teachers and visitors.</p>
+                </div>
+
+                <button class="primary-btn" onclick="openMessageModal()">
+                    + New Message
+                </button>
+
+            </div>
+
+
+            <!-- STATS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon">💬</div>
+
+                    <div>
+                        <span>Total Messages</span>
+                        <h2 id="totalMessages">18</h2>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon">📩</div>
+
+                    <div>
+                        <span>Unread</span>
+                        <h2 id="unreadMessages">7</h2>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon">📖</div>
+
+                    <div>
+                        <span>Read</span>
+                        <h2 id="readMessages">11</h2>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+
+                    <div>
+                        <span>Important</span>
+                        <h2 id="importantMessages">4</h2>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- FILTER -->
+
+            <div class="content-card">
+
+                <div class="filter-bar">
+
+                    <input
+                        type="text"
+                        id="searchMessage"
+                        placeholder="Search messages..."
+                        onkeyup="filterMessages()"
+                    >
+
+
+                    <select
+                        id="senderFilter"
+                        onchange="filterMessages()"
+                    >
+
+                        <option value="">All Senders</option>
+                        <option value="Parent">Parent</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Visitor">Visitor</option>
+
+                    </select>
+
+
+                    <select
+                        id="messageStatusFilter"
+                        onchange="filterMessages()"
+                    >
+
+                        <option value="">All Status</option>
+                        <option value="Unread">Unread</option>
+                        <option value="Read">Read</option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- TABLE -->
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Sender</th>
+                                <th>Type</th>
+                                <th>Subject</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Important</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="messagesBody">
+
+
+                            <tr>
+
+                                <td>
+                                    <strong>Mrs. Ayesha Khan</strong>
+                                    <br>
+                                    <small>Parent</small>
+                                </td>
+
+                                <td>Parent</td>
+
+                                <td>Fee Payment Query</td>
+
+                                <td>30 Sep 2026</td>
+
+                                <td>
+                                    <span class="status-badge pending">
+                                        Unread
+                                    </span>
+                                </td>
+
+                                <td>⭐</td>
+
+                                <td>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewMessage('Mrs. Ayesha Khan','Fee Payment Query')"
+                                    >
+                                        View
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteMessage(this)"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    <strong>Mr. Ahmed Ali</strong>
+                                    <br>
+                                    <small>Teacher</small>
+                                </td>
+
+                                <td>Teacher</td>
+
+                                <td>Leave Request</td>
+
+                                <td>29 Sep 2026</td>
+
+                                <td>
+                                    <span class="status-badge pending">
+                                        Unread
+                                    </span>
+                                </td>
+
+                                <td>—</td>
+
+                                <td>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewMessage('Mr. Ahmed Ali','Leave Request')"
+                                    >
+                                        View
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteMessage(this)"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    <strong>Usman Raza</strong>
+                                    <br>
+                                    <small>Visitor</small>
+                                </td>
+
+                                <td>Visitor</td>
+
+                                <td>Admission Information</td>
+
+                                <td>28 Sep 2026</td>
+
+                                <td>
+                                    <span class="status-badge shortlisted">
+                                        Read
+                                    </span>
+                                </td>
+
+                                <td>⭐</td>
+
+                                <td>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewMessage('Usman Raza','Admission Information')"
+                                    >
+                                        View
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteMessage(this)"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    <strong>Mrs. Sana Malik</strong>
+                                    <br>
+                                    <small>Parent</small>
+                                </td>
+
+                                <td>Parent</td>
+
+                                <td>Homework Question</td>
+
+                                <td>27 Sep 2026</td>
+
+                                <td>
+                                    <span class="status-badge shortlisted">
+                                        Read
+                                    </span>
+                                </td>
+
+                                <td>—</td>
+
+                                <td>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewMessage('Mrs. Sana Malik','Homework Question')"
+                                    >
+                                        View
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteMessage(this)"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    <strong>Mr. Bilal Ahmed</strong>
+                                    <br>
+                                    <small>Teacher</small>
+                                </td>
+
+                                <td>Teacher</td>
+
+                                <td>Class Timetable</td>
+
+                                <td>26 Sep 2026</td>
+
+                                <td>
+                                    <span class="status-badge pending">
+                                        Unread
+                                    </span>
+                                </td>
+
+                                <td>—</td>
+
+                                <td>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewMessage('Mr. Bilal Ahmed','Class Timetable')"
+                                    >
+                                        View
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteMessage(this)"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    <strong>Hina Shah</strong>
+                                    <br>
+                                    <small>Visitor</small>
+                                </td>
+
+                                <td>Visitor</td>
+
+                                <td>School Visit</td>
+
+                                <td>25 Sep 2026</td>
+
+                                <td>
+                                    <span class="status-badge shortlisted">
+                                        Read
+                                    </span>
+                                </td>
+
+                                <td>—</td>
+
+                                <td>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewMessage('Hina Shah','School Visit')"
+                                    >
+                                        View
+                                    </button>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="deleteMessage(this)"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- NEW MESSAGE MODAL -->
+
+<div class="modal" id="messageModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>New Message</h2>
+                <p>Create a new message.</p>
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeMessageModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="messageForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>Sender Name</label>
+
+                    <input
+                        type="text"
+                        id="senderName"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Sender Type</label>
+
+                    <select id="senderType" required>
+
+                        <option value="">
+                            Select Type
+                        </option>
+
+                        <option>Parent</option>
+                        <option>Teacher</option>
+                        <option>Visitor</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Subject</label>
+
+                    <input
+                        type="text"
+                        id="messageSubject"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Date</label>
+
+                    <input
+                        type="date"
+                        id="messageDate"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Status</label>
+
+                    <select id="messageStatus">
+
+                        <option>Unread</option>
+                        <option>Read</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Important</label>
+
+                    <select id="messageImportant">
+
+                        <option value="No">
+                            No
+                        </option>
+
+                        <option value="Yes">
+                            Yes
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group full-width">
+
+                <label>Message</label>
+
+                <textarea
+                    id="messageText"
+                    rows="5"
+                    placeholder="Write message..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    onclick="closeMessageModal()"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Save Message
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+    /* SIDEBAR */
+
+    function toggleSidebar() {
+
+        document
+            .querySelector(".sidebar")
+            .classList.toggle("show");
+
+    }
+
+
+
+    /* OPEN MODAL */
+
+    function openMessageModal() {
+
+        document
+            .getElementById("messageModal")
+            .classList.add("show");
+
+
+        document
+            .getElementById("messageDate")
+            .value =
+            new Date().toISOString().split("T")[0];
+
+    }
+
+
+
+    /* CLOSE MODAL */
+
+    function closeMessageModal() {
+
+        document
+            .getElementById("messageModal")
+            .classList.remove("show");
+
+
+        document
+            .getElementById("messageForm")
+            .reset();
+
+    }
+
+
+
+    /* ADD MESSAGE */
+
+    document
+        .getElementById("messageForm")
+        .addEventListener("submit", function(e) {
+
+            e.preventDefault();
+
+
+            const name =
+                document.getElementById("senderName").value;
+
+            const type =
+                document.getElementById("senderType").value;
+
+            const subject =
+                document.getElementById("messageSubject").value;
+
+            const date =
+                document.getElementById("messageDate").value;
+
+            const status =
+                document.getElementById("messageStatus").value;
+
+            const important =
+                document.getElementById("messageImportant").value;
+
+
+            const formattedDate =
+                new Date(date).toLocaleDateString(
+                    "en-GB",
+                    {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric"
+                    }
+                );
+
+
+            const statusClass =
+                status === "Unread"
+                    ? "pending"
+                    : "shortlisted";
+
+
+            const importantText =
+                important === "Yes"
+                    ? "⭐"
+                    : "—";
+
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    <strong>${name}</strong>
+                    <br>
+                    <small>${type}</small>
+                </td>
+
+                <td>${type}</td>
+
+                <td>${subject}</td>
+
+                <td>${formattedDate}</td>
+
+                <td>
+                    <span class="status-badge ${statusClass}">
+                        ${status}
+                    </span>
+                </td>
+
+                <td>${importantText}</td>
+
+                <td>
+
+                    <button
+                        class="action-btn"
+                        onclick="viewMessage('${name}','${subject}')"
+                    >
+                        View
+                    </button>
+
+                    <button
+                        class="action-btn"
+                        onclick="deleteMessage(this)"
+                    >
+                        Delete
+                    </button>
+
+                </td>
+
+            `;
+
+
+            document
+                .getElementById("messagesBody")
+                .appendChild(row);
+
+
+            updateMessageStats();
+
+            closeMessageModal();
+
+
+            alert(
+                "Message added successfully!"
+            );
+
+        });
+
+
+
+    /* SEARCH + FILTER */
+
+    function filterMessages() {
+
+        const search =
+            document
+                .getElementById("searchMessage")
+                .value
+                .toLowerCase();
+
+
+        const sender =
+            document
+                .getElementById("senderFilter")
+                .value;
+
+
+        const status =
+            document
+                .getElementById("messageStatusFilter")
+                .value;
+
+
+        const rows =
+            document.querySelectorAll(
+                "#messagesBody tr"
+            );
+
+
+        rows.forEach(row => {
+
+            const text =
+                row.innerText.toLowerCase();
+
+
+            const rowSender =
+                row.children[1].innerText;
+
+
+            const rowStatus =
+                row.children[4].innerText.trim();
+
+
+            const matchesSearch =
+                text.includes(search);
+
+
+            const matchesSender =
+                sender === "" ||
+                rowSender === sender;
+
+
+            const matchesStatus =
+                status === "" ||
+                rowStatus === status;
+
+
+            if (
+                matchesSearch &&
+                matchesSender &&
+                matchesStatus
+            ) {
+
+                row.style.display = "";
+
+            } else {
+
+                row.style.display = "none";
+
+            }
+
+        });
+
+    }
+
+
+
+    /* UPDATE STATS */
+
+    function updateMessageStats() {
+
+        const rows =
+            document.querySelectorAll(
+                "#messagesBody tr"
+            );
+
+
+        let unread = 0;
+        let read = 0;
+        let important = 0;
+
+
+        rows.forEach(row => {
+
+            const status =
+                row.children[4].innerText.trim();
+
+
+            const importantValue =
+                row.children[5].innerText.trim();
+
+
+            if (status === "Unread") {
+                unread++;
+            }
+
+
+            if (status === "Read") {
+                read++;
+            }
+
+
+            if (importantValue === "⭐") {
+                important++;
+            }
+
+        });
+
+
+        document
+            .getElementById("totalMessages")
+            .innerText = rows.length;
+
+
+        document
+            .getElementById("unreadMessages")
+            .innerText = unread;
+
+
+        document
+            .getElementById("readMessages")
+            .innerText = read;
+
+
+        document
+            .getElementById("importantMessages")
+            .innerText = important;
+
+    }
+
+
+
+    /* VIEW MESSAGE */
+
+    function viewMessage(name, subject) {
+
+        alert(
+            "Message Details\n\n" +
+            "Sender: " + name +
+            "\nSubject: " + subject +
+            "\n\nFull message details will be connected to the database later."
+        );
+
+    }
+
+
+
+    /* DELETE MESSAGE */
+
+    function deleteMessage(button) {
+
+        const confirmation =
+            confirm(
+                "Are you sure you want to delete this message?"
+            );
+
+
+        if (confirmation) {
+
+            button
+                .closest("tr")
+                .remove();
+
+
+            updateMessageStats();
+
+
+            alert(
+                "Message deleted successfully!"
+            );
+
+        }
+
+    }
+
+
+
+    /* CLOSE MODAL OUTSIDE CLICK */
+
+    window.addEventListener("click", function(e) {
+
+        const modal =
+            document.getElementById("messageModal");
+
+
+        if (e.target === modal) {
+
+            closeMessageModal();
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

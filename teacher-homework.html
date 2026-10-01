@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework & Diary | Teacher Portal</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .page-content {
+            padding: 30px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            margin-top: 6px;
+        }
+
+        .primary-btn {
+            border: none;
+            background: #1e3a8a;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .primary-btn:hover {
+            background: #172554;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+        }
+
+        .summary-card h3 {
+            margin: 0 0 8px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .summary-card strong {
+            font-size: 27px;
+            color: #1e293b;
+        }
+
+        .filters-box {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 7px;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #dbe1ea;
+            border-radius: 8px;
+            outline: none;
+            background: white;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            border-color: #1e3a8a;
+        }
+
+        .table-box {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            overflow-x: auto;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 950px;
+        }
+
+        th,
+        td {
+            padding: 15px 18px;
+            text-align: left;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        td {
+            font-size: 14px;
+            color: #334155;
+        }
+
+        .homework-title {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .details {
+            max-width: 230px;
+            color: #64748b;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status.pending {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .status.completed {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .status.overdue {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .action-btn {
+            border: none;
+            padding: 7px 10px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+
+        .complete-btn {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .view-btn {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* MODAL */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 16px;
+            padding: 25px;
+            box-sizing: border-box;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .close-btn {
+            border: none;
+            background: #f1f5f9;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #dbe1ea;
+            border-radius: 8px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .cancel-btn {
+            border: none;
+            background: #f1f5f9;
+            color: #334155;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .save-btn {
+            border: none;
+            background: #1e3a8a;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* DIARY */
+
+        .diary-section {
+            margin-top: 25px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+        }
+
+        .diary-section h2 {
+            margin-top: 0;
+        }
+
+        .diary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .diary-grid textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 1px solid #dbe1ea;
+            border-radius: 8px;
+            box-sizing: border-box;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .diary-save {
+            margin-top: 15px;
+            border: none;
+            background: #16a34a;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1000px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .page-content {
+                padding: 18px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid,
+            .diary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Teacher Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="teacher-dashboard.html">
+                <span>🏠</span>
+                Dashboard
+            </a>
+
+            <a href="teacher-classes.html">
+                <span>📚</span>
+                My Classes
+            </a>
+
+            <a href="teacher-attendance.html">
+                <span>📝</span>
+                Attendance
+            </a>
+
+            <a href="teacher-homework.html" class="active">
+                <span>📖</span>
+                Daily Diary & Homework
+            </a>
+
+            <a href="teacher-syllabus.html">
+                <span>📋</span>
+                Syllabus
+            </a>
+
+            <a href="teacher-results.html">
+                <span>📊</span>
+                Marks & Results
+            </a>
+
+            <a href="teacher-timetable.html">
+                <span>🕒</span>
+                Timetable
+            </a>
+
+            <a href="teacher-leave.html">
+                <span>📩</span>
+                Leave Request
+            </a>
+
+            <a href="teacher-notices.html">
+                <span>📢</span>
+                Notices
+            </a>
+
+            <a href="teacher-profile.html">
+                <span>👤</span>
+                My Profile
+            </a>
+
+            <a href="index.html">
+                <span>🌐</span>
+                Back to Website
+            </a>
+
+            <a href="login.html">
+                <span>🚪</span>
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+            <div class="topbar-title">
+                <h2>Homework & Diary</h2>
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">SK</div>
+
+                <div>
+                    <strong>Sarah Khan</strong>
+                    <small>Computer Science Teacher</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="page-content">
+
+            <!-- HEADER -->
+            <div class="page-header">
+
+                <div>
+                    <h1>Daily Diary & Homework</h1>
+                    <p>Create homework and maintain daily class diary.</p>
+                </div>
+
+                <button
+                    class="primary-btn"
+                    onclick="openHomeworkModal()"
+                >
+                    + Add Homework
+                </button>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+            <div class="summary-grid">
+
+                <div class="summary-card">
+                    <h3>Total Homework</h3>
+                    <strong id="totalHomework">6</strong>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Pending</h3>
+                    <strong id="pendingHomework">3</strong>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Completed</h3>
+                    <strong id="completedHomework">2</strong>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Overdue</h3>
+                    <strong id="overdueHomework">1</strong>
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="filters-box">
+
+                <div class="filters-grid">
+
+                    <div class="filter-group">
+
+                        <label>Search Homework</label>
+
+                        <input
+                            type="text"
+                            id="searchHomework"
+                            placeholder="Search subject, class or homework..."
+                            oninput="filterHomework()"
+                        >
+
+                    </div>
+
+
+                    <div class="filter-group">
+
+                        <label>Class</label>
+
+                        <select
+                            id="classFilter"
+                            onchange="filterHomework()"
+                        >
+
+                            <option value="all">All Classes</option>
+                            <option value="Grade 8 - A">Grade 8 - A</option>
+                            <option value="Grade 8 - B">Grade 8 - B</option>
+                            <option value="Grade 9 - A">Grade 9 - A</option>
+                            <option value="Grade 9 - B">Grade 9 - B</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="filter-group">
+
+                        <label>Subject</label>
+
+                        <select
+                            id="subjectFilter"
+                            onchange="filterHomework()"
+                        >
+
+                            <option value="all">All Subjects</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="English">English</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="filter-group">
+
+                        <label>Status</label>
+
+                        <select
+                            id="statusFilter"
+                            onchange="filterHomework()"
+                        >
+
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="completed">Completed</option>
+                            <option value="overdue">Overdue</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HOMEWORK TABLE -->
+            <div class="table-box">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>#</th>
+                            <th>Homework</th>
+                            <th>Subject</th>
+                            <th>Class</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="homeworkTableBody">
+
+                        <tr
+                            data-subject="Computer Science"
+                            data-class="Grade 8 - A"
+                            data-status="pending"
+                        >
+
+                            <td>1</td>
+
+                            <td>
+                                <div class="homework-title">
+                                    HTML Forms Practice
+                                </div>
+                                <div class="details">
+                                    Create a registration form using HTML.
+                                </div>
+                            </td>
+
+                            <td>Computer Science</td>
+                            <td>Grade 8 - A</td>
+                            <td>02 Oct 2026</td>
+
+                            <td>
+                                <span class="status pending">
+                                    Pending
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="action-btn complete-btn"
+                                    onclick="completeHomework(this)"
+                                >
+                                    Complete
+                                </button>
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewHomework(this)"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteHomework(this)"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-subject="Computer Science"
+                            data-class="Grade 8 - B"
+                            data-status="completed"
+                        >
+
+                            <td>2</td>
+
+                            <td>
+                                <div class="homework-title">
+                                    Computer Basics
+                                </div>
+                                <div class="details">
+                                    Revise input and output devices.
+                                </div>
+                            </td>
+
+                            <td>Computer Science</td>
+                            <td>Grade 8 - B</td>
+                            <td>30 Sep 2026</td>
+
+                            <td>
+                                <span class="status completed">
+                                    Completed
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="action-btn complete-btn"
+                                    onclick="completeHomework(this)"
+                                >
+                                    Complete
+                                </button>
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewHomework(this)"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteHomework(this)"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-subject="Mathematics"
+                            data-class="Grade 9 - A"
+                            data-status="pending"
+                        >
+
+                            <td>3</td>
+
+                            <td>
+                                <div class="homework-title">
+                                    Algebra Exercise
+                                </div>
+                                <div class="details">
+                                    Solve questions 1 to 10.
+                                </div>
+                            </td>
+
+                            <td>Mathematics</td>
+                            <td>Grade 9 - A</td>
+                            <td>03 Oct 2026</td>
+
+                            <td>
+                                <span class="status pending">
+                                    Pending
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="action-btn complete-btn"
+                                    onclick="completeHomework(this)"
+                                >
+                                    Complete
+                                </button>
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewHomework(this)"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteHomework(this)"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-subject="English"
+                            data-class="Grade 8 - A"
+                            data-status="overdue"
+                        >
+
+                            <td>4</td>
+
+                            <td>
+                                <div class="homework-title">
+                                    Essay Writing
+                                </div>
+                                <div class="details">
+                                    Write an essay on My School.
+                                </div>
+                            </td>
+
+                            <td>English</td>
+                            <td>Grade 8 - A</td>
+                            <td>28 Sep 2026</td>
+
+                            <td>
+                                <span class="status overdue">
+                                    Overdue
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="action-btn complete-btn"
+                                    onclick="completeHomework(this)"
+                                >
+                                    Complete
+                                </button>
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewHomework(this)"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteHomework(this)"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-subject="Computer Science"
+                            data-class="Grade 9 - A"
+                            data-status="completed"
+                        >
+
+                            <td>5</td>
+
+                            <td>
+                                <div class="homework-title">
+                                    Python Variables
+                                </div>
+                                <div class="details">
+                                    Practice basic variable programs.
+                                </div>
+                            </td>
+
+                            <td>Computer Science</td>
+                            <td>Grade 9 - A</td>
+                            <td>29 Sep 2026</td>
+
+                            <td>
+                                <span class="status completed">
+                                    Completed
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="action-btn complete-btn"
+                                    onclick="completeHomework(this)"
+                                >
+                                    Complete
+                                </button>
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewHomework(this)"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteHomework(this)"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr
+                            data-subject="Computer Science"
+                            data-class="Grade 8 - B"
+                            data-status="pending"
+                        >
+
+                            <td>6</td>
+
+                            <td>
+                                <div class="homework-title">
+                                    Internet Safety
+                                </div>
+                                <div class="details">
+                                    Write five rules for safe internet use.
+                                </div>
+                            </td>
+
+                            <td>Computer Science</td>
+                            <td>Grade 8 - B</td>
+                            <td>04 Oct 2026</td>
+
+                            <td>
+                                <span class="status pending">
+                                    Pending
+                                </span>
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="action-btn complete-btn"
+                                    onclick="completeHomework(this)"
+                                >
+                                    Complete
+                                </button>
+
+                                <button
+                                    class="action-btn view-btn"
+                                    onclick="viewHomework(this)"
+                                >
+                                    View
+                                </button>
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    onclick="deleteHomework(this)"
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- DAILY DIARY -->
+            <div class="diary-section">
+
+                <h2>Daily Class Diary</h2>
+
+                <p style="color:#64748b;">
+                    Add today's lesson and important notes for parents and students.
+                </p>
+
+                <div class="diary-grid">
+
+                    <div>
+
+                        <label
+                            style="display:block;font-size:13px;font-weight:600;margin-bottom:7px;"
+                        >
+                            Today's Lesson
+                        </label>
+
+                        <textarea
+                            id="lessonText"
+                            placeholder="Write what was taught today..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div>
+
+                        <label
+                            style="display:block;font-size:13px;font-weight:600;margin-bottom:7px;"
+                        >
+                            Teacher's Note
+                        </label>
+
+                        <textarea
+                            id="diaryNote"
+                            placeholder="Write any important note..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="diary-save"
+                    onclick="saveDiary()"
+                >
+                    Save Daily Diary
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ADD HOMEWORK MODAL -->
+
+<div class="modal" id="homeworkModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Add Homework</h2>
+
+            <button
+                class="close-btn"
+                onclick="closeHomeworkModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="homeworkForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>Subject</label>
+
+                    <select id="homeworkSubject" required>
+
+                        <option value="">
+                            Select Subject
+                        </option>
+
+                        <option value="Computer Science">
+                            Computer Science
+                        </option>
+
+                        <option value="Mathematics">
+                            Mathematics
+                        </option>
+
+                        <option value="English">
+                            English
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Class</label>
+
+                    <select id="homeworkClass" required>
+
+                        <option value="">
+                            Select Class
+                        </option>
+
+                        <option value="Grade 8 - A">
+                            Grade 8 - A
+                        </option>
+
+                        <option value="Grade 8 - B">
+                            Grade 8 - B
+                        </option>
+
+                        <option value="Grade 9 - A">
+                            Grade 9 - A
+                        </option>
+
+                        <option value="Grade 9 - B">
+                            Grade 9 - B
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Homework Title</label>
+
+                    <input
+                        type="text"
+                        id="homeworkTitle"
+                        placeholder="Example: Chapter 3 Questions"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Due Date</label>
+
+                    <input
+                        type="date"
+                        id="homeworkDueDate"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>Homework Details</label>
+
+                    <textarea
+                        id="homeworkDetails"
+                        placeholder="Write homework details..."
+                        required
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeHomeworkModal()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    Add Homework
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function toggleSidebar() {
+
+    document
+        .querySelector(".sidebar")
+        .classList.toggle("active");
+
+}
+
+
+function openHomeworkModal() {
+
+    document.getElementById("homeworkModal").style.display = "flex";
+
+}
+
+
+function closeHomeworkModal() {
+
+    document.getElementById("homeworkModal").style.display = "none";
+
+}
+
+
+document
+    .getElementById("homeworkForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const subject =
+            document.getElementById("homeworkSubject").value;
+
+        const className =
+            document.getElementById("homeworkClass").value;
+
+        const title =
+            document.getElementById("homeworkTitle").value;
+
+        const dueDate =
+            document.getElementById("homeworkDueDate").value;
+
+        const details =
+            document.getElementById("homeworkDetails").value;
+
+        const tableBody =
+            document.getElementById("homeworkTableBody");
+
+        const row = document.createElement("tr");
+
+        row.setAttribute("data-subject", subject);
+        row.setAttribute("data-class", className);
+        row.setAttribute("data-status", "pending");
+
+        const rowNumber =
+            tableBody.querySelectorAll("tr").length + 1;
+
+        row.innerHTML = `
+
+            <td>${rowNumber}</td>
+
+            <td>
+                <div class="homework-title">
+                    ${title}
+                </div>
+
+                <div class="details">
+                    ${details}
+                </div>
+            </td>
+
+            <td>${subject}</td>
+
+            <td>${className}</td>
+
+            <td>${formatDate(dueDate)}</td>
+
+            <td>
+                <span class="status pending">
+                    Pending
+                </span>
+            </td>
+
+            <td>
+
+                <button
+                    class="action-btn complete-btn"
+                    onclick="completeHomework(this)"
+                >
+                    Complete
+                </button>
+
+                <button
+                    class="action-btn view-btn"
+                    onclick="viewHomework(this)"
+                >
+                    View
+                </button>
+
+                <button
+                    class="action-btn delete-btn"
+                    onclick="deleteHomework(this)"
+                >
+                    Delete
+                </button>
+
+            </td>
+
+        `;
+
+        tableBody.appendChild(row);
+
+        updateSummary();
+
+        alert("Homework added successfully!");
+
+        document.getElementById("homeworkForm").reset();
+
+        closeHomeworkModal();
+
+    });
+
+
+function completeHomework(button) {
+
+    const row = button.closest("tr");
+
+    row.setAttribute("data-status", "completed");
+
+    const status =
+        row.querySelector(".status");
+
+    status.textContent = "Completed";
+
+    status.className = "status completed";
+
+    updateSummary();
+
+}
+
+
+function viewHomework(button) {
+
+    const row = button.closest("tr");
+
+    const title =
+        row.querySelector(".homework-title").textContent.trim();
+
+    const details =
+        row.querySelector(".details").textContent.trim();
+
+    const subject =
+        row.children[2].textContent.trim();
+
+    const className =
+        row.children[3].textContent.trim();
+
+    const dueDate =
+        row.children[4].textContent.trim();
+
+    alert(
+        "Homework Details\n\n" +
+        "Title: " + title +
+        "\nSubject: " + subject +
+        "\nClass: " + className +
+        "\nDue Date: " + dueDate +
+        "\n\nDetails:\n" + details
+    );
+
+}
+
+
+function deleteHomework(button) {
+
+    const row = button.closest("tr");
+
+    const title =
+        row.querySelector(".homework-title").textContent.trim();
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete \"" +
+            title +
+            "\"?"
+        );
+
+    if (confirmDelete) {
+
+        row.remove();
+
+        updateRowNumbers();
+
+        updateSummary();
+
+    }
+
+}
+
+
+function updateRowNumbers() {
+
+    const rows =
+        document.querySelectorAll(
+            "#homeworkTableBody tr"
+        );
+
+    rows.forEach(function(row, index) {
+
+        row.children[0].textContent = index + 1;
+
+    });
+
+}
+
+
+function updateSummary() {
+
+    const rows =
+        document.querySelectorAll(
+            "#homeworkTableBody tr"
+        );
+
+    let pending = 0;
+    let completed = 0;
+    let overdue = 0;
+
+    rows.forEach(function(row) {
+
+        const status =
+            row.getAttribute("data-status");
+
+        if (status === "pending") {
+            pending++;
+        }
+
+        else if (status === "completed") {
+            completed++;
+        }
+
+        else if (status === "overdue") {
+            overdue++;
+        }
+
+    });
+
+    document.getElementById("totalHomework").textContent =
+        rows.length;
+
+    document.getElementById("pendingHomework").textContent =
+        pending;
+
+    document.getElementById("completedHomework").textContent =
+        completed;
+
+    document.getElementById("overdueHomework").textContent =
+        overdue;
+
+}
+
+
+function filterHomework() {
+
+    const search =
+        document
+            .getElementById("searchHomework")
+            .value
+            .toLowerCase();
+
+    const classFilter =
+        document.getElementById("classFilter").value;
+
+    const subjectFilter =
+        document.getElementById("subjectFilter").value;
+
+    const statusFilter =
+        document.getElementById("statusFilter").value;
+
+    const rows =
+        document.querySelectorAll(
+            "#homeworkTableBody tr"
+        );
+
+    rows.forEach(function(row) {
+
+        const text =
+            row.textContent.toLowerCase();
+
+        const subject =
+            row.getAttribute("data-subject");
+
+        const className =
+            row.getAttribute("data-class");
+
+        const status =
+            row.getAttribute("data-status");
+
+        const matchesSearch =
+            text.includes(search);
+
+        const matchesClass =
+            classFilter === "all" ||
+            className === classFilter;
+
+        const matchesSubject =
+            subjectFilter === "all" ||
+            subject === subjectFilter;
+
+        const matchesStatus =
+            statusFilter === "all" ||
+            status === statusFilter;
+
+        if (
+            matchesSearch &&
+            matchesClass &&
+            matchesSubject &&
+            matchesStatus
+        ) {
+
+            row.style.display = "";
+
+        } else {
+
+            row.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+function formatDate(dateString) {
+
+    if (!dateString) {
+        return "";
+    }
+
+    const date = new Date(dateString);
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+function saveDiary() {
+
+    const lesson =
+        document.getElementById("lessonText").value.trim();
+
+    const note =
+        document.getElementById("diaryNote").value.trim();
+
+    if (!lesson && !note) {
+
+        alert(
+            "Please enter the lesson or teacher's note."
+        );
+
+        return;
+
+    }
+
+    alert(
+        "Daily diary saved successfully!\n\n" +
+        "Database connection will be added later."
+    );
+
+}
+
+
+window.onclick = function(event) {
+
+    const modal =
+        document.getElementById("homeworkModal");
+
+    if (event.target === modal) {
+
+        closeHomeworkModal();
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Parent Dashboard | EduSphere</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-page">
+
+    <div class="dashboard-layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+
+            <div class="sidebar-logo">
+
+                <div class="logo">
+                    Edu<span>Sphere</span>
+                </div>
+
+                <small>SMART SCHOOL MANAGEMENT</small>
+
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <p class="sidebar-title">MAIN</p>
+
+                <a href="parent-dashboard.html" class="sidebar-link active">
+                    <span>▣</span>
+                    Dashboard
+                </a>
+
+
+                <p class="sidebar-title">MY CHILD</p>
+
+                <a href="parent-profile.html" class="sidebar-link">
+                    <span>👤</span>
+                    Child Profile
+                </a>
+
+                <a href="parent-fees.html" class="sidebar-link">
+                    <span>💳</span>
+                    Fee Status
+                </a>
+
+                <a href="parent-attendance.html" class="sidebar-link">
+                    <span>✓</span>
+                    Attendance
+                </a>
+
+                <a href="parent-homework.html" class="sidebar-link">
+                    <span>📝</span>
+                    Diary & Homework
+                </a>
+
+                <a href="parent-syllabus.html" class="sidebar-link">
+                    <span>📚</span>
+                    Syllabus
+                </a>
+
+                <a href="parent-date-sheet.html" class="sidebar-link">
+                    <span>📅</span>
+                    Date Sheet
+                </a>
+
+                <a href="parent-results.html" class="sidebar-link">
+                    <span>📊</span>
+                    Results
+                </a>
+
+                <a href="parent-notices.html" class="sidebar-link">
+                    <span>📢</span>
+                    Notices
+                </a>
+
+
+                <p class="sidebar-title">SYSTEM</p>
+
+                <a href="index.html" class="sidebar-link">
+                    <span>←</span>
+                    Back to Website
+                </a>
+
+                <a href="login.html" class="sidebar-link logout-link">
+                    <span>↪</span>
+                    Logout
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- MAIN AREA -->
+
+        <main class="dashboard-main">
+
+            <!-- TOP BAR -->
+
+            <header class="dashboard-topbar">
+
+                <button class="menu-toggle" id="menuToggle">
+                    ☰
+                </button>
+
+
+                <div class="topbar-left">
+
+                    <h2>Parent Dashboard</h2>
+
+                    <p>
+                        Monitor your child's academic progress
+                    </p>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <button class="notification-button">
+                        🔔
+                        <span>3</span>
+                    </button>
+
+
+                    <div class="admin-profile">
+
+                        <div class="profile-avatar">
+                            AA
+                        </div>
+
+                        <div>
+
+                            <strong>Ahmed Ali</strong>
+
+                            <small>
+                                Parent
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- DASHBOARD CONTENT -->
+
+            <section class="dashboard-content">
+
+
+                <!-- WELCOME -->
+
+                <div class="dashboard-welcome">
+
+                    <div>
+
+                        <span class="dashboard-label">
+                            PARENT PORTAL
+                        </span>
+
+                        <h1>
+                            Good Morning, Mr. Ahmed 👋
+                        </h1>
+
+                        <p>
+                            Here is your child's school progress and today's updates.
+                        </p>
+
+                    </div>
+
+
+                    <div class="dashboard-date">
+
+                        <strong>30 September 2026</strong>
+
+                        <span>Wednesday</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CHILD INFO -->
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>My Child</h3>
+
+                            <p>
+                                Current student information
+                            </p>
+
+                        </div>
+
+                        <a href="parent-profile.html">
+                            View Profile
+                        </a>
+
+                    </div>
+
+
+                    <div class="application-list">
+
+                        <div class="application-item">
+
+                            <div class="mini-avatar">
+                                MA
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Muhammad Ahmed
+                                </strong>
+
+                                <span>
+                                    Grade 8-A • Admission No. ES-2026-1024
+                                </span>
+
+                            </div>
+
+                            <span class="status-badge active-status">
+                                Active
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATS -->
+
+                <div class="dashboard-stats">
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="stat-icon green">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <span>Attendance</span>
+
+                            <h2>94%</h2>
+
+                            <small class="positive">
+                                Good attendance
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="stat-icon blue">
+                            📊
+                        </div>
+
+                        <div>
+
+                            <span>Current Average</span>
+
+                            <h2>87%</h2>
+
+                            <small>
+                                Academic performance
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="stat-icon orange">
+                            📝
+                        </div>
+
+                        <div>
+
+                            <span>Pending Homework</span>
+
+                            <h2>2</h2>
+
+                            <small>
+                                Need attention
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="stat-icon purple">
+                            💳
+                        </div>
+
+                        <div>
+
+                            <span>Fee Status</span>
+
+                            <h2>Paid</h2>
+
+                            <small>
+                                September 2026
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MAIN GRID -->
+
+                <div class="dashboard-grid">
+
+
+                    <!-- ATTENDANCE -->
+
+                    <div class="dashboard-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>Attendance Summary</h3>
+
+                                <p>
+                                    Current academic year
+                                </p>
+
+                            </div>
+
+                            <a href="parent-attendance.html">
+                                View Details
+                            </a>
+
+                        </div>
+
+
+                        <div class="attendance-circle">
+
+                            <div>
+
+                                <strong>94%</strong>
+
+                                <span>Present</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="attendance-details">
+
+                            <div>
+
+                                <span class="dot present-dot"></span>
+
+                                Present
+
+                                <strong>112</strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span class="dot absent-dot"></span>
+
+                                Absent
+
+                                <strong>5</strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span class="dot leave-dot"></span>
+
+                                Late
+
+                                <strong>2</strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RECENT HOMEWORK -->
+
+                    <div class="dashboard-card large-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>Recent Homework</h3>
+
+                                <p>
+                                    Latest homework activities
+                                </p>
+
+                            </div>
+
+                            <a href="parent-homework.html">
+                                View All
+                            </a>
+
+                        </div>
+
+
+                        <div class="application-list">
+
+
+                            <div class="application-item">
+
+                                <div class="mini-avatar">
+                                    CS
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        HTML & CSS Practice
+                                    </strong>
+
+                                    <span>
+                                        Computer Science • Due 02 Oct
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge pending-status">
+                                    Pending
+                                </span>
+
+                            </div>
+
+
+                            <div class="application-item">
+
+                                <div class="mini-avatar">
+                                    MT
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Algebra Questions
+                                    </strong>
+
+                                    <span>
+                                        Mathematics • Due 03 Oct
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge pending-status">
+                                    Pending
+                                </span>
+
+                            </div>
+
+
+                            <div class="application-item">
+
+                                <div class="mini-avatar">
+                                    EN
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        English Essay
+                                    </strong>
+
+                                    <span>
+                                        English • Submitted
+                                    </span>
+
+                                </div>
+
+                                <span class="status-badge active-status">
+                                    Completed
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TODAY'S SCHEDULE -->
+
+                    <div class="dashboard-card large-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>Today's Schedule</h3>
+
+                                <p>
+                                    Grade 8-A timetable
+                                </p>
+
+                            </div>
+
+                            <a href="parent-date-sheet.html">
+                                Date Sheet
+                            </a>
+
+                        </div>
+
+
+                        <div class="table-wrapper">
+
+                            <table class="data-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>Time</th>
+                                        <th>Subject</th>
+                                        <th>Teacher</th>
+                                        <th>Room</th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>08:00 - 08:45</td>
+
+                                        <td>Mathematics</td>
+
+                                        <td>Mr. Usman</td>
+
+                                        <td>Room 8</td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>09:00 - 09:45</td>
+
+                                        <td>English</td>
+
+                                        <td>Ms. Ayesha</td>
+
+                                        <td>Room 8</td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>10:30 - 11:15</td>
+
+                                        <td>Computer Science</td>
+
+                                        <td>Ms. Sarah</td>
+
+                                        <td>Computer Lab</td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>12:00 - 12:45</td>
+
+                                        <td>Physics</td>
+
+                                        <td>Mr. Hamid</td>
+
+                                        <td>Lab 2</td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FEE STATUS -->
+
+                    <div class="dashboard-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <h3>Fee Status</h3>
+
+                                <p>
+                                    Monthly fee overview
+                                </p>
+
+                            </div>
+
+                            <a href="parent-fees.html">
+                                View Fees
+                            </a>
+
+                        </div>
+
+
+                        <div class="fee-summary">
+
+                            <div>
+
+                                <span>August</span>
+
+                                <strong>
+                                    Paid
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>September</span>
+
+                                <strong>
+                                    Paid
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>October</span>
+
+                                <strong>
+                                    Pending
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="progress-bar">
+
+                            <div style="width: 75%;"></div>
+
+                        </div>
+
+
+                        <p class="progress-text">
+                            October fee voucher is available.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SCHOOL NOTICES -->
+
+                <div class="dashboard-card notice-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>School Notices</h3>
+
+                            <p>
+                                Latest announcements for parents
+                            </p>
+
+                        </div>
+
+                        <a href="parent-notices.html">
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="notice-list">
+
+
+                        <div class="notice-item">
+
+                            <div class="notice-icon">
+                                📢
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Mid-Term Examination Schedule
+                                </strong>
+
+                                <p>
+                                    The examination schedule has been uploaded.
+                                </p>
+
+                                <small>
+                                    Posted today
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="notice-item">
+
+                            <div class="notice-icon">
+                                📅
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Parent-Teacher Meeting
+                                </strong>
+
+                                <p>
+                                    Parent-teacher meeting will be held next Saturday.
+                                </p>
+
+                                <small>
+                                    Posted 2 days ago
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+
+                <div class="dashboard-card quick-actions-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h3>Quick Actions</h3>
+
+                            <p>
+                                Quickly access your child's information
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-actions">
+
+
+                        <a href="parent-attendance.html"
+                           class="quick-action">
+
+                            <span>✓</span>
+
+                            <strong>
+                                Attendance
+                            </strong>
+
+                            <small>
+                                View attendance record
+                            </small>
+
+                        </a>
+
+
+                        <a href="parent-homework.html"
+                           class="quick-action">
+
+                            <span>📝</span>
+
+                            <strong>
+                                Homework
+                            </strong>
+
+                            <small>
+                                Check pending homework
+                            </small>
+
+                        </a>
+
+
+                        <a href="parent-results.html"
+                           class="quick-action">
+
+                            <span>📊</span>
+
+                            <strong>
+                                Results
+                            </strong>
+
+                            <small>
+                                View academic results
+                            </small>
+
+                        </a>
+
+
+                        <a href="parent-fees.html"
+                           class="quick-action">
+
+                            <span>💳</span>
+
+                            <strong>
+                                Fee Voucher
+                            </strong>
+
+                            <small>
+                                View current fee
+                            </small>
+
+                        </a>
+
+
+                        <a href="parent-syllabus.html"
+                           class="quick-action">
+
+                            <span>📚</span>
+
+                            <strong>
+                                Syllabus
+                            </strong>
+
+                            <small>
+                                Check course progress
+                            </small>
+
+                        </a>
+
+
+                        <a href="parent-profile.html"
+                           class="quick-action">
+
+                            <span>👤</span>
+
+                            <strong>
+                                Child Profile
+                            </strong>
+
+                            <small>
+                                View student information
+                            </small>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        const menuToggle =
+            document.getElementById("menuToggle");
+
+        const sidebar =
+            document.getElementById("dashboardSidebar");
+
+
+        menuToggle.addEventListener("click", function () {
+
+            sidebar.classList.toggle("sidebar-open");
+
+        });
+
+
+        const sidebarLinks =
+            document.querySelectorAll(".sidebar-link");
+
+
+        sidebarLinks.forEach(function(link) {
+
+            link.addEventListener("click", function() {
+
+                sidebarLinks.forEach(function(item) {
+
+                    item.classList.remove("active");
+
+                });
+
+                this.classList.add("active");
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>

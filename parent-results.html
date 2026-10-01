@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Results | Parent Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .results-page {
+            padding: 28px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 6px;
+            color: #173b67;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+        }
+
+        .header-button {
+            border: none;
+            background: #173b67;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.06);
+        }
+
+        .summary-card h4 {
+            margin: 0 0 9px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .summary-card h2 {
+            margin: 0;
+            color: #173b67;
+            font-size: 25px;
+        }
+
+        .passed-number {
+            color: #218838 !important;
+        }
+
+        .failed-number {
+            color: #c0392b !important;
+        }
+
+        .student-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            margin-bottom: 22px;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: 65px 1fr;
+            gap: 18px;
+            align-items: center;
+        }
+
+        .student-avatar {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: #173b67;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .student-info h2 {
+            margin: 0 0 5px;
+            color: #173b67;
+            font-size: 20px;
+        }
+
+        .student-info p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .filters-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            margin-bottom: 22px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            outline: none;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            margin-bottom: 22px;
+        }
+
+        .table-card h2 {
+            margin: 0 0 18px;
+            color: #173b67;
+            font-size: 19px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        .results-table th,
+        .results-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .results-table th {
+            background: #f7f9fc;
+            color: #666;
+        }
+
+        .results-table td {
+            color: #444;
+        }
+
+        .grade {
+            font-weight: 700;
+            color: #173b67;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 11px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .status-pass {
+            background: #eaf7ee;
+            color: #218838;
+        }
+
+        .status-fail {
+            background: #fdecea;
+            color: #c0392b;
+        }
+
+        .performance-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .performance-card h2 {
+            margin: 0 0 20px;
+            color: #173b67;
+            font-size: 19px;
+        }
+
+        .performance-list {
+            display: grid;
+            gap: 17px;
+        }
+
+        .performance-row {
+            display: grid;
+            grid-template-columns: 160px 1fr 55px;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .performance-row span {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .performance-row strong {
+            font-size: 13px;
+            color: #173b67;
+            text-align: right;
+        }
+
+        .progress {
+            width: 100%;
+            height: 9px;
+            background: #e9edf2;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #173b67;
+            border-radius: 20px;
+        }
+
+        .result-note {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f7f9fc;
+            border-left: 4px solid #173b67;
+            border-radius: 6px;
+            color: #666;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .empty-message {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        @media (max-width: 1000px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .performance-row {
+                grid-template-columns: 120px 1fr 50px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .results-page {
+                padding: 18px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .student-info {
+                grid-template-columns: 1fr;
+            }
+
+            .performance-row {
+                grid-template-columns: 1fr;
+                gap: 7px;
+            }
+
+            .performance-row strong {
+                text-align: left;
+            }
+        }
+
+        @media print {
+            .sidebar,
+            .topbar,
+            .filters-card,
+            .header-button {
+                display: none !important;
+            }
+
+            .main-content {
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+
+            .results-page {
+                padding: 10px;
+            }
+
+            .table-card,
+            .student-card,
+            .performance-card {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Parent Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="parent-dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="parent-profile.html">
+                👤 Child Profile
+            </a>
+
+            <a href="parent-fees.html">
+                💳 Fee Status
+            </a>
+
+            <a href="parent-attendance.html">
+                ✓ Attendance
+            </a>
+
+            <a href="parent-homework.html">
+                📝 Diary & Homework
+            </a>
+
+            <a href="parent-syllabus.html">
+                📚 Syllabus
+            </a>
+
+            <a href="parent-date-sheet.html">
+                📅 Date Sheet
+            </a>
+
+            <a href="parent-results.html" class="active">
+                📈 Results
+            </a>
+
+            <a href="parent-notices.html">
+                🔔 Notices
+            </a>
+
+            <a href="index.html">
+                🌐 Back to Website
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                Results
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">
+                    AA
+                </div>
+
+                <div>
+                    <strong>Mr. Ahmed Ali</strong>
+                    <small>Parent</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="results-page">
+
+            <!-- HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <h1>Academic Results</h1>
+
+                    <p>
+                        View your child's subject-wise marks and academic performance.
+                    </p>
+
+                </div>
+
+                <button
+                    class="header-button"
+                    onclick="window.print()"
+                >
+                    🖨 Print Result
+                </button>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+            <div class="summary-grid">
+
+                <div class="summary-card">
+
+                    <h4>Overall Average</h4>
+
+                    <h2>
+                        87%
+                    </h2>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <h4>Subjects</h4>
+
+                    <h2>
+                        6
+                    </h2>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <h4>Passed</h4>
+
+                    <h2 class="passed-number">
+                        6
+                    </h2>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <h4>Failed</h4>
+
+                    <h2 class="failed-number">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT -->
+            <div class="student-card">
+
+                <div class="student-info">
+
+                    <div class="student-avatar">
+                        MA
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Muhammad Ahmed
+                        </h2>
+
+                        <p>
+                            Grade 8-A &nbsp; | &nbsp;
+                            Admission No: ES-2026-1024 &nbsp; | &nbsp;
+                            Academic Year: 2026
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="filters-card">
+
+                <div class="filters">
+
+                    <input
+                        type="text"
+                        id="searchResult"
+                        placeholder="Search subject..."
+                        onkeyup="filterResults()"
+                    >
+
+
+                    <select
+                        id="termFilter"
+                        onchange="filterResults()"
+                    >
+
+                        <option value="">
+                            All Terms
+                        </option>
+
+                        <option value="Mid Term">
+                            Mid Term
+                        </option>
+
+                        <option value="Final Term">
+                            Final Term
+                        </option>
+
+                    </select>
+
+
+                    <select
+                        id="resultFilter"
+                        onchange="filterResults()"
+                    >
+
+                        <option value="">
+                            All Results
+                        </option>
+
+                        <option value="Pass">
+                            Passed
+                        </option>
+
+                        <option value="Fail">
+                            Failed
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESULTS TABLE -->
+            <div class="table-card">
+
+                <h2>
+                    Subject-wise Results
+                </h2>
+
+                <div class="table-wrapper">
+
+                    <table class="results-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Subject</th>
+                                <th>Term</th>
+                                <th>Total Marks</th>
+                                <th>Obtained</th>
+                                <th>Percentage</th>
+                                <th>Grade</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="resultsTable">
+
+
+                            <!-- RESULT 1 -->
+                            <tr
+                                data-term="Final Term"
+                                data-result="Pass"
+                            >
+
+                                <td>
+                                    Mathematics
+                                </td>
+
+                                <td>
+                                    Final Term
+                                </td>
+
+                                <td>
+                                    100
+                                </td>
+
+                                <td>
+                                    91
+                                </td>
+
+                                <td>
+                                    91%
+                                </td>
+
+                                <td class="grade">
+                                    A+
+                                </td>
+
+                                <td>
+                                    <span class="status status-pass">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <!-- RESULT 2 -->
+                            <tr
+                                data-term="Final Term"
+                                data-result="Pass"
+                            >
+
+                                <td>
+                                    English
+                                </td>
+
+                                <td>
+                                    Final Term
+                                </td>
+
+                                <td>
+                                    100
+                                </td>
+
+                                <td>
+                                    88
+                                </td>
+
+                                <td>
+                                    88%
+                                </td>
+
+                                <td class="grade">
+                                    A
+                                </td>
+
+                                <td>
+                                    <span class="status status-pass">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <!-- RESULT 3 -->
+                            <tr
+                                data-term="Final Term"
+                                data-result="Pass"
+                            >
+
+                                <td>
+                                    Computer Science
+                                </td>
+
+                                <td>
+                                    Final Term
+                                </td>
+
+                                <td>
+                                    100
+                                </td>
+
+                                <td>
+                                    94
+                                </td>
+
+                                <td>
+                                    94%
+                                </td>
+
+                                <td class="grade">
+                                    A+
+                                </td>
+
+                                <td>
+                                    <span class="status status-pass">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <!-- RESULT 4 -->
+                            <tr
+                                data-term="Final Term"
+                                data-result="Pass"
+                            >
+
+                                <td>
+                                    Physics
+                                </td>
+
+                                <td>
+                                    Final Term
+                                </td>
+
+                                <td>
+                                    100
+                                </td>
+
+                                <td>
+                                    82
+                                </td>
+
+                                <td>
+                                    82%
+                                </td>
+
+                                <td class="grade">
+                                    A
+                                </td>
+
+                                <td>
+                                    <span class="status status-pass">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <!-- RESULT 5 -->
+                            <tr
+                                data-term="Final Term"
+                                data-result="Pass"
+                            >
+
+                                <td>
+                                    Urdu
+                                </td>
+
+                                <td>
+                                    Final Term
+                                </td>
+
+                                <td>
+                                    100
+                                </td>
+
+                                <td>
+                                    85
+                                </td>
+
+                                <td>
+                                    85%
+                                </td>
+
+                                <td class="grade">
+                                    A
+                                </td>
+
+                                <td>
+                                    <span class="status status-pass">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <!-- RESULT 6 -->
+                            <tr
+                                data-term="Final Term"
+                                data-result="Pass"
+                            >
+
+                                <td>
+                                    General Science
+                                </td>
+
+                                <td>
+                                    Final Term
+                                </td>
+
+                                <td>
+                                    100
+                                </td>
+
+                                <td>
+                                    84
+                                </td>
+
+                                <td>
+                                    84%
+                                </td>
+
+                                <td class="grade">
+                                    A
+                                </td>
+
+                                <td>
+                                    <span class="status status-pass">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <!-- MID TERM 1 -->
+                            <tr
+                                data-term="Mid Term"
+                                data-result="Pass"
+                            >
+
+                                <td>
+                                    Mathematics
+                                </td>
+
+                                <td>
+                                    Mid Term
+                                </td>
+
+                                <td>
+                                    50
+                                </td>
+
+                                <td>
+                                    43
+                                </td>
+
+                                <td>
+                                    86%
+                                </td>
+
+                                <td class="grade">
+                                    A
+                                </td>
+
+                                <td>
+                                    <span class="status status-pass">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <!-- MID TERM 2 -->
+                            <tr
+                                data-term="Mid Term"
+                                data-result="Pass"
+                            >
+
+                                <td>
+                                    Computer Science
+                                </td>
+
+                                <td>
+                                    Mid Term
+                                </td>
+
+                                <td>
+                                    50
+                                </td>
+
+                                <td>
+                                    47
+                                </td>
+
+                                <td>
+                                    94%
+                                </td>
+
+                                <td class="grade">
+                                    A+
+                                </td>
+
+                                <td>
+                                    <span class="status status-pass">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div
+                    class="empty-message"
+                    id="emptyMessage"
+                >
+                    No result found.
+                </div>
+
+            </div>
+
+
+            <!-- PERFORMANCE -->
+            <div class="performance-card">
+
+                <h2>
+                    Subject Performance
+                </h2>
+
+
+                <div class="performance-list">
+
+
+                    <div class="performance-row">
+
+                        <span>
+                            Computer Science
+                        </span>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                style="width:94%;"
+                            ></div>
+
+                        </div>
+
+                        <strong>
+                            94%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="performance-row">
+
+                        <span>
+                            Mathematics
+                        </span>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                style="width:91%;"
+                            ></div>
+
+                        </div>
+
+                        <strong>
+                            91%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="performance-row">
+
+                        <span>
+                            English
+                        </span>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                style="width:88%;"
+                            ></div>
+
+                        </div>
+
+                        <strong>
+                            88%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="performance-row">
+
+                        <span>
+                            Urdu
+                        </span>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                style="width:85%;"
+                            ></div>
+
+                        </div>
+
+                        <strong>
+                            85%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="performance-row">
+
+                        <span>
+                            General Science
+                        </span>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                style="width:84%;"
+                            ></div>
+
+                        </div>
+
+                        <strong>
+                            84%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="performance-row">
+
+                        <span>
+                            Physics
+                        </span>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                style="width:82%;"
+                            ></div>
+
+                        </div>
+
+                        <strong>
+                            82%
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="result-note">
+
+                    <strong>Academic Note:</strong>
+                    Results shown here are for demonstration purposes.
+                    In the final system, marks and grades will be loaded
+                    automatically from the school's database.
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("open");
+
+    }
+
+
+    function filterResults() {
+
+        const search =
+            document
+                .getElementById("searchResult")
+                .value
+                .toLowerCase();
+
+        const term =
+            document
+                .getElementById("termFilter")
+                .value;
+
+        const result =
+            document
+                .getElementById("resultFilter")
+                .value;
+
+
+        const rows =
+            document.querySelectorAll("#resultsTable tr");
+
+        let visibleCount = 0;
+
+
+        rows.forEach(function(row) {
+
+            const text =
+                row.innerText.toLowerCase();
+
+            const rowTerm =
+                row.dataset.term;
+
+            const rowResult =
+                row.dataset.result;
+
+
+            const searchMatch =
+                text.includes(search);
+
+            const termMatch =
+                !term || rowTerm === term;
+
+            const resultMatch =
+                !result || rowResult === result;
+
+
+            if (
+                searchMatch &&
+                termMatch &&
+                resultMatch
+            ) {
+
+                row.style.display = "";
+
+                visibleCount++;
+
+            } else {
+
+                row.style.display = "none";
+
+            }
+
+        });
+
+
+        const emptyMessage =
+            document.getElementById("emptyMessage");
+
+
+        if (visibleCount === 0) {
+
+            emptyMessage.style.display = "block";
+
+        } else {
+
+            emptyMessage.style.display = "none";
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

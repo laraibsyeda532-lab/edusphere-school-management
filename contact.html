@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | EduSphere</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">Edu<span>Sphere</span></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="academics.html">Academics</a>
+        <a href="admissions.html">Admissions</a>
+        <a href="faculty.html">Faculty</a>
+        <a href="contact.html" class="active">Contact</a>
+    </nav>
+
+    <div class="nav-buttons">
+        <a href="login.html" class="login-btn">Login</a>
+        <a href="admissions.html" class="apply-btn">Apply Now</a>
+    </div>
+
+</header>
+
+
+<section class="page-hero">
+
+    <div>
+
+        <span class="hero-label">CONTACT US</span>
+
+        <h1>We'd Love to<br>Hear From You</h1>
+
+        <p>
+            Have a question about admissions, academics or
+            school services? Get in touch with us.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="content-section">
+
+    <div class="contact-layout">
+
+
+        <div class="contact-info">
+
+            <span class="hero-label">GET IN TOUCH</span>
+
+            <h2>Let's Talk</h2>
+
+            <p>
+                Contact the school administration for admissions,
+                general information and other inquiries.
+            </p>
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">📍</div>
+
+                <div>
+                    <h3>Address</h3>
+                    <p>School Campus, Wah Cantt, Punjab, Pakistan</p>
+                </div>
+
+            </div>
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">📞</div>
+
+                <div>
+                    <h3>Phone</h3>
+                    <p>+92 300 1234567</p>
+                </div>
+
+            </div>
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">✉️</div>
+
+                <div>
+                    <h3>Email</h3>
+                    <p>info@edusphere.com</p>
+                </div>
+
+            </div>
+
+
+            <div class="contact-item">
+
+                <div class="contact-icon">⏰</div>
+
+                <div>
+                    <h3>Office Hours</h3>
+                    <p>Monday - Friday | 8:00 AM - 3:00 PM</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <form class="contact-form">
+
+                <h2>Send Us a Message</h2>
+
+                <div class="form-group">
+
+                    <label>Your Name</label>
+
+                    <input
+                        type="text"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Email Address</label>
+
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Phone Number</label>
+
+                    <input
+                        type="tel"
+                        placeholder="Enter your phone number"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Subject</label>
+
+                    <input
+                        type="text"
+                        placeholder="Enter subject"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Message</label>
+
+                    <textarea
+                        rows="6"
+                        placeholder="Write your message..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <button type="submit" class="submit-btn">
+                    Send Message
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="map-section">
+
+    <div>
+
+        <span>OUR LOCATION</span>
+
+        <h2>Find Our School</h2>
+
+        <p>
+            School location will be added here when the website
+            is customized for a real school.
+        </p>
+
+        <div class="map-placeholder">
+            📍 School Location
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer class="footer">
+
+    <div>
+        <h2>EduSphere</h2>
+        <p>Smart digital solutions for modern schools.</p>
+    </div>
+
+    <div>
+        <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="academics.html">Academics</a>
+        <a href="admissions.html">Admissions</a>
+    </div>
+
+    <div>
+        <h3>Portals</h3>
+        <a href="login.html">Admin Portal</a>
+        <a href="login.html">Teacher Portal</a>
+        <a href="login.html">Parent Portal</a>
+        <a href="login.html">Student Portal</a>
+    </div>
+
+</footer>
+
+<div class="copyright">
+    © 2026 EduSphere. All Rights Reserved.
+</div>
+
+
+<script>
+
+document.querySelector(".contact-form").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    alert("Thank you! Your message has been sent successfully.");
+
+    this.reset();
+
+});
+
+</script>
+
+</body>
+</html>

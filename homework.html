@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homework - EduSphere</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 240px;
+            height: 100vh;
+            background: #111827;
+            color: white;
+            padding: 25px 15px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #d1d5db;
+            text-decoration: none;
+            padding: 13px 15px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            transition: 0.2s;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .topbar h1 {
+            font-size: 28px;
+        }
+
+        .topbar p {
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            margin-bottom: 7px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #2563eb;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 7px;
+            padding: 11px 18px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-edit {
+            background: #f59e0b;
+            color: white;
+            padding: 7px 12px;
+        }
+
+        .btn-delete {
+            background: #dc2626;
+            color: white;
+            padding: 7px 12px;
+        }
+
+        .form-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            max-width: 400px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 13px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        th {
+            background: #f9fafb;
+            font-weight: 700;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .actions {
+            display: flex;
+            gap: 7px;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 7px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #6b7280;
+            padding: 25px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 12px;
+            padding: 25px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close {
+            font-size: 28px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .close:hover {
+            color: #111827;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .main {
+                margin-left: 200px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">EduSphere</div>
+
+        <a href="admin-dashboard.html" class="sidebar-link">
+            <span>🏠</span> Dashboard
+        </a>
+
+        <a href="students.html" class="sidebar-link">
+            <span>👨‍🎓</span> Students
+        </a>
+
+        <a href="teachers.html" class="sidebar-link">
+            <span>👩‍🏫</span> Teachers
+        </a>
+
+        <a href="classes.html" class="sidebar-link">
+            <span>🏫</span> Classes
+        </a>
+
+        <a href="attendance.html" class="sidebar-link">
+            <span>✓</span> Attendance
+        </a>
+
+        <a href="homework.html" class="sidebar-link active">
+            <span>📚</span> Homework
+        </a>
+
+        <a href="syllabus.html" class="sidebar-link">
+            <span>📖</span> Syllabus
+        </a>
+
+        <a href="datesheet.html" class="sidebar-link">
+            <span>📅</span> Date Sheet
+        </a>
+
+        <a href="results.html" class="sidebar-link">
+            <span>📊</span> Results
+        </a>
+
+        <a href="fees.html" class="sidebar-link">
+            <span>💰</span> Fees
+        </a>
+
+        <a href="notices.html" class="sidebar-link">
+            <span>📢</span> Notices
+        </a>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h1>Homework</h1>
+                <p>Manage class homework and assignments</p>
+            </div>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <!-- Add Homework -->
+        <div class="card">
+            <h2>Add Homework</h2>
+
+            <form id="homeworkForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Class *</label>
+                        <select id="class_id" required>
+                            <option value="">Select Class</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subject *</label>
+                        <input
+                            type="text"
+                            id="subject"
+                            placeholder="e.g. Mathematics"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Homework Title *</label>
+                        <input
+                            type="text"
+                            id="title"
+                            placeholder="Enter homework title"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Description</label>
+                        <textarea
+                            id="description"
+                            placeholder="Enter homework details..."
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="date" id="due_date">
+                    </div>
+
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        Add Homework
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="resetForm()"
+                    >
+                        Clear
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- Homework List -->
+        <div class="card">
+
+            <h2>Homework List</h2>
+
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by class, subject or title..."
+                    onkeyup="filterHomework()"
+                >
+            </div>
+
+            <div class="table-container">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Class</th>
+                            <th>Subject</th>
+                            <th>Title</th>
+                            <th>Due Date</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="homeworkTableBody">
+                        <tr>
+                            <td colspan="7" class="no-data">
+                                Loading homework...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </main>
+
+
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h2>Edit Homework</h2>
+                <span class="close" onclick="closeEditModal()">&times;</span>
+            </div>
+
+            <form id="editHomeworkForm">
+
+                <input type="hidden" id="edit_id">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Class *</label>
+                        <select id="edit_class_id" required>
+                            <option value="">Select Class</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subject *</label>
+                        <input type="text" id="edit_subject" required>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Homework Title *</label>
+                        <input type="text" id="edit_title" required>
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Description</label>
+                        <textarea id="edit_description"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="date" id="edit_due_date">
+                    </div>
+
+                </div>
+
+                <div class="form-buttons">
+
+                    <button type="submit" class="btn btn-primary">
+                        Update Homework
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="closeEditModal()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+
+<script>
+
+let allHomework = [];
+let allClasses = [];
+
+
+/* Show Message */
+function showMessage(text, type) {
+
+    const message = document.getElementById("message");
+
+    message.textContent = text;
+    message.className = "message " + type;
+    message.style.display = "block";
+
+    setTimeout(() => {
+        message.style.display = "none";
+    }, 3000);
+}
+
+
+/* Load Classes */
+async function loadClasses() {
+
+    try {
+
+        const response = await fetch("/api/classes");
+
+        if (!response.ok) {
+            throw new Error("Failed to load classes");
+        }
+
+        allClasses = await response.json();
+
+        const classSelect = document.getElementById("class_id");
+        const editClassSelect = document.getElementById("edit_class_id");
+
+        classSelect.innerHTML =
+            '<option value="">Select Class</option>';
+
+        editClassSelect.innerHTML =
+            '<option value="">Select Class</option>';
+
+        allClasses.forEach(cls => {
+
+            const classText =
+                cls.class_name +
+                (cls.section ? " - " + cls.section : "");
+
+            classSelect.innerHTML += `
+                <option value="${cls.id}">
+                    ${escapeHtml(classText)}
+                </option>
+            `;
+
+            editClassSelect.innerHTML += `
+                <option value="${cls.id}">
+                    ${escapeHtml(classText)}
+                </option>
+            `;
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            "Unable to load classes.",
+            "error"
+        );
+    }
+}
+
+
+/* Load Homework */
+async function loadHomework() {
+
+    try {
+
+        const response = await fetch("/api/homework");
+
+        if (!response.ok) {
+            throw new Error("Failed to load homework");
+        }
+
+        allHomework = await response.json();
+
+        displayHomework(allHomework);
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "homeworkTableBody"
+        ).innerHTML = `
+            <tr>
+                <td colspan="7" class="no-data">
+                    Unable to load homework.
+                </td>
+            </tr>
+        `;
+    }
+}
+
+
+/* Display Homework */
+function displayHomework(homeworkList) {
+
+    const tbody =
+        document.getElementById("homeworkTableBody");
+
+    if (!homeworkList.length) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="no-data">
+                    No homework found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    tbody.innerHTML = "";
+
+    homeworkList.forEach((item, index) => {
+
+        const className =
+            item.class_name +
+            (item.section
+                ? " - " + item.section
+                : "");
+
+        tbody.innerHTML += `
+            <tr>
+
+                <td>${index + 1}</td>
+
+                <td>
+                    ${escapeHtml(className)}
+                </td>
+
+                <td>
+                    ${escapeHtml(item.subject || "")}
+                </td>
+
+                <td>
+                    ${escapeHtml(item.title || "")}
+                </td>
+
+                <td>
+                    ${item.due_date || "-"}
+                </td>
+
+                <td>
+                    ${escapeHtml(item.description || "-")}
+                </td>
+
+                <td>
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-edit"
+                            onclick="openEditModal(${item.id})"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="btn btn-delete"
+                            onclick="deleteHomework(${item.id})"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+        `;
+    });
+}
+
+
+/* Add Homework */
+document.getElementById("homeworkForm")
+.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const data = {
+
+        class_id:
+            document.getElementById("class_id").value,
+
+        subject:
+            document.getElementById("subject").value.trim(),
+
+        title:
+            document.getElementById("title").value.trim(),
+
+        description:
+            document.getElementById("description").value.trim(),
+
+        due_date:
+            document.getElementById("due_date").value || null
+    };
+
+
+    try {
+
+        const response = await fetch(
+            "/api/homework",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(data)
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                result.message || "Failed to add homework"
+            );
+        }
+
+        showMessage(
+            "Homework added successfully!",
+            "success"
+        );
+
+        resetForm();
+
+        loadHomework();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            error.message,
+            "error"
+        );
+    }
+
+});
+
+
+/* Reset Form */
+function resetForm() {
+
+    document.getElementById(
+        "homeworkForm"
+    ).reset();
+}
+
+
+/* Open Edit Modal */
+function openEditModal(id) {
+
+    const item =
+        allHomework.find(h => h.id === id);
+
+    if (!item) return;
+
+    document.getElementById("edit_id").value =
+        item.id;
+
+    document.getElementById("edit_class_id").value =
+        item.class_id;
+
+    document.getElementById("edit_subject").value =
+        item.subject || "";
+
+    document.getElementById("edit_title").value =
+        item.title || "";
+
+    document.getElementById("edit_description").value =
+        item.description || "";
+
+    document.getElementById("edit_due_date").value =
+        item.due_date || "";
+
+    document.getElementById("editModal").style.display =
+        "flex";
+}
+
+
+/* Close Edit Modal */
+function closeEditModal() {
+
+    document.getElementById("editModal").style.display =
+        "none";
+}
+
+
+/* Update Homework */
+document.getElementById("editHomeworkForm")
+.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const id =
+        document.getElementById("edit_id").value;
+
+    const data = {
+
+        class_id:
+            document.getElementById("edit_class_id").value,
+
+        subject:
+            document.getElementById("edit_subject").value.trim(),
+
+        title:
+            document.getElementById("edit_title").value.trim(),
+
+        description:
+            document.getElementById("edit_description").value.trim(),
+
+        due_date:
+            document.getElementById("edit_due_date").value || null
+    };
+
+
+    try {
+
+        const response = await fetch(
+            `/api/homework/${id}`,
+            {
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(data)
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                result.message || "Failed to update homework"
+            );
+        }
+
+        showMessage(
+            "Homework updated successfully!",
+            "success"
+        );
+
+        closeEditModal();
+
+        loadHomework();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            error.message,
+            "error"
+        );
+    }
+
+});
+
+
+/* Delete Homework */
+async function deleteHomework(id) {
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this homework?"
+        );
+
+    if (!confirmDelete) return;
+
+
+    try {
+
+        const response = await fetch(
+            `/api/homework/${id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                result.message || "Failed to delete homework"
+            );
+        }
+
+        showMessage(
+            "Homework deleted successfully!",
+            "success"
+        );
+
+        loadHomework();
+
+    } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+            error.message,
+            "error"
+        );
+    }
+}
+
+
+/* Search */
+function filterHomework() {
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value.toLowerCase().trim();
+
+    if (!search) {
+
+        displayHomework(allHomework);
+
+        return;
+    }
+
+
+    const filtered =
+        allHomework.filter(item => {
+
+            const className =
+                (
+                    item.class_name +
+                    " " +
+                    (item.section || "")
+                ).toLowerCase();
+
+            const subject =
+                (item.subject || "").toLowerCase();
+
+            const title =
+                (item.title || "").toLowerCase();
+
+            const description =
+                (item.description || "").toLowerCase();
+
+            return (
+                className.includes(search) ||
+                subject.includes(search) ||
+                title.includes(search) ||
+                description.includes(search)
+            );
+        });
+
+
+    displayHomework(filtered);
+}
+
+
+/* Escape HTML */
+function escapeHtml(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* Close modal when clicking outside */
+window.addEventListener("click", function(event) {
+
+    const modal =
+        document.getElementById("editModal");
+
+    if (event.target === modal) {
+        closeEditModal();
+    }
+
+});
+
+
+/* Initial Load */
+loadClasses();
+loadHomework();
+
+</script>
+
+</body>
+</html>

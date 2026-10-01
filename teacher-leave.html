@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leave Request - EduSphere</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 240px;
+    height: 100vh;
+    background: #172554;
+    color: white;
+    padding: 20px 0;
+    overflow-y: auto;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+    padding: 0 22px 25px;
+}
+
+.logo span {
+    color: #60a5fa;
+}
+
+.menu a {
+    display: block;
+    padding: 12px 22px;
+    color: #dbeafe;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.menu a:hover,
+.menu a.active {
+    background: #2563eb;
+    color: white;
+}
+
+.main {
+    margin-left: 240px;
+    padding: 28px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    font-size: 28px;
+}
+
+.header p {
+    color: #6b7280;
+    margin-top: 5px;
+}
+
+.apply-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+.card h3 {
+    color: #6b7280;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.card strong {
+    font-size: 27px;
+}
+
+.table-box {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+.table-box h2 {
+    margin-bottom: 18px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 13px 10px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+th {
+    background: #f8fafc;
+    color: #475569;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.approved {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.cancel-btn {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.view-btn {
+    background: #dbeafe;
+    color: #1d4ed8;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: white;
+    width: 500px;
+    max-width: 92%;
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.modal-box h2 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    outline: none;
+}
+
+.form-group textarea {
+    height: 90px;
+    resize: none;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.close-btn {
+    background: #e5e7eb;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.submit-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+@media(max-width: 900px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .main {
+        margin-left: 200px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 18px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .table-box {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 800px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+```
+<div class="logo">
+    Edu<span>Sphere</span>
+</div>
+
+<div class="menu">
+
+    <a href="teacher-dashboard.html">🏠 Dashboard</a>
+
+    <a href="teacher-classes.html">📚 My Classes</a>
+
+    <a href="teacher-attendance.html">✓ Attendance</a>
+
+    <a href="teacher-homework.html">📝 Daily Diary & Homework</a>
+
+    <a href="teacher-syllabus.html">📖 Syllabus</a>
+
+    <a href="teacher-results.html">📊 Marks & Results</a>
+
+    <a href="teacher-timetable.html">🕐 Timetable</a>
+
+    <a href="teacher-leave.html" class="active">📅 Leave Request</a>
+
+    <a href="teacher-notices.html">🔔 Notices</a>
+
+    <a href="teacher-profile.html">👤 My Profile</a>
+
+    <a href="index.html">🌐 Back to Website</a>
+
+    <a href="login.html">🚪 Logout</a>
+
+</div>
+```
+
+</aside>
+
+<main class="main">
+
+```
+<div class="header">
+
+    <div>
+        <h1>Leave Request</h1>
+        <p>Manage your leave applications and leave history.</p>
+    </div>
+
+    <button class="apply-btn" onclick="openModal()">
+        + Apply for Leave
+    </button>
+
+</div>
+
+
+<div class="cards">
+
+    <div class="card">
+        <h3>Total Leave</h3>
+        <strong>24</strong>
+    </div>
+
+    <div class="card">
+        <h3>Used Leave</h3>
+        <strong>7</strong>
+    </div>
+
+    <div class="card">
+        <h3>Remaining</h3>
+        <strong>17</strong>
+    </div>
+
+    <div class="card">
+        <h3>Pending Requests</h3>
+        <strong id="pendingCount">1</strong>
+    </div>
+
+</div>
+
+
+<div class="table-box">
+
+    <h2>Leave History</h2>
+
+    <table id="leaveTable">
+
+        <thead>
+
+            <tr>
+                <th>Leave Type</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Days</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td>Casual Leave</td>
+
+                <td>05 Sep 2026</td>
+
+                <td>06 Sep 2026</td>
+
+                <td>2</td>
+
+                <td>Personal work</td>
+
+                <td>
+                    <span class="status approved">Approved</span>
+                </td>
+
+                <td>
+                    <button class="view-btn"
+                    onclick="viewLeave('Casual Leave','05 Sep 2026','06 Sep 2026','2','Personal work','Approved')">
+                    View
+                    </button>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>Sick Leave</td>
+
+                <td>15 Sep 2026</td>
+
+                <td>15 Sep 2026</td>
+
+                <td>1</td>
+
+                <td>Not feeling well</td>
+
+                <td>
+                    <span class="status approved">Approved</span>
+                </td>
+
+                <td>
+                    <button class="view-btn"
+                    onclick="viewLeave('Sick Leave','15 Sep 2026','15 Sep 2026','1','Not feeling well','Approved')">
+                    View
+                    </button>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>Casual Leave</td>
+
+                <td>10 Oct 2026</td>
+
+                <td>11 Oct 2026</td>
+
+                <td>2</td>
+
+                <td>Family event</td>
+
+                <td>
+                    <span class="status pending">Pending</span>
+                </td>
+
+                <td>
+                    <button class="cancel-btn" onclick="cancelLeave(this)">
+                        Cancel
+                    </button>
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+```
+
+</main>
+
+<div class="modal" id="leaveModal">
+
+```
+<div class="modal-box">
+
+    <h2>Apply for Leave</h2>
+
+
+    <div class="form-group">
+
+        <label>Leave Type</label>
+
+        <select id="leaveType">
+
+            <option>Casual Leave</option>
+
+            <option>Sick Leave</option>
+
+            <option>Emergency Leave</option>
+
+            <option>Annual Leave</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>From Date</label>
+
+        <input type="date" id="fromDate">
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>To Date</label>
+
+        <input type="date" id="toDate">
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>Reason</label>
+
+        <textarea id="reason"
+        placeholder="Enter reason for leave"></textarea>
+
+    </div>
+
+
+    <div class="modal-actions">
+
+        <button class="close-btn" onclick="closeModal()">
+            Cancel
+        </button>
+
+        <button class="submit-btn" onclick="submitLeave()">
+            Submit Request
+        </button>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<script>
+
+function openModal() {
+
+    document.getElementById("leaveModal").style.display = "flex";
+
+}
+
+
+function closeModal() {
+
+    document.getElementById("leaveModal").style.display = "none";
+
+}
+
+
+function submitLeave() {
+
+    const type = document.getElementById("leaveType").value;
+
+    const from = document.getElementById("fromDate").value;
+
+    const to = document.getElementById("toDate").value;
+
+    const reason = document.getElementById("reason").value.trim();
+
+
+    if (!from || !to || !reason) {
+
+        alert("Please fill all fields.");
+
+        return;
+
+    }
+
+
+    if (to < from) {
+
+        alert("To date cannot be before From date.");
+
+        return;
+
+    }
+
+
+    const start = new Date(from);
+
+    const end = new Date(to);
+
+    const days = Math.floor(
+        (end - start) / (1000 * 60 * 60 * 24)
+    ) + 1;
+
+
+    const formattedFrom = formatDate(from);
+
+    const formattedTo = formatDate(to);
+
+
+    const tbody = document.querySelector("#leaveTable tbody");
+
+    const row = document.createElement("tr");
+
+
+    row.innerHTML = `
+
+        <td>${type}</td>
+
+        <td>${formattedFrom}</td>
+
+        <td>${formattedTo}</td>
+
+        <td>${days}</td>
+
+        <td>${reason}</td>
+
+        <td>
+            <span class="status pending">Pending</span>
+        </td>
+
+        <td>
+            <button class="cancel-btn"
+            onclick="cancelLeave(this)">
+            Cancel
+            </button>
+        </td>
+
+    `;
+
+
+    tbody.appendChild(row);
+
+
+    updatePendingCount(1);
+
+
+    alert("Leave request submitted successfully.");
+
+
+    document.getElementById("leaveType").value = "Casual Leave";
+
+    document.getElementById("fromDate").value = "";
+
+    document.getElementById("toDate").value = "";
+
+    document.getElementById("reason").value = "";
+
+
+    closeModal();
+
+}
+
+
+function cancelLeave(button) {
+
+    if (confirm("Are you sure you want to cancel this leave request?")) {
+
+        const row = button.closest("tr");
+
+        row.remove();
+
+        updatePendingCount(-1);
+
+        alert("Leave request cancelled.");
+
+    }
+
+}
+
+
+function updatePendingCount(change) {
+
+    const element = document.getElementById("pendingCount");
+
+    let current = parseInt(element.innerText);
+
+    current += change;
+
+    if (current < 0) {
+        current = 0;
+    }
+
+    element.innerText = current;
+
+}
+
+
+function formatDate(dateString) {
+
+    const date = new Date(dateString + "T00:00:00");
+
+    return date.toLocaleDateString("en-GB", {
+
+        day: "2-digit",
+
+        month: "short",
+
+        year: "numeric"
+
+    });
+
+}
+
+
+function viewLeave(type, from, to, days, reason, status) {
+
+    alert(
+
+        "Leave Details\n\n" +
+
+        "Type: " + type + "\n" +
+
+        "From: " + from + "\n" +
+
+        "To: " + to + "\n" +
+
+        "Days: " + days + "\n" +
+
+        "Reason: " + reason + "\n" +
+
+        "Status: " + status
+
+    );
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fees - EduSphere</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background: #0f172a;
+    color: white;
+    padding: 25px 15px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 35px;
+    padding-left: 10px;
+}
+
+.sidebar a {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 12px 14px;
+    margin: 5px 0;
+    border-radius: 8px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #1e293b;
+    color: white;
+}
+
+.main {
+    flex: 1;
+    padding: 30px;
+}
+
+h1 {
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    margin-bottom: 25px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+}
+
+.add-btn {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 10px 17px;
+    border-radius: 7px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.delete-btn {
+    border: none;
+    background: #dc2626;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 13px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+th {
+    background: #f8fafc;
+}
+
+.message {
+    margin-top: 10px;
+}
+
+@media(max-width:800px) {
+    .sidebar {
+        width: 190px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main {
+        padding: 15px;
+    }
+
+    table {
+        min-width: 850px;
+    }
+
+    .card {
+        overflow-x: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<aside class="sidebar">
+
+<div class="logo">EduSphere</div>
+
+<a href="admin-dashboard.html">🏠 Dashboard</a>
+<a href="students.html">👨‍🎓 Students</a>
+<a href="teachers.html">👨‍🏫 Teachers</a>
+<a href="classes.html">🏫 Classes</a>
+<a href="attendance.html">📋 Attendance</a>
+<a href="homework.html">📚 Homework</a>
+<a href="syllabus.html">📖 Syllabus</a>
+<a href="date-sheet.html">📅 Date Sheet</a>
+<a href="results.html">📊 Results</a>
+<a href="fees.html" class="active">💳 Fees</a>
+<a href="notices.html">📢 Notices</a>
+<a href="admissions.html">📄 Admissions</a>
+
+<a href="index.html">← Back to Website</a>
+<a href="login.html">↪ Logout</a>
+
+</aside>
+
+
+<main class="main">
+
+<h1>Fee Management</h1>
+
+
+<div class="card">
+
+<h2>Add Fee Record</h2>
+
+<br>
+
+<div class="form-grid">
+
+<select id="student_id">
+<option value="">Select Student</option>
+</select>
+
+<input
+type="text"
+id="fee_month"
+placeholder="Fee Month (e.g. October 2026)"
+>
+
+<input
+type="number"
+id="amount"
+placeholder="Total Fee Amount"
+>
+
+<input
+type="number"
+id="paid_amount"
+placeholder="Paid Amount"
+value="0"
+>
+
+<select id="status">
+
+<option value="Unpaid">Unpaid</option>
+<option value="Partial">Partial</option>
+<option value="Paid">Paid</option>
+
+</select>
+
+<input
+type="date"
+id="due_date"
+>
+
+</div>
+
+
+<button class="add-btn" onclick="addFee()">
+Add Fee
+</button>
+
+<div id="message" class="message"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Fee Records</h2>
+
+<br>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Student</th>
+<th>Month</th>
+<th>Amount</th>
+<th>Paid</th>
+<th>Status</th>
+<th>Due Date</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody id="feesTable"></tbody>
+
+</table>
+
+</div>
+
+</main>
+
+</div>
+
+
+<script>
+
+async function loadStudents() {
+
+try {
+
+const response = await fetch("/api/students");
+
+const data = await response.json();
+
+const select =
+document.getElementById("student_id");
+
+select.innerHTML =
+'<option value="">Select Student</option>';
+
+data.forEach(student => {
+
+const option =
+document.createElement("option");
+
+option.value = student.id;
+
+option.textContent =
+student.name +
+(student.admission_no
+? " - " + student.admission_no
+: "");
+
+select.appendChild(option);
+
+});
+
+} catch(error) {
+
+console.error(error);
+
+}
+
+}
+
+
+async function loadFees() {
+
+try {
+
+const response =
+await fetch("/api/fees");
+
+const data =
+await response.json();
+
+const table =
+document.getElementById("feesTable");
+
+table.innerHTML = "";
+
+data.forEach(fee => {
+
+const row =
+document.createElement("tr");
+
+row.innerHTML = `
+
+<td>${fee.student_name || "-"}</td>
+
+<td>${fee.fee_month || "-"}</td>
+
+<td>${fee.amount || 0}</td>
+
+<td>${fee.paid_amount || 0}</td>
+
+<td>${fee.status || "-"}</td>
+
+<td>${fee.due_date || "-"}</td>
+
+<td>
+
+<button
+class="delete-btn"
+onclick="deleteFee(${fee.id})">
+Delete
+</button>
+
+</td>
+
+`;
+
+table.appendChild(row);
+
+});
+
+} catch(error) {
+
+console.error(error);
+
+}
+
+}
+
+
+async function addFee() {
+
+const student_id =
+document.getElementById("student_id").value;
+
+const fee_month =
+document.getElementById("fee_month").value.trim();
+
+const amount =
+document.getElementById("amount").value;
+
+const paid_amount =
+document.getElementById("paid_amount").value;
+
+const status =
+document.getElementById("status").value;
+
+const due_date =
+document.getElementById("due_date").value;
+
+
+if(!student_id || !fee_month || !amount) {
+
+document.getElementById("message").innerText =
+"Please select student, fee month and amount.";
+
+return;
+
+}
+
+
+try {
+
+const response =
+await fetch("/api/fees", {
+
+method: "POST",
+
+headers: {
+"Content-Type": "application/json"
+},
+
+body: JSON.stringify({
+
+student_id: student_id,
+fee_month: fee_month,
+amount: amount,
+paid_amount: paid_amount,
+status: status,
+due_date: due_date
+
+})
+
+});
+
+
+const result =
+await response.json();
+
+
+if(response.ok) {
+
+document.getElementById("message").innerText =
+"Fee record added successfully.";
+
+document.getElementById("fee_month").value = "";
+document.getElementById("amount").value = "";
+document.getElementById("paid_amount").value = "0";
+document.getElementById("due_date").value = "";
+
+loadFees();
+
+} else {
+
+document.getElementById("message").innerText =
+result.error || "Failed to add fee.";
+
+}
+
+} catch(error) {
+
+console.error(error);
+
+document.getElementById("message").innerText =
+"Server error.";
+
+}
+
+}
+
+
+async function deleteFee(id) {
+
+if(!confirm("Delete this fee record?")) {
+return;
+}
+
+try {
+
+const response =
+await fetch(
+"/api/fees/" + id,
+{
+method: "DELETE"
+}
+);
+
+if(response.ok) {
+
+loadFees();
+
+} else {
+
+alert("Could not delete fee record.");
+
+}
+
+} catch(error) {
+
+console.error(error);
+
+}
+
+}
+
+
+loadStudents();
+loadFees();
+
+</script>
+
+</body>
+</html>

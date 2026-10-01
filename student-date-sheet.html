@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Date Sheet | Student Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .student-page {
+            padding: 28px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 6px;
+            color: #173b67;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .print-btn {
+            border: none;
+            background: #173b67;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .print-btn:hover {
+            opacity: .9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .stat-card h4 {
+            margin: 0 0 8px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .stat-card h2 {
+            margin: 0;
+            color: #173b67;
+            font-size: 25px;
+        }
+
+        .stat-card small {
+            display: block;
+            margin-top: 6px;
+            color: #888;
+            font-size: 11px;
+        }
+
+        .student-info {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .student-info h3 {
+            margin: 0 0 15px;
+            color: #173b67;
+            font-size: 17px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #f7f9fc;
+            padding: 13px;
+            border-radius: 8px;
+        }
+
+        .info-item span {
+            display: block;
+            color: #888;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .info-item strong {
+            color: #333;
+            font-size: 13px;
+        }
+
+        .filters-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            outline: none;
+            background: white;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .table-title {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table-title h3 {
+            margin: 0;
+            color: #173b67;
+            font-size: 17px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th {
+            background: #f7f9fc;
+            color: #666;
+            font-size: 11px;
+            text-align: left;
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        td {
+            padding: 15px 14px;
+            font-size: 12px;
+            color: #444;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .exam-date {
+            font-weight: 700;
+            color: #173b67;
+        }
+
+        .subject-name {
+            font-weight: 700;
+            color: #333;
+        }
+
+        .exam-type {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            background: #edf2f8;
+            color: #173b67;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .upcoming {
+            background: #fff4df;
+            color: #b36b00;
+        }
+
+        .completed {
+            background: #e8f7ee;
+            color: #248a52;
+        }
+
+        .today {
+            background: #e8eef8;
+            color: #285b8f;
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .note-box {
+            margin-top: 22px;
+            background: #f7f9fc;
+            border-radius: 10px;
+            padding: 16px;
+            color: #666;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 1000px) {
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filters {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .student-page {
+                padding: 18px;
+            }
+
+            .page-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .print-btn {
+                width: 100%;
+            }
+
+        }
+
+        @media print {
+
+            .sidebar,
+            .topbar,
+            .filters-card,
+            .print-btn,
+            .note-box {
+                display: none !important;
+            }
+
+            .main-content {
+                margin: 0 !important;
+                width: 100% !important;
+            }
+
+            .student-page {
+                padding: 10px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .table-card {
+                box-shadow: none;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Student Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="student-dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="student-profile.html">
+                👤 My Profile
+            </a>
+
+            <a href="student-attendance.html">
+                ✓ Attendance
+            </a>
+
+            <a href="student-homework.html">
+                📝 Homework & Diary
+            </a>
+
+            <a href="student-syllabus.html">
+                📚 Syllabus
+            </a>
+
+            <a href="student-date-sheet.html" class="active">
+                📅 Date Sheet
+            </a>
+
+            <a href="student-results.html">
+                📈 Results
+            </a>
+
+            <a href="student-timetable.html">
+                🕐 Timetable
+            </a>
+
+            <a href="student-notices.html">
+                🔔 Notices
+            </a>
+
+            <a href="index.html">
+                🌐 Back to Website
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                Date Sheet
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">
+                    MA
+                </div>
+
+                <div>
+                    <strong>Muhammad Ahmed</strong>
+                    <small>Grade 8-A</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="student-page">
+
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        My Date Sheet
+                    </h1>
+
+                    <p>
+                        View your upcoming and completed examinations.
+                    </p>
+
+                </div>
+
+                <button
+                    class="print-btn"
+                    onclick="window.print()"
+                >
+                    🖨 Print Date Sheet
+                </button>
+
+            </div>
+
+
+            <!-- STATS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <h4>Total Exams</h4>
+
+                    <h2 id="totalExams">
+                        8
+                    </h2>
+
+                    <small>
+                        Academic year 2026
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>Completed</h4>
+
+                    <h2 id="completedExams">
+                        4
+                    </h2>
+
+                    <small>
+                        Exams completed
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>Upcoming</h4>
+
+                    <h2 id="upcomingExams">
+                        4
+                    </h2>
+
+                    <small>
+                        Exams remaining
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>Class</h4>
+
+                    <h2>
+                        8-A
+                    </h2>
+
+                    <small>
+                        Current class
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT INFORMATION -->
+            <div class="student-info">
+
+                <h3>
+                    Student Information
+                </h3>
+
+                <div class="info-grid">
+
+                    <div class="info-item">
+
+                        <span>
+                            Student
+                        </span>
+
+                        <strong>
+                            Muhammad Ahmed
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <span>
+                            Class
+                        </span>
+
+                        <strong>
+                            Grade 8-A
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <span>
+                            Admission No.
+                        </span>
+
+                        <strong>
+                            ES-2026-1024
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-item">
+
+                        <span>
+                            Academic Year
+                        </span>
+
+                        <strong>
+                            2026
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="filters-card">
+
+                <div class="filters">
+
+                    <input
+                        type="text"
+                        id="searchExam"
+                        placeholder="Search subject, room or teacher..."
+                        onkeyup="filterExams()"
+                    >
+
+
+                    <select
+                        id="typeFilter"
+                        onchange="filterExams()"
+                    >
+
+                        <option value="">
+                            All Exam Types
+                        </option>
+
+                        <option value="Monthly Test">
+                            Monthly Test
+                        </option>
+
+                        <option value="Mid Term">
+                            Mid Term
+                        </option>
+
+                        <option value="Final Term">
+                            Final Term
+                        </option>
+
+                        <option value="Class Test">
+                            Class Test
+                        </option>
+
+                    </select>
+
+
+                    <select
+                        id="statusFilter"
+                        onchange="filterExams()"
+                    >
+
+                        <option value="">
+                            All Status
+                        </option>
+
+                        <option value="Upcoming">
+                            Upcoming
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                        <option value="Today">
+                            Today
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- DATE SHEET TABLE -->
+            <div class="table-card">
+
+                <div class="table-title">
+
+                    <h3>
+                        Examination Schedule
+                    </h3>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    #
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Day
+                                </th>
+
+                                <th>
+                                    Subject
+                                </th>
+
+                                <th>
+                                    Exam Type
+                                </th>
+
+                                <th>
+                                    Time
+                                </th>
+
+                                <th>
+                                    Room
+                                </th>
+
+                                <th>
+                                    Teacher
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="examTable">
+
+
+                            <tr data-type="Mid Term" data-status="Completed">
+
+                                <td>1</td>
+
+                                <td class="exam-date">
+                                    10 Apr 2026
+                                </td>
+
+                                <td>
+                                    Friday
+                                </td>
+
+                                <td class="subject-name">
+                                    Mathematics
+                                </td>
+
+                                <td>
+                                    <span class="exam-type">
+                                        Mid Term
+                                    </span>
+                                </td>
+
+                                <td>
+                                    09:00 AM - 10:30 AM
+                                </td>
+
+                                <td>
+                                    Room 8
+                                </td>
+
+                                <td>
+                                    Mr. Bilal
+                                </td>
+
+                                <td>
+                                    <span class="status-badge completed">
+                                        Completed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr data-type="Mid Term" data-status="Completed">
+
+                                <td>2</td>
+
+                                <td class="exam-date">
+                                    13 Apr 2026
+                                </td>
+
+                                <td>
+                                    Monday
+                                </td>
+
+                                <td class="subject-name">
+                                    English
+                                </td>
+
+                                <td>
+                                    <span class="exam-type">
+                                        Mid Term
+                                    </span>
+                                </td>
+
+                                <td>
+                                    09:00 AM - 10:30 AM
+                                </td>
+
+                                <td>
+                                    Room 8
+                                </td>
+
+                                <td>
+                                    Ms. Ayesha
+                                </td>
+
+                                <td>
+                                    <span class="status-badge completed">
+                                        Completed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr data-type="Mid Term" data-status="Completed">
+
+                                <td>3</td>
+
+                                <td class="exam-date">
+                                    15 Apr 2026
+                                </td>
+
+                                <td>
+                                    Wednesday
+                                </td>
+
+                                <td class="subject-name">
+                                    Computer Science
+                                </td>
+
+                                <td>
+                                    <span class="exam-type">
+                                        Mid Term
+                                    </span>
+                                </td>
+
+                                <td>
+                                    09:00 AM - 10:30 AM
+                                </td>
+
+                                <td>
+                                    Computer Lab
+                                </td>
+
+                                <td>
+                                    Ms. Sarah
+                                </td>
+
+                                <td>
+                                    <span class="status-badge completed">
+                                        Completed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr data-type="Mid Term" data-status="Completed">
+
+                                <td>4</td>
+
+                                <td class="exam-date">
+                                    17 Apr 2026
+                                </td>
+
+                                <td>
+                                    Friday
+                                </td>
+
+                                <td class="subject-name">
+                                    Physics
+                                </td>
+
+                                <td>
+                                    <span class="exam-type">
+                                        Mid Term
+                                    </span>
+                                </td>
+
+                                <td>
+                                    09:00 AM - 10:30 AM
+                                </td>
+
+                                <td>
+                                    Room 8
+                                </td>
+
+                                <td>
+                                    Mr. Hamza
+                                </td>
+
+                                <td>
+                                    <span class="status-badge completed">
+                                        Completed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr data-type="Final Term" data-status="Upcoming">
+
+                                <td>5</td>
+
+                                <td class="exam-date">
+                                    05 Oct 2026
+                                </td>
+
+                                <td>
+                                    Monday
+                                </td>
+
+                                <td class="subject-name">
+                                    Mathematics
+                                </td>
+
+                                <td>
+                                    <span class="exam-type">
+                                        Final Term
+                                    </span>
+                                </td>
+
+                                <td>
+                                    09:00 AM - 11:00 AM
+                                </td>
+
+                                <td>
+                                    Hall A
+                                </td>
+
+                                <td>
+                                    Mr. Bilal
+                                </td>
+
+                                <td>
+                                    <span class="status-badge upcoming">
+                                        Upcoming
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr data-type="Final Term" data-status="Upcoming">
+
+                                <td>6</td>
+
+                                <td class="exam-date">
+                                    07 Oct 2026
+                                </td>
+
+                                <td>
+                                    Wednesday
+                                </td>
+
+                                <td class="subject-name">
+                                    English
+                                </td>
+
+                                <td>
+                                    <span class="exam-type">
+                                        Final Term
+                                    </span>
+                                </td>
+
+                                <td>
+                                    09:00 AM - 11:00 AM
+                                </td>
+
+                                <td>
+                                    Hall A
+                                </td>
+
+                                <td>
+                                    Ms. Ayesha
+                                </td>
+
+                                <td>
+                                    <span class="status-badge upcoming">
+                                        Upcoming
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr data-type="Final Term" data-status="Upcoming">
+
+                                <td>7</td>
+
+                                <td class="exam-date">
+                                    09 Oct 2026
+                                </td>
+
+                                <td>
+                                    Friday
+                                </td>
+
+                                <td class="subject-name">
+                                    Computer Science
+                                </td>
+
+                                <td>
+                                    <span class="exam-type">
+                                        Final Term
+                                    </span>
+                                </td>
+
+                                <td>
+                                    09:00 AM - 11:00 AM
+                                </td>
+
+                                <td>
+                                    Computer Lab
+                                </td>
+
+                                <td>
+                                    Ms. Sarah
+                                </td>
+
+                                <td>
+                                    <span class="status-badge upcoming">
+                                        Upcoming
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr data-type="Final Term" data-status="Upcoming">
+
+                                <td>8</td>
+
+                                <td class="exam-date">
+                                    12 Oct 2026
+                                </td>
+
+                                <td>
+                                    Monday
+                                </td>
+
+                                <td class="subject-name">
+                                    Physics
+                                </td>
+
+                                <td>
+                                    <span class="exam-type">
+                                        Final Term
+                                    </span>
+                                </td>
+
+                                <td>
+                                    09:00 AM - 11:00 AM
+                                </td>
+
+                                <td>
+                                    Hall A
+                                </td>
+
+                                <td>
+                                    Mr. Hamza
+                                </td>
+
+                                <td>
+                                    <span class="status-badge upcoming">
+                                        Upcoming
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div
+                    class="no-results"
+                    id="noResults"
+                >
+                    No examination record found.
+                </div>
+
+            </div>
+
+
+            <!-- NOTE -->
+            <div class="note-box">
+
+                <strong>Note:</strong>
+                This date sheet currently contains demo examination data.
+                After the backend is connected, the school administration
+                will publish the actual date sheet and students will see
+                their latest examination schedule automatically.
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("open");
+
+    }
+
+
+    function filterExams() {
+
+        const search =
+            document
+                .getElementById("searchExam")
+                .value
+                .toLowerCase();
+
+        const type =
+            document
+                .getElementById("typeFilter")
+                .value;
+
+        const status =
+            document
+                .getElementById("statusFilter")
+                .value;
+
+
+        const rows =
+            document.querySelectorAll(
+                "#examTable tr"
+            );
+
+
+        let visible = 0;
+
+
+        rows.forEach(function(row) {
+
+            const text =
+                row.innerText.toLowerCase();
+
+            const rowType =
+                row.dataset.type;
+
+            const rowStatus =
+                row.dataset.status;
+
+
+            const searchMatch =
+                text.includes(search);
+
+            const typeMatch =
+                !type ||
+                rowType === type;
+
+            const statusMatch =
+                !status ||
+                rowStatus === status;
+
+
+            if (
+                searchMatch &&
+                typeMatch &&
+                statusMatch
+            ) {
+
+                row.style.display = "";
+
+                visible++;
+
+            } else {
+
+                row.style.display = "none";
+
+            }
+
+        });
+
+
+        const noResults =
+            document.getElementById("noResults");
+
+
+        if (visible === 0) {
+
+            noResults.style.display = "block";
+
+        } else {
+
+            noResults.style.display = "none";
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

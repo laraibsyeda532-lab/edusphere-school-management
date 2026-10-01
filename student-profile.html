@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | Student Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .student-page {
+            padding: 28px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 6px;
+            color: #173b67;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 22px;
+        }
+
+        .profile-card,
+        .details-card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .profile-card {
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 105px;
+            height: 105px;
+            border-radius: 50%;
+            background: #173b67;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .profile-card h2 {
+            margin: 0 0 5px;
+            color: #173b67;
+            font-size: 20px;
+        }
+
+        .profile-card p {
+            margin: 4px 0;
+            color: #777;
+            font-size: 12px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 15px;
+            border-radius: 20px;
+            background: #e8f7ee;
+            color: #248a52;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .profile-info {
+            margin-top: 22px;
+            text-align: left;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .profile-info div {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 9px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 11px;
+        }
+
+        .profile-info span {
+            color: #888;
+        }
+
+        .profile-info strong {
+            color: #333;
+            text-align: right;
+        }
+
+        .details-card {
+            margin-bottom: 22px;
+        }
+
+        .details-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .details-card h2 {
+            margin: 0 0 20px;
+            color: #173b67;
+            font-size: 18px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .info-item {
+            background: #f7f9fc;
+            padding: 14px;
+            border-radius: 9px;
+        }
+
+        .info-item span {
+            display: block;
+            color: #888;
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+
+        .info-item strong {
+            color: #333;
+            font-size: 13px;
+        }
+
+        .academic-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .academic-table th,
+        .academic-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .academic-table th {
+            color: #777;
+            font-size: 11px;
+        }
+
+        .academic-table td {
+            color: #444;
+        }
+
+        .grade {
+            font-weight: 700;
+            color: #173b67;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .contact-box {
+            border: 1px solid #e8ebef;
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .contact-box h4 {
+            margin: 0 0 12px;
+            color: #173b67;
+            font-size: 14px;
+        }
+
+        .contact-box p {
+            margin: 6px 0;
+            color: #777;
+            font-size: 12px;
+        }
+
+        .contact-box strong {
+            color: #333;
+        }
+
+        @media (max-width: 900px) {
+            .profile-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .student-page {
+                padding: 18px;
+            }
+
+            .page-header {
+                align-items: flex-start;
+            }
+
+            .info-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .details-card {
+                overflow-x: auto;
+            }
+
+            .academic-table {
+                min-width: 600px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Student Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="student-dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="student-profile.html" class="active">
+                👤 My Profile
+            </a>
+
+            <a href="student-attendance.html">
+                ✓ Attendance
+            </a>
+
+            <a href="student-homework.html">
+                📝 Homework & Diary
+            </a>
+
+            <a href="student-syllabus.html">
+                📚 Syllabus
+            </a>
+
+            <a href="student-date-sheet.html">
+                📅 Date Sheet
+            </a>
+
+            <a href="student-results.html">
+                📈 Results
+            </a>
+
+            <a href="student-timetable.html">
+                🕐 Timetable
+            </a>
+
+            <a href="student-notices.html">
+                🔔 Notices
+            </a>
+
+            <a href="index.html">
+                🌐 Back to Website
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                My Profile
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">
+                    MA
+                </div>
+
+                <div>
+                    <strong>Muhammad Ahmed</strong>
+                    <small>Grade 8-A</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="student-page">
+
+            <!-- HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        My Profile
+                    </h1>
+
+                    <p>
+                        View your personal, academic and contact information.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-layout">
+
+                <!-- LEFT PROFILE CARD -->
+                <div>
+
+                    <div class="profile-card">
+
+                        <div class="profile-avatar">
+                            MA
+                        </div>
+
+                        <h2>
+                            Muhammad Ahmed
+                        </h2>
+
+                        <p>
+                            Grade 8-A
+                        </p>
+
+                        <p>
+                            Roll No. 08
+                        </p>
+
+                        <span class="status-badge">
+                            Active Student
+                        </span>
+
+
+                        <div class="profile-info">
+
+                            <div>
+                                <span>Admission No.</span>
+                                <strong>ES-2026-1024</strong>
+                            </div>
+
+                            <div>
+                                <span>Academic Year</span>
+                                <strong>2026</strong>
+                            </div>
+
+                            <div>
+                                <span>Class Teacher</span>
+                                <strong>Ms. Sarah Khan</strong>
+                            </div>
+
+                            <div>
+                                <span>Section</span>
+                                <strong>A</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT CONTENT -->
+                <div>
+
+                    <!-- PERSONAL INFORMATION -->
+                    <div class="details-card">
+
+                        <h2>
+                            Personal Information
+                        </h2>
+
+                        <div class="info-grid">
+
+                            <div class="info-item">
+                                <span>Full Name</span>
+                                <strong>Muhammad Ahmed</strong>
+                            </div>
+
+                            <div class="info-item">
+                                <span>Father's Name</span>
+                                <strong>Ahmed Ali</strong>
+                            </div>
+
+                            <div class="info-item">
+                                <span>Date of Birth</span>
+                                <strong>15 March 2012</strong>
+                            </div>
+
+                            <div class="info-item">
+                                <span>Gender</span>
+                                <strong>Male</strong>
+                            </div>
+
+                            <div class="info-item">
+                                <span>Blood Group</span>
+                                <strong>B+</strong>
+                            </div>
+
+                            <div class="info-item">
+                                <span>Nationality</span>
+                                <strong>Pakistani</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACADEMIC INFORMATION -->
+                    <div class="details-card">
+
+                        <h2>
+                            Academic Information
+                        </h2>
+
+                        <div class="info-grid">
+
+                            <div class="info-item">
+                                <span>Current Class</span>
+                                <strong>Grade 8-A</strong>
+                            </div>
+
+                            <div class="info-item">
+                                <span>Roll Number</span>
+                                <strong>08</strong>
+                            </div>
+
+                            <div class="info-item">
+                                <span>Admission Date</span>
+                                <strong>10 April 2024</strong>
+                            </div>
+
+                            <div class="info-item">
+                                <span>Class Teacher</span>
+                                <strong>Ms. Sarah Khan</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PERFORMANCE -->
+                    <div class="details-card">
+
+                        <h2>
+                            Academic Performance
+                        </h2>
+
+                        <table class="academic-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Total Marks</th>
+                                    <th>Obtained</th>
+                                    <th>Percentage</th>
+                                    <th>Grade</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>Mathematics</td>
+                                    <td>100</td>
+                                    <td>89</td>
+                                    <td>89%</td>
+                                    <td class="grade">A</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Computer Science</td>
+                                    <td>100</td>
+                                    <td>94</td>
+                                    <td>94%</td>
+                                    <td class="grade">A+</td>
+                                </tr>
+
+                                <tr>
+                                    <td>English</td>
+                                    <td>100</td>
+                                    <td>86</td>
+                                    <td>86%</td>
+                                    <td class="grade">A</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Physics</td>
+                                    <td>100</td>
+                                    <td>84</td>
+                                    <td>84%</td>
+                                    <td class="grade">A</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Urdu</td>
+                                    <td>100</td>
+                                    <td>82</td>
+                                    <td>82%</td>
+                                    <td class="grade">A</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Islamiat</td>
+                                    <td>100</td>
+                                    <td>87</td>
+                                    <td>87%</td>
+                                    <td class="grade">A</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- PARENT / EMERGENCY -->
+                    <div class="details-card">
+
+                        <h2>
+                            Parent & Emergency Contact
+                        </h2>
+
+                        <div class="contact-grid">
+
+                            <div class="contact-box">
+
+                                <h4>
+                                    Parent / Guardian
+                                </h4>
+
+                                <p>
+                                    <strong>Name:</strong>
+                                    Ahmed Ali
+                                </p>
+
+                                <p>
+                                    <strong>Relation:</strong>
+                                    Father
+                                </p>
+
+                                <p>
+                                    <strong>Phone:</strong>
+                                    0300-1234567
+                                </p>
+
+                                <p>
+                                    <strong>Email:</strong>
+                                    ahmed@example.com
+                                </p>
+
+                            </div>
+
+
+                            <div class="contact-box">
+
+                                <h4>
+                                    Emergency Contact
+                                </h4>
+
+                                <p>
+                                    <strong>Name:</strong>
+                                    Ayesha Ahmed
+                                </p>
+
+                                <p>
+                                    <strong>Relation:</strong>
+                                    Mother
+                                </p>
+
+                                <p>
+                                    <strong>Phone:</strong>
+                                    0312-7654321
+                                </p>
+
+                                <p>
+                                    <strong>Address:</strong>
+                                    Wah Cantt, Pakistan
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("open");
+
+    }
+
+</script>
+
+</body>
+</html>

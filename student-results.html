@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Results | Student Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .student-page {
+            padding: 28px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 6px;
+            color: #173b67;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .print-btn {
+            border: none;
+            background: #173b67;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .stat-card h4 {
+            margin: 0 0 8px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .stat-card h2 {
+            margin: 0;
+            color: #173b67;
+            font-size: 25px;
+        }
+
+        .stat-card small {
+            display: block;
+            margin-top: 6px;
+            color: #888;
+            font-size: 11px;
+        }
+
+        .student-info {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .student-info h3 {
+            margin: 0 0 15px;
+            color: #173b67;
+            font-size: 17px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #f7f9fc;
+            padding: 13px;
+            border-radius: 8px;
+        }
+
+        .info-item span {
+            display: block;
+            color: #888;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .info-item strong {
+            color: #333;
+            font-size: 13px;
+        }
+
+        .filters-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            outline: none;
+            background: white;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            margin-bottom: 22px;
+        }
+
+        .table-title {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table-title h3 {
+            margin: 0;
+            color: #173b67;
+            font-size: 17px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th {
+            background: #f7f9fc;
+            color: #666;
+            font-size: 11px;
+            text-align: left;
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        td {
+            padding: 15px 14px;
+            font-size: 12px;
+            color: #444;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .subject-name {
+            font-weight: 700;
+            color: #333;
+        }
+
+        .marks {
+            font-weight: 700;
+            color: #173b67;
+        }
+
+        .percentage {
+            font-weight: 700;
+        }
+
+        .grade {
+            display: inline-block;
+            min-width: 28px;
+            text-align: center;
+            padding: 5px 8px;
+            border-radius: 6px;
+            background: #edf2f8;
+            color: #173b67;
+            font-weight: 700;
+            font-size: 11px;
+        }
+
+        .result-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .passed {
+            background: #e8f7ee;
+            color: #248a52;
+        }
+
+        .failed {
+            background: #fdeaea;
+            color: #c0392b;
+        }
+
+        .performance-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .performance-card h3 {
+            margin: 0 0 20px;
+            color: #173b67;
+            font-size: 17px;
+        }
+
+        .performance-item {
+            margin-bottom: 18px;
+        }
+
+        .performance-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+        }
+
+        .performance-top span:first-child {
+            font-size: 12px;
+            font-weight: 700;
+            color: #444;
+        }
+
+        .performance-top span:last-child {
+            font-size: 12px;
+            font-weight: 700;
+            color: #173b67;
+        }
+
+        .performance-bar {
+            height: 8px;
+            background: #e8edf2;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .performance-bar span {
+            display: block;
+            height: 100%;
+            background: #285b8f;
+            border-radius: 20px;
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .note-box {
+            margin-top: 22px;
+            background: #f7f9fc;
+            border-radius: 10px;
+            padding: 16px;
+            color: #666;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 1000px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filters {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .student-page {
+                padding: 18px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .print-btn {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            .sidebar,
+            .topbar,
+            .filters-card,
+            .print-btn,
+            .note-box {
+                display: none !important;
+            }
+
+            .main-content {
+                margin: 0 !important;
+                width: 100% !important;
+            }
+
+            .student-page {
+                padding: 10px;
+            }
+
+            .table-card,
+            .performance-card,
+            .student-info,
+            .stat-card {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Student Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="student-dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="student-profile.html">
+                👤 My Profile
+            </a>
+
+            <a href="student-attendance.html">
+                ✓ Attendance
+            </a>
+
+            <a href="student-homework.html">
+                📝 Homework & Diary
+            </a>
+
+            <a href="student-syllabus.html">
+                📚 Syllabus
+            </a>
+
+            <a href="student-date-sheet.html">
+                📅 Date Sheet
+            </a>
+
+            <a href="student-results.html" class="active">
+                📈 Results
+            </a>
+
+            <a href="student-timetable.html">
+                🕐 Timetable
+            </a>
+
+            <a href="student-notices.html">
+                🔔 Notices
+            </a>
+
+            <a href="index.html">
+                🌐 Back to Website
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                Results
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">
+                    MA
+                </div>
+
+                <div>
+                    <strong>Muhammad Ahmed</strong>
+                    <small>Grade 8-A</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="student-page">
+
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        My Results
+                    </h1>
+
+                    <p>
+                        View your subject-wise marks, grades and academic performance.
+                    </p>
+
+                </div>
+
+                <button
+                    class="print-btn"
+                    onclick="window.print()"
+                >
+                    🖨 Print Results
+                </button>
+
+            </div>
+
+
+            <!-- STATS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <h4>
+                        Overall Average
+                    </h4>
+
+                    <h2 id="averageMarks">
+                        87%
+                    </h2>
+
+                    <small>
+                        Current academic performance
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>
+                        Total Subjects
+                    </h4>
+
+                    <h2>
+                        6
+                    </h2>
+
+                    <small>
+                        Subjects evaluated
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>
+                        Passed
+                    </h4>
+
+                    <h2 id="passedCount">
+                        6
+                    </h2>
+
+                    <small>
+                        Subjects passed
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>
+                        Failed
+                    </h4>
+
+                    <h2 id="failedCount">
+                        0
+                    </h2>
+
+                    <small>
+                        Subjects failed
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT INFO -->
+            <div class="student-info">
+
+                <h3>
+                    Student Information
+                </h3>
+
+                <div class="info-grid">
+
+                    <div class="info-item">
+                        <span>Student</span>
+                        <strong>Muhammad Ahmed</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Class</span>
+                        <strong>Grade 8-A</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Admission No.</span>
+                        <strong>ES-2026-1024</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Academic Year</span>
+                        <strong>2026</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="filters-card">
+
+                <div class="filters">
+
+                    <input
+                        type="text"
+                        id="searchResult"
+                        placeholder="Search subject or teacher..."
+                        onkeyup="filterResults()"
+                    >
+
+                    <select
+                        id="termFilter"
+                        onchange="filterResults()"
+                    >
+
+                        <option value="">
+                            All Terms
+                        </option>
+
+                        <option value="Mid Term">
+                            Mid Term
+                        </option>
+
+                        <option value="Final Term">
+                            Final Term
+                        </option>
+
+                        <option value="Monthly Test">
+                            Monthly Test
+                        </option>
+
+                    </select>
+
+                    <select
+                        id="statusFilter"
+                        onchange="filterResults()"
+                    >
+
+                        <option value="">
+                            All Results
+                        </option>
+
+                        <option value="Passed">
+                            Passed
+                        </option>
+
+                        <option value="Failed">
+                            Failed
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESULTS TABLE -->
+            <div class="table-card">
+
+                <div class="table-title">
+
+                    <h3>
+                        Examination Results
+                    </h3>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>Subject</th>
+
+                                <th>Teacher</th>
+
+                                <th>Term</th>
+
+                                <th>Total Marks</th>
+
+                                <th>Obtained</th>
+
+                                <th>Percentage</th>
+
+                                <th>Grade</th>
+
+                                <th>Result</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="resultsTable">
+
+
+                            <tr
+                                data-term="Mid Term"
+                                data-result="Passed"
+                            >
+
+                                <td>1</td>
+
+                                <td class="subject-name">
+                                    Mathematics
+                                </td>
+
+                                <td>
+                                    Mr. Bilal
+                                </td>
+
+                                <td>
+                                    Mid Term
+                                </td>
+
+                                <td>
+                                    100
+                                </td>
+
+                                <td class="marks">
+                                    89
+                                </td>
+
+                                <td class="percentage">
+                                    89%
+                                </td>
+
+                                <td>
+                                    <span class="grade">
+                                        A
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="result-badge passed">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-term="Mid Term"
+                                data-result="Passed"
+                            >
+
+                                <td>2</td>
+
+                                <td class="subject-name">
+                                    English
+                                </td>
+
+                                <td>
+                                    Ms. Ayesha
+                                </td>
+
+                                <td>
+                                    Mid Term
+                                </td>
+
+                                <td>
+                                    100
+                                </td>
+
+                                <td class="marks">
+                                    92
+                                </td>
+
+                                <td class="percentage">
+                                    92%
+                                </td>
+
+                                <td>
+                                    <span class="grade">
+                                        A+
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="result-badge passed">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-term="Mid Term"
+                                data-result="Passed"
+                            >
+
+                                <td>3</td>
+
+                                <td class="subject-name">
+                                    Computer Science
+                                </td>
+
+                                <td>
+                                    Ms. Sarah
+                                </td>
+
+                                <td>
+                                    Mid Term
+                                </td>
+
+                                <td>
+                                    100
+                                </td>
+
+                                <td class="marks">
+                                    95
+                                </td>
+
+                                <td class="percentage">
+                                    95%
+                                </td>
+
+                                <td>
+                                    <span class="grade">
+                                        A+
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="result-badge passed">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-term="Mid Term"
+                                data-result="Passed"
+                            >
+
+                                <td>4</td>
+
+                                <td class="subject-name">
+                                    Physics
+                                </td>
+
+                                <td>
+                                    Mr. Hamza
+                                </td>
+
+                                <td>
+                                    Mid Term
+                                </td>
+
+                                <td>
+                                    100
+                                </td>
+
+                                <td class="marks">
+                                    84
+                                </td>
+
+                                <td class="percentage">
+                                    84%
+                                </td>
+
+                                <td>
+                                    <span class="grade">
+                                        A
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="result-badge passed">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-term="Final Term"
+                                data-result="Passed"
+                            >
+
+                                <td>5</td>
+
+                                <td class="subject-name">
+                                    Urdu
+                                </td>
+
+                                <td>
+                                    Ms. Nadia
+                                </td>
+
+                                <td>
+                                    Final Term
+                                </td>
+
+                                <td>
+                                    100
+                                </td>
+
+                                <td class="marks">
+                                    82
+                                </td>
+
+                                <td class="percentage">
+                                    82%
+                                </td>
+
+                                <td>
+                                    <span class="grade">
+                                        A
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="result-badge passed">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr
+                                data-term="Final Term"
+                                data-result="Passed"
+                            >
+
+                                <td>6</td>
+
+                                <td class="subject-name">
+                                    Islamiat
+                                </td>
+
+                                <td>
+                                    Ms. Fatima
+                                </td>
+
+                                <td>
+                                    Final Term
+                                </td>
+
+                                <td>
+                                    100
+                                </td>
+
+                                <td class="marks">
+                                    80
+                                </td>
+
+                                <td class="percentage">
+                                    80%
+                                </td>
+
+                                <td>
+                                    <span class="grade">
+                                        A
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="result-badge passed">
+                                        Passed
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div
+                    class="no-results"
+                    id="noResults"
+                >
+                    No result record found.
+                </div>
+
+            </div>
+
+
+            <!-- SUBJECT PERFORMANCE -->
+            <div class="performance-card">
+
+                <h3>
+                    Subject Performance
+                </h3>
+
+
+                <div class="performance-item">
+
+                    <div class="performance-top">
+                        <span>Computer Science</span>
+                        <span>95%</span>
+                    </div>
+
+                    <div class="performance-bar">
+                        <span style="width:95%;"></span>
+                    </div>
+
+                </div>
+
+
+                <div class="performance-item">
+
+                    <div class="performance-top">
+                        <span>English</span>
+                        <span>92%</span>
+                    </div>
+
+                    <div class="performance-bar">
+                        <span style="width:92%;"></span>
+                    </div>
+
+                </div>
+
+
+                <div class="performance-item">
+
+                    <div class="performance-top">
+                        <span>Mathematics</span>
+                        <span>89%</span>
+                    </div>
+
+                    <div class="performance-bar">
+                        <span style="width:89%;"></span>
+                    </div>
+
+                </div>
+
+
+                <div class="performance-item">
+
+                    <div class="performance-top">
+                        <span>Physics</span>
+                        <span>84%</span>
+                    </div>
+
+                    <div class="performance-bar">
+                        <span style="width:84%;"></span>
+                    </div>
+
+                </div>
+
+
+                <div class="performance-item">
+
+                    <div class="performance-top">
+                        <span>Urdu</span>
+                        <span>82%</span>
+                    </div>
+
+                    <div class="performance-bar">
+                        <span style="width:82%;"></span>
+                    </div>
+
+                </div>
+
+
+                <div class="performance-item">
+
+                    <div class="performance-top">
+                        <span>Islamiat</span>
+                        <span>80%</span>
+                    </div>
+
+                    <div class="performance-bar">
+                        <span style="width:80%;"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE -->
+            <div class="note-box">
+
+                <strong>Note:</strong>
+                These results are currently demo records.
+                After the backend is connected, marks and grades
+                will be loaded automatically from the school's database.
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("open");
+
+    }
+
+
+    function filterResults() {
+
+        const search =
+            document
+                .getElementById("searchResult")
+                .value
+                .toLowerCase();
+
+        const term =
+            document
+                .getElementById("termFilter")
+                .value;
+
+        const status =
+            document
+                .getElementById("statusFilter")
+                .value;
+
+
+        const rows =
+            document.querySelectorAll(
+                "#resultsTable tr"
+            );
+
+
+        let visible = 0;
+
+
+        rows.forEach(function(row) {
+
+            const text =
+                row.innerText.toLowerCase();
+
+            const rowTerm =
+                row.dataset.term;
+
+            const rowResult =
+                row.dataset.result;
+
+
+            const searchMatch =
+                text.includes(search);
+
+            const termMatch =
+                !term ||
+                rowTerm === term;
+
+            const statusMatch =
+                !status ||
+                rowResult === status;
+
+
+            if (
+                searchMatch &&
+                termMatch &&
+                statusMatch
+            ) {
+
+                row.style.display = "";
+
+                visible++;
+
+            } else {
+
+                row.style.display = "none";
+
+            }
+
+        });
+
+
+        const noResults =
+            document.getElementById("noResults");
+
+
+        if (visible === 0) {
+
+            noResults.style.display = "block";
+
+        } else {
+
+            noResults.style.display = "none";
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

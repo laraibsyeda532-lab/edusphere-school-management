@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Child Profile | Parent Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .profile-page {
+            padding: 28px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 6px;
+            color: #173b67;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 22px;
+        }
+
+        .profile-card,
+        .info-card {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.06);
+        }
+
+        .profile-card {
+            padding: 28px;
+            text-align: center;
+        }
+
+        .student-avatar {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #173b67;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            font-weight: 700;
+        }
+
+        .profile-card h2 {
+            margin: 0 0 6px;
+            color: #173b67;
+        }
+
+        .profile-card .class-name {
+            color: #777;
+            margin-bottom: 22px;
+        }
+
+        .profile-info {
+            text-align: left;
+            border-top: 1px solid #eee;
+            padding-top: 18px;
+        }
+
+        .info-item {
+            margin-bottom: 16px;
+        }
+
+        .info-item span {
+            display: block;
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .info-item strong {
+            color: #333;
+            font-size: 14px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #eaf7ee;
+            color: #218838;
+            padding: 5px 11px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .info-card {
+            padding: 25px;
+            margin-bottom: 22px;
+        }
+
+        .info-card h2 {
+            margin: 0 0 20px;
+            color: #173b67;
+            font-size: 20px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .detail-box {
+            background: #f7f9fc;
+            padding: 15px;
+            border-radius: 9px;
+        }
+
+        .detail-box span {
+            display: block;
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .detail-box strong {
+            color: #333;
+            font-size: 14px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .academic-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .academic-table th,
+        .academic-table td {
+            padding: 13px 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+
+        .academic-table th {
+            color: #666;
+            background: #f7f9fc;
+        }
+
+        .academic-table td {
+            color: #444;
+        }
+
+        .progress {
+            width: 100%;
+            max-width: 130px;
+            height: 7px;
+            background: #e9edf2;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #173b67;
+            border-radius: 10px;
+        }
+
+        .contact-box {
+            background: #f7f9fc;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .contact-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .contact-box span {
+            color: #777;
+            font-size: 13px;
+        }
+
+        @media (max-width: 950px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-info {
+                max-width: 500px;
+                margin: auto;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .profile-page {
+                padding: 18px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .academic-table {
+                min-width: 650px;
+            }
+
+            .table-wrapper {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Parent Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="parent-dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="parent-profile.html" class="active">
+                👤 Child Profile
+            </a>
+
+            <a href="parent-fees.html">
+                💳 Fee Status
+            </a>
+
+            <a href="parent-attendance.html">
+                ✓ Attendance
+            </a>
+
+            <a href="parent-homework.html">
+                📝 Diary & Homework
+            </a>
+
+            <a href="parent-syllabus.html">
+                📚 Syllabus
+            </a>
+
+            <a href="parent-date-sheet.html">
+                📅 Date Sheet
+            </a>
+
+            <a href="parent-results.html">
+                📈 Results
+            </a>
+
+            <a href="parent-notices.html">
+                🔔 Notices
+            </a>
+
+            <a href="index.html">
+                🌐 Back to Website
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                Child Profile
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">
+                    LA
+                </div>
+
+                <div>
+                    <strong>Mr. Ahmed Ali</strong>
+                    <small>Parent</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="profile-page">
+
+            <div class="page-header">
+
+                <h1>Child Profile</h1>
+
+                <p>
+                    View your child's personal and academic information.
+                </p>
+
+            </div>
+
+
+            <div class="profile-grid">
+
+
+                <!-- PROFILE SUMMARY -->
+                <div class="profile-card">
+
+                    <div class="student-avatar">
+                        MA
+                    </div>
+
+                    <h2>
+                        Muhammad Ahmed
+                    </h2>
+
+                    <div class="class-name">
+                        Grade 8-A
+                    </div>
+
+                    <span class="status-badge">
+                        Active Student
+                    </span>
+
+
+                    <div class="profile-info">
+
+                        <div class="info-item">
+
+                            <span>Admission Number</span>
+
+                            <strong>
+                                ES-2026-1024
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>Roll Number</span>
+
+                            <strong>
+                                08
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>Class Teacher</span>
+
+                            <strong>
+                                Sarah Khan
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>Academic Year</span>
+
+                            <strong>
+                                2026–2027
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>Admission Date</span>
+
+                            <strong>
+                                15 Aug 2026
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT SIDE -->
+                <div>
+
+
+                    <!-- PERSONAL INFORMATION -->
+                    <div class="info-card">
+
+                        <h2>
+                            Personal Information
+                        </h2>
+
+                        <div class="details-grid">
+
+                            <div class="detail-box">
+
+                                <span>Full Name</span>
+
+                                <strong>
+                                    Muhammad Ahmed
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-box">
+
+                                <span>Father Name</span>
+
+                                <strong>
+                                    Ahmed Ali
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-box">
+
+                                <span>Date of Birth</span>
+
+                                <strong>
+                                    12 March 2013
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-box">
+
+                                <span>Gender</span>
+
+                                <strong>
+                                    Male
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-box">
+
+                                <span>Class</span>
+
+                                <strong>
+                                    Grade 8-A
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-box">
+
+                                <span>Section</span>
+
+                                <strong>
+                                    A
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-box">
+
+                                <span>Blood Group</span>
+
+                                <strong>
+                                    B+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-box">
+
+                                <span>Nationality</span>
+
+                                <strong>
+                                    Pakistani
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail-box full">
+
+                                <span>Address</span>
+
+                                <strong>
+                                    Wah Cantt, Punjab, Pakistan
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACADEMIC INFORMATION -->
+                    <div class="info-card">
+
+                        <h2>
+                            Academic Performance
+                        </h2>
+
+                        <div class="table-wrapper">
+
+                            <table class="academic-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>Subject</th>
+                                        <th>Teacher</th>
+                                        <th>Average</th>
+                                        <th>Progress</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>Computer Science</td>
+
+                                        <td>Sarah Khan</td>
+
+                                        <td>92%</td>
+
+                                        <td>
+
+                                            <div class="progress">
+
+                                                <div
+                                                    class="progress-bar"
+                                                    style="width:92%"
+                                                ></div>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>Mathematics</td>
+
+                                        <td>Ali Raza</td>
+
+                                        <td>88%</td>
+
+                                        <td>
+
+                                            <div class="progress">
+
+                                                <div
+                                                    class="progress-bar"
+                                                    style="width:88%"
+                                                ></div>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>English</td>
+
+                                        <td>Maria Khan</td>
+
+                                        <td>84%</td>
+
+                                        <td>
+
+                                            <div class="progress">
+
+                                                <div
+                                                    class="progress-bar"
+                                                    style="width:84%"
+                                                ></div>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+
+                                    <tr>
+
+                                        <td>Science</td>
+
+                                        <td>Hassan Ahmed</td>
+
+                                        <td>86%</td>
+
+                                        <td>
+
+                                            <div class="progress">
+
+                                                <div
+                                                    class="progress-bar"
+                                                    style="width:86%"
+                                                ></div>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PARENT / EMERGENCY CONTACT -->
+                    <div class="info-card">
+
+                        <h2>
+                            Parent & Emergency Contact
+                        </h2>
+
+
+                        <div class="contact-box">
+
+                            <strong>
+                                Father — Ahmed Ali
+                            </strong>
+
+                            <span>
+                                Phone: 0300-1234567
+                                &nbsp; | &nbsp;
+                                Email: ahmed.ali@example.com
+                            </span>
+
+                        </div>
+
+
+                        <div class="contact-box">
+
+                            <strong>
+                                Mother — Ayesha Ahmed
+                            </strong>
+
+                            <span>
+                                Phone: 0312-7654321
+                            </span>
+
+                        </div>
+
+
+                        <div class="contact-box">
+
+                            <strong>
+                                Emergency Contact
+                            </strong>
+
+                            <span>
+                                Ahmed Ali — 0300-1234567
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("open");
+
+    }
+
+</script>
+
+</body>
+</html>

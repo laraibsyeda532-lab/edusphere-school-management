@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Timetable | Student Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .student-page {
+            padding: 28px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 6px;
+            color: #173b67;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .print-btn {
+            border: none;
+            background: #173b67;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .stat-card h4 {
+            margin: 0 0 8px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .stat-card h2 {
+            margin: 0;
+            color: #173b67;
+            font-size: 25px;
+        }
+
+        .stat-card small {
+            display: block;
+            margin-top: 6px;
+            color: #888;
+            font-size: 11px;
+        }
+
+        .student-info {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .student-info h3 {
+            margin: 0 0 15px;
+            color: #173b67;
+            font-size: 17px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            background: #f7f9fc;
+            padding: 13px;
+            border-radius: 8px;
+        }
+
+        .info-item span {
+            display: block;
+            color: #888;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .info-item strong {
+            color: #333;
+            font-size: 13px;
+        }
+
+        .day-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .day-btn {
+            border: 1px solid #dce2e8;
+            background: white;
+            color: #555;
+            padding: 10px 17px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .day-btn:hover,
+        .day-btn.active {
+            background: #173b67;
+            color: white;
+            border-color: #173b67;
+        }
+
+        .timetable-card {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            overflow: hidden;
+            margin-bottom: 22px;
+        }
+
+        .table-title {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table-title h3 {
+            margin: 0 0 5px;
+            color: #173b67;
+            font-size: 17px;
+        }
+
+        .table-title p {
+            margin: 0;
+            color: #888;
+            font-size: 11px;
+        }
+
+        .period-list {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .period-card {
+            border: 1px solid #e7ebef;
+            border-radius: 11px;
+            padding: 17px;
+            background: #fff;
+            transition: .2s;
+        }
+
+        .period-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,.06);
+        }
+
+        .period-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 13px;
+        }
+
+        .period-number {
+            background: #edf2f8;
+            color: #173b67;
+            border-radius: 6px;
+            padding: 5px 8px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .period-time {
+            color: #777;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .period-card h3 {
+            margin: 0 0 5px;
+            color: #173b67;
+            font-size: 16px;
+        }
+
+        .period-card p {
+            margin: 4px 0;
+            color: #777;
+            font-size: 11px;
+        }
+
+        .break-card {
+            background: #f7f9fc;
+            border-style: dashed;
+        }
+
+        .break-card h3 {
+            color: #777;
+        }
+
+        .today-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .today-card h3 {
+            margin: 0 0 18px;
+            color: #173b67;
+            font-size: 17px;
+        }
+
+        .today-class {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .today-class:last-child {
+            border-bottom: none;
+        }
+
+        .today-class strong {
+            display: block;
+            color: #333;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .today-class span {
+            color: #888;
+            font-size: 11px;
+        }
+
+        .time-badge {
+            background: #edf2f8;
+            color: #173b67;
+            padding: 7px 10px;
+            border-radius: 7px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .no-classes {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .note-box {
+            margin-top: 22px;
+            background: #f7f9fc;
+            border-radius: 10px;
+            padding: 16px;
+            color: #666;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 1000px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .period-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .student-page {
+                padding: 18px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .day-selector {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .day-btn {
+                width: 100%;
+            }
+
+            .print-btn {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            .sidebar,
+            .topbar,
+            .day-selector,
+            .print-btn,
+            .note-box {
+                display: none !important;
+            }
+
+            .main-content {
+                margin: 0 !important;
+                width: 100% !important;
+            }
+
+            .student-page {
+                padding: 10px;
+            }
+
+            .period-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Student Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="student-dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="student-profile.html">
+                👤 My Profile
+            </a>
+
+            <a href="student-attendance.html">
+                ✓ Attendance
+            </a>
+
+            <a href="student-homework.html">
+                📝 Homework & Diary
+            </a>
+
+            <a href="student-syllabus.html">
+                📚 Syllabus
+            </a>
+
+            <a href="student-date-sheet.html">
+                📅 Date Sheet
+            </a>
+
+            <a href="student-results.html">
+                📈 Results
+            </a>
+
+            <a href="student-timetable.html" class="active">
+                🕐 Timetable
+            </a>
+
+            <a href="student-notices.html">
+                🔔 Notices
+            </a>
+
+            <a href="index.html">
+                🌐 Back to Website
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                Timetable
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">
+                    MA
+                </div>
+
+                <div>
+                    <strong>Muhammad Ahmed</strong>
+                    <small>Grade 8-A</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="student-page">
+
+            <!-- HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <h1>
+                        My Timetable
+                    </h1>
+
+                    <p>
+                        View your weekly class schedule and daily periods.
+                    </p>
+
+                </div>
+
+                <button
+                    class="print-btn"
+                    onclick="window.print()"
+                >
+                    🖨 Print Timetable
+                </button>
+
+            </div>
+
+
+            <!-- STATS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <h4>
+                        Weekly Periods
+                    </h4>
+
+                    <h2>
+                        30
+                    </h2>
+
+                    <small>
+                        Monday to Friday
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>
+                        Subjects
+                    </h4>
+
+                    <h2>
+                        6
+                    </h2>
+
+                    <small>
+                        Current subjects
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>
+                        School Days
+                    </h4>
+
+                    <h2>
+                        5
+                    </h2>
+
+                    <small>
+                        Days per week
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <h4>
+                        Class
+                    </h4>
+
+                    <h2>
+                        8-A
+                    </h2>
+
+                    <small>
+                        Current class
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENT INFO -->
+            <div class="student-info">
+
+                <h3>
+                    Student Information
+                </h3>
+
+                <div class="info-grid">
+
+                    <div class="info-item">
+                        <span>Student</span>
+                        <strong>Muhammad Ahmed</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Class</span>
+                        <strong>Grade 8-A</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Class Teacher</span>
+                        <strong>Ms. Sarah</strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>Room</span>
+                        <strong>Room 8</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DAY SELECTOR -->
+            <div class="day-selector">
+
+                <button
+                    class="day-btn active"
+                    onclick="showDay('Monday', this)"
+                >
+                    Monday
+                </button>
+
+                <button
+                    class="day-btn"
+                    onclick="showDay('Tuesday', this)"
+                >
+                    Tuesday
+                </button>
+
+                <button
+                    class="day-btn"
+                    onclick="showDay('Wednesday', this)"
+                >
+                    Wednesday
+                </button>
+
+                <button
+                    class="day-btn"
+                    onclick="showDay('Thursday', this)"
+                >
+                    Thursday
+                </button>
+
+                <button
+                    class="day-btn"
+                    onclick="showDay('Friday', this)"
+                >
+                    Friday
+                </button>
+
+            </div>
+
+
+            <!-- TIMETABLE -->
+            <div class="timetable-card">
+
+                <div class="table-title">
+
+                    <h3 id="selectedDay">
+                        Monday Timetable
+                    </h3>
+
+                    <p>
+                        Academic Year 2026 — Grade 8-A
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="period-list"
+                    id="periodList"
+                >
+
+                    <div class="period-card">
+
+                        <div class="period-top">
+
+                            <span class="period-number">
+                                Period 1
+                            </span>
+
+                            <span class="period-time">
+                                08:00 - 08:45
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            Mathematics
+                        </h3>
+
+                        <p>
+                            👨‍🏫 Mr. Bilal
+                        </p>
+
+                        <p>
+                            📍 Room 8
+                        </p>
+
+                    </div>
+
+
+                    <div class="period-card">
+
+                        <div class="period-top">
+
+                            <span class="period-number">
+                                Period 2
+                            </span>
+
+                            <span class="period-time">
+                                08:45 - 09:30
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            English
+                        </h3>
+
+                        <p>
+                            👩‍🏫 Ms. Ayesha
+                        </p>
+
+                        <p>
+                            📍 Room 8
+                        </p>
+
+                    </div>
+
+
+                    <div class="period-card">
+
+                        <div class="period-top">
+
+                            <span class="period-number">
+                                Period 3
+                            </span>
+
+                            <span class="period-time">
+                                09:30 - 10:15
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            Computer Science
+                        </h3>
+
+                        <p>
+                            👩‍🏫 Ms. Sarah
+                        </p>
+
+                        <p>
+                            📍 Computer Lab
+                        </p>
+
+                    </div>
+
+
+                    <div class="period-card break-card">
+
+                        <div class="period-top">
+
+                            <span class="period-number">
+                                Break
+                            </span>
+
+                            <span class="period-time">
+                                10:15 - 10:35
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            Short Break
+                        </h3>
+
+                        <p>
+                            ☕ Break Time
+                        </p>
+
+                    </div>
+
+
+                    <div class="period-card">
+
+                        <div class="period-top">
+
+                            <span class="period-number">
+                                Period 4
+                            </span>
+
+                            <span class="period-time">
+                                10:35 - 11:20
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            Physics
+                        </h3>
+
+                        <p>
+                            👨‍🏫 Mr. Hamza
+                        </p>
+
+                        <p>
+                            📍 Room 8
+                        </p>
+
+                    </div>
+
+
+                    <div class="period-card">
+
+                        <div class="period-top">
+
+                            <span class="period-number">
+                                Period 5
+                            </span>
+
+                            <span class="period-time">
+                                11:20 - 12:05
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            Urdu
+                        </h3>
+
+                        <p>
+                            👩‍🏫 Ms. Nadia
+                        </p>
+
+                        <p>
+                            📍 Room 8
+                        </p>
+
+                    </div>
+
+
+                    <div class="period-card">
+
+                        <div class="period-top">
+
+                            <span class="period-number">
+                                Period 6
+                            </span>
+
+                            <span class="period-time">
+                                12:05 - 12:50
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            Islamiat
+                        </h3>
+
+                        <p>
+                            👩‍🏫 Ms. Fatima
+                        </p>
+
+                        <p>
+                            📍 Room 8
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TODAY'S CLASSES -->
+            <div class="today-card">
+
+                <h3>
+                    Today's Classes
+                </h3>
+
+
+                <div class="today-class">
+
+                    <div>
+
+                        <strong>
+                            Mathematics
+                        </strong>
+
+                        <span>
+                            Mr. Bilal • Room 8
+                        </span>
+
+                    </div>
+
+                    <span class="time-badge">
+                        08:00 - 08:45
+                    </span>
+
+                </div>
+
+
+                <div class="today-class">
+
+                    <div>
+
+                        <strong>
+                            English
+                        </strong>
+
+                        <span>
+                            Ms. Ayesha • Room 8
+                        </span>
+
+                    </div>
+
+                    <span class="time-badge">
+                        08:45 - 09:30
+                    </span>
+
+                </div>
+
+
+                <div class="today-class">
+
+                    <div>
+
+                        <strong>
+                            Computer Science
+                        </strong>
+
+                        <span>
+                            Ms. Sarah • Computer Lab
+                        </span>
+
+                    </div>
+
+                    <span class="time-badge">
+                        09:30 - 10:15
+                    </span>
+
+                </div>
+
+
+                <div class="today-class">
+
+                    <div>
+
+                        <strong>
+                            Physics
+                        </strong>
+
+                        <span>
+                            Mr. Hamza • Room 8
+                        </span>
+
+                    </div>
+
+                    <span class="time-badge">
+                        10:35 - 11:20
+                    </span>
+
+                </div>
+
+
+                <div class="today-class">
+
+                    <div>
+
+                        <strong>
+                            Urdu
+                        </strong>
+
+                        <span>
+                            Ms. Nadia • Room 8
+                        </span>
+
+                    </div>
+
+                    <span class="time-badge">
+                        11:20 - 12:05
+                    </span>
+
+                </div>
+
+
+                <div class="today-class">
+
+                    <div>
+
+                        <strong>
+                            Islamiat
+                        </strong>
+
+                        <span>
+                            Ms. Fatima • Room 8
+                        </span>
+
+                    </div>
+
+                    <span class="time-badge">
+                        12:05 - 12:50
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTE -->
+            <div class="note-box">
+
+                <strong>Note:</strong>
+                This timetable currently contains demo data.
+                After the backend is connected, the school administration
+                will manage the timetable and students will automatically
+                see their class schedule.
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("open");
+
+    }
+
+
+    const timetableData = {
+
+        Monday: [
+
+            ["Period 1", "08:00 - 08:45", "Mathematics", "Mr. Bilal", "Room 8"],
+
+            ["Period 2", "08:45 - 09:30", "English", "Ms. Ayesha", "Room 8"],
+
+            ["Period 3", "09:30 - 10:15", "Computer Science", "Ms. Sarah", "Computer Lab"],
+
+            ["Break", "10:15 - 10:35", "Short Break", "Break Time", ""],
+
+            ["Period 4", "10:35 - 11:20", "Physics", "Mr. Hamza", "Room 8"],
+
+            ["Period 5", "11:20 - 12:05", "Urdu", "Ms. Nadia", "Room 8"],
+
+            ["Period 6", "12:05 - 12:50", "Islamiat", "Ms. Fatima", "Room 8"]
+
+        ],
+
+        Tuesday: [
+
+            ["Period 1", "08:00 - 08:45", "English", "Ms. Ayesha", "Room 8"],
+
+            ["Period 2", "08:45 - 09:30", "Mathematics", "Mr. Bilal", "Room 8"],
+
+            ["Period 3", "09:30 - 10:15", "Physics", "Mr. Hamza", "Room 8"],
+
+            ["Break", "10:15 - 10:35", "Short Break", "Break Time", ""],
+
+            ["Period 4", "10:35 - 11:20", "Computer Science", "Ms. Sarah", "Computer Lab"],
+
+            ["Period 5", "11:20 - 12:05", "Islamiat", "Ms. Fatima", "Room 8"],
+
+            ["Period 6", "12:05 - 12:50", "Urdu", "Ms. Nadia", "Room 8"]
+
+        ],
+
+        Wednesday: [
+
+            ["Period 1", "08:00 - 08:45", "Computer Science", "Ms. Sarah", "Computer Lab"],
+
+            ["Period 2", "08:45 - 09:30", "Physics", "Mr. Hamza", "Room 8"],
+
+            ["Period 3", "09:30 - 10:15", "Mathematics", "Mr. Bilal", "Room 8"],
+
+            ["Break", "10:15 - 10:35", "Short Break", "Break Time", ""],
+
+            ["Period 4", "10:35 - 11:20", "English", "Ms. Ayesha", "Room 8"],
+
+            ["Period 5", "11:20 - 12:05", "Urdu", "Ms. Nadia", "Room 8"],
+
+            ["Period 6", "12:05 - 12:50", "Islamiat", "Ms. Fatima", "Room 8"]
+
+        ],
+
+        Thursday: [
+
+            ["Period 1", "08:00 - 08:45", "Physics", "Mr. Hamza", "Room 8"],
+
+            ["Period 2", "08:45 - 09:30", "Mathematics", "Mr. Bilal", "Room 8"],
+
+            ["Period 3", "09:30 - 10:15", "English", "Ms. Ayesha", "Room 8"],
+
+            ["Break", "10:15 - 10:35", "Short Break", "Break Time", ""],
+
+            ["Period 4", "10:35 - 11:20", "Computer Science", "Ms. Sarah", "Computer Lab"],
+
+            ["Period 5", "11:20 - 12:05", "Urdu", "Ms. Nadia", "Room 8"],
+
+            ["Period 6", "12:05 - 12:50", "Islamiat", "Ms. Fatima", "Room 8"]
+
+        ],
+
+        Friday: [
+
+            ["Period 1", "08:00 - 08:40", "Mathematics", "Mr. Bilal", "Room 8"],
+
+            ["Period 2", "08:40 - 09:20", "English", "Ms. Ayesha", "Room 8"],
+
+            ["Period 3", "09:20 - 10:00", "Computer Science", "Ms. Sarah", "Computer Lab"],
+
+            ["Break", "10:00 - 10:20", "Short Break", "Break Time", ""],
+
+            ["Period 4", "10:20 - 11:00", "Physics", "Mr. Hamza", "Room 8"],
+
+            ["Period 5", "11:00 - 11:40", "Urdu", "Ms. Nadia", "Room 8"],
+
+            ["Period 6", "11:40 - 12:20", "Islamiat", "Ms. Fatima", "Room 8"]
+
+        ]
+
+    };
+
+
+    function showDay(day, button) {
+
+        document
+            .querySelectorAll(".day-btn")
+            .forEach(function(btn) {
+
+                btn.classList.remove("active");
+
+            });
+
+
+        button.classList.add("active");
+
+
+        document.getElementById("selectedDay").textContent =
+            day + " Timetable";
+
+
+        const periodList =
+            document.getElementById("periodList");
+
+
+        periodList.innerHTML = "";
+
+
+        timetableData[day].forEach(function(period) {
+
+            const isBreak =
+                period[0] === "Break";
+
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "period-card" +
+                (isBreak ? " break-card" : "");
+
+
+            card.innerHTML = `
+
+                <div class="period-top">
+
+                    <span class="period-number">
+                        ${period[0]}
+                    </span>
+
+                    <span class="period-time">
+                        ${period[1]}
+                    </span>
+
+                </div>
+
+                <h3>
+                    ${period[2]}
+                </h3>
+
+                <p>
+                    ${isBreak ? "☕" : "👩‍🏫"}
+                    ${period[3]}
+                </p>
+
+                ${
+                    period[4]
+                    ?
+                    `<p>📍 ${period[4]}</p>`
+                    :
+                    ""
+                }
+
+            `;
+
+
+            periodList.appendChild(card);
+
+        });
+
+    }
+
+</script>
+
+</body>
+</html>

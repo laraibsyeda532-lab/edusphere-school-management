@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notices | Parent Portal</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .notices-page {
+            padding: 28px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 6px;
+            color: #173b67;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.06);
+        }
+
+        .summary-card h4 {
+            margin: 0 0 9px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .summary-card h2 {
+            margin: 0;
+            color: #173b67;
+            font-size: 25px;
+        }
+
+        .important-number {
+            color: #c0392b !important;
+        }
+
+        .month-number {
+            color: #b36b00 !important;
+        }
+
+        .filters-card {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            margin-bottom: 22px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            outline: none;
+        }
+
+        .notices-card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+        }
+
+        .notices-card h2 {
+            margin: 0 0 20px;
+            color: #173b67;
+            font-size: 19px;
+        }
+
+        .notice-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .notice-item {
+            border: 1px solid #e8ebef;
+            border-radius: 11px;
+            padding: 19px;
+            transition: .2s;
+        }
+
+        .notice-item:hover {
+            box-shadow: 0 4px 14px rgba(0,0,0,.06);
+        }
+
+        .notice-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .notice-title {
+            color: #173b67;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .notice-description {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-top: 10px;
+        }
+
+        .notice-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 14px;
+            color: #888;
+            font-size: 11px;
+        }
+
+        .category {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #edf2f8;
+            color: #173b67;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .important-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #fdecea;
+            color: #c0392b;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .notice-date {
+            color: #777;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .notice-divider {
+            margin: 14px 0;
+            border: none;
+            border-top: 1px solid #eee;
+        }
+
+        .empty-message {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        .school-contact {
+            margin-top: 22px;
+            background: #f7f9fc;
+            border-radius: 10px;
+            padding: 18px;
+            color: #666;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 1000px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .notices-page {
+                padding: 18px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .notice-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+            <h2>EduSphere</h2>
+            <span>Parent Portal</span>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="parent-dashboard.html">
+                📊 Dashboard
+            </a>
+
+            <a href="parent-profile.html">
+                👤 Child Profile
+            </a>
+
+            <a href="parent-fees.html">
+                💳 Fee Status
+            </a>
+
+            <a href="parent-attendance.html">
+                ✓ Attendance
+            </a>
+
+            <a href="parent-homework.html">
+                📝 Diary & Homework
+            </a>
+
+            <a href="parent-syllabus.html">
+                📚 Syllabus
+            </a>
+
+            <a href="parent-date-sheet.html">
+                📅 Date Sheet
+            </a>
+
+            <a href="parent-results.html">
+                📈 Results
+            </a>
+
+            <a href="parent-notices.html" class="active">
+                🔔 Notices
+            </a>
+
+            <a href="index.html">
+                🌐 Back to Website
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <button class="menu-btn" onclick="toggleSidebar()">
+                ☰
+            </button>
+
+            <div class="topbar-title">
+                School Notices
+            </div>
+
+            <div class="topbar-profile">
+
+                <div class="profile-avatar">
+                    AA
+                </div>
+
+                <div>
+                    <strong>Mr. Ahmed Ali</strong>
+                    <small>Parent</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="notices-page">
+
+            <!-- PAGE HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <h1>School Notices</h1>
+
+                    <p>
+                        Stay updated with important school announcements and events.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+            <div class="summary-grid">
+
+                <div class="summary-card">
+
+                    <h4>Total Notices</h4>
+
+                    <h2>
+                        12
+                    </h2>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <h4>Important</h4>
+
+                    <h2 class="important-number">
+                        3
+                    </h2>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <h4>This Month</h4>
+
+                    <h2 class="month-number">
+                        7
+                    </h2>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <h4>For Parents</h4>
+
+                    <h2>
+                        9
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="filters-card">
+
+                <div class="filters">
+
+                    <input
+                        type="text"
+                        id="searchNotice"
+                        placeholder="Search notices..."
+                        onkeyup="filterNotices()"
+                    >
+
+
+                    <select
+                        id="categoryFilter"
+                        onchange="filterNotices()"
+                    >
+
+                        <option value="">
+                            All Categories
+                        </option>
+
+                        <option value="Academic">
+                            Academic
+                        </option>
+
+                        <option value="Event">
+                            Event
+                        </option>
+
+                        <option value="Holiday">
+                            Holiday
+                        </option>
+
+                        <option value="Fee">
+                            Fee
+                        </option>
+
+                        <option value="General">
+                            General
+                        </option>
+
+                    </select>
+
+
+                    <select
+                        id="importanceFilter"
+                        onchange="filterNotices()"
+                    >
+
+                        <option value="">
+                            All Notices
+                        </option>
+
+                        <option value="Important">
+                            Important
+                        </option>
+
+                        <option value="Normal">
+                            Normal
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- NOTICES -->
+            <div class="notices-card">
+
+                <h2>
+                    Latest Announcements
+                </h2>
+
+
+                <div class="notice-list" id="noticeList">
+
+
+                    <!-- NOTICE 1 -->
+                    <div
+                        class="notice-item"
+                        data-category="Academic"
+                        data-importance="Important"
+                    >
+
+                        <div class="notice-top">
+
+                            <div>
+
+                                <div class="notice-title">
+                                    Final Term Examination Schedule
+                                </div>
+
+                                <span class="category">
+                                    Academic
+                                </span>
+
+                                <span class="important-badge">
+                                    Important
+                                </span>
+
+                            </div>
+
+                            <div class="notice-date">
+                                30 Sep 2026
+                            </div>
+
+                        </div>
+
+
+                        <div class="notice-description">
+
+                            The final term examination schedule has been
+                            published. Parents are requested to review the
+                            date sheet and make sure students arrive on time
+                            for each examination.
+
+                        </div>
+
+
+                        <hr class="notice-divider">
+
+
+                        <div class="notice-meta">
+
+                            <span>
+                                👤 School Administration
+                            </span>
+
+                            <span>
+                                👥 Audience: Parents & Students
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NOTICE 2 -->
+                    <div
+                        class="notice-item"
+                        data-category="Event"
+                        data-importance="Normal"
+                    >
+
+                        <div class="notice-top">
+
+                            <div>
+
+                                <div class="notice-title">
+                                    Annual Sports Day
+                                </div>
+
+                                <span class="category">
+                                    Event
+                                </span>
+
+                            </div>
+
+                            <div class="notice-date">
+                                28 Sep 2026
+                            </div>
+
+                        </div>
+
+
+                        <div class="notice-description">
+
+                            The school's Annual Sports Day will be held
+                            on 20 October 2026. Students participating in
+                            sports activities should submit their names
+                            to their class teacher.
+
+                        </div>
+
+
+                        <hr class="notice-divider">
+
+
+                        <div class="notice-meta">
+
+                            <span>
+                                👤 Activity Department
+                            </span>
+
+                            <span>
+                                👥 Audience: Parents & Students
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NOTICE 3 -->
+                    <div
+                        class="notice-item"
+                        data-category="Fee"
+                        data-importance="Important"
+                    >
+
+                        <div class="notice-top">
+
+                            <div>
+
+                                <div class="notice-title">
+                                    Monthly Fee Submission Reminder
+                                </div>
+
+                                <span class="category">
+                                    Fee
+                                </span>
+
+                                <span class="important-badge">
+                                    Important
+                                </span>
+
+                            </div>
+
+                            <div class="notice-date">
+                                27 Sep 2026
+                            </div>
+
+                        </div>
+
+
+                        <div class="notice-description">
+
+                            Parents are requested to submit the monthly
+                            school fee before the due date to avoid
+                            late payment charges.
+
+                        </div>
+
+
+                        <hr class="notice-divider">
+
+
+                        <div class="notice-meta">
+
+                            <span>
+                                👤 Accounts Department
+                            </span>
+
+                            <span>
+                                👥 Audience: Parents
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NOTICE 4 -->
+                    <div
+                        class="notice-item"
+                        data-category="Holiday"
+                        data-importance="Normal"
+                    >
+
+                        <div class="notice-top">
+
+                            <div>
+
+                                <div class="notice-title">
+                                    School Holiday Announcement
+                                </div>
+
+                                <span class="category">
+                                    Holiday
+                                </span>
+
+                            </div>
+
+                            <div class="notice-date">
+                                25 Sep 2026
+                            </div>
+
+                        </div>
+
+
+                        <div class="notice-description">
+
+                            The school will remain closed on 9 October
+                            2026 due to the scheduled school holiday.
+                            Regular classes will resume on the next
+                            working day.
+
+                        </div>
+
+
+                        <hr class="notice-divider">
+
+
+                        <div class="notice-meta">
+
+                            <span>
+                                👤 School Administration
+                            </span>
+
+                            <span>
+                                👥 Audience: All
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NOTICE 5 -->
+                    <div
+                        class="notice-item"
+                        data-category="Academic"
+                        data-importance="Normal"
+                    >
+
+                        <div class="notice-top">
+
+                            <div>
+
+                                <div class="notice-title">
+                                    Parent Teacher Meeting
+                                </div>
+
+                                <span class="category">
+                                    Academic
+                                </span>
+
+                            </div>
+
+                            <div class="notice-date">
+                                23 Sep 2026
+                            </div>
+
+                        </div>
+
+
+                        <div class="notice-description">
+
+                            Parent Teacher Meeting will be conducted on
+                            Saturday, 3 October 2026. Parents are encouraged
+                            to attend and discuss their child's academic
+                            progress with teachers.
+
+                        </div>
+
+
+                        <hr class="notice-divider">
+
+
+                        <div class="notice-meta">
+
+                            <span>
+                                👤 Academic Department
+                            </span>
+
+                            <span>
+                                👥 Audience: Parents
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NOTICE 6 -->
+                    <div
+                        class="notice-item"
+                        data-category="General"
+                        data-importance="Normal"
+                    >
+
+                        <div class="notice-top">
+
+                            <div>
+
+                                <div class="notice-title">
+                                    School Uniform Reminder
+                                </div>
+
+                                <span class="category">
+                                    General
+                                </span>
+
+                            </div>
+
+                            <div class="notice-date">
+                                20 Sep 2026
+                            </div>
+
+                        </div>
+
+
+                        <div class="notice-description">
+
+                            Students are requested to come to school in
+                            complete and clean uniform according to the
+                            school's uniform policy.
+
+                        </div>
+
+
+                        <hr class="notice-divider">
+
+
+                        <div class="notice-meta">
+
+                            <span>
+                                👤 School Administration
+                            </span>
+
+                            <span>
+                                👥 Audience: Students & Parents
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div
+                    class="empty-message"
+                    id="emptyMessage"
+                >
+                    No notices found.
+                </div>
+
+
+                <div class="school-contact">
+
+                    <strong>Need Help?</strong><br>
+
+                    For questions regarding school notices,
+                    please contact the school administration during
+                    official school hours.
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("open");
+
+    }
+
+
+    function filterNotices() {
+
+        const search =
+            document
+                .getElementById("searchNotice")
+                .value
+                .toLowerCase();
+
+        const category =
+            document
+                .getElementById("categoryFilter")
+                .value;
+
+        const importance =
+            document
+                .getElementById("importanceFilter")
+                .value;
+
+
+        const notices =
+            document.querySelectorAll(".notice-item");
+
+        let visibleCount = 0;
+
+
+        notices.forEach(function(notice) {
+
+            const text =
+                notice.innerText.toLowerCase();
+
+            const noticeCategory =
+                notice.dataset.category;
+
+            const noticeImportance =
+                notice.dataset.importance;
+
+
+            const searchMatch =
+                text.includes(search);
+
+            const categoryMatch =
+                !category ||
+                noticeCategory === category;
+
+            const importanceMatch =
+                !importance ||
+                noticeImportance === importance;
+
+
+            if (
+                searchMatch &&
+                categoryMatch &&
+                importanceMatch
+            ) {
+
+                notice.style.display = "";
+
+                visibleCount++;
+
+            } else {
+
+                notice.style.display = "none";
+
+            }
+
+        });
+
+
+        const emptyMessage =
+            document.getElementById("emptyMessage");
+
+
+        if (visibleCount === 0) {
+
+            emptyMessage.style.display = "block";
+
+        } else {
+
+            emptyMessage.style.display = "none";
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

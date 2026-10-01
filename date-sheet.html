@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Sheet - EduSphere</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: #0f172a;
+            color: white;
+            padding: 25px 15px;
+            min-height: 100vh;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 35px;
+            padding-left: 10px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 12px 14px;
+            margin: 5px 0;
+            border-radius: 8px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #1e293b;
+            color: white;
+        }
+
+        .main {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .top h1 {
+            font-size: 28px;
+        }
+
+        .btn {
+            border: none;
+            background: #2563eb;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+        }
+
+        .form-btn {
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            background: #f8fafc;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .message {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 190px;
+            }
+
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-height: auto;
+            }
+
+            .main {
+                padding: 15px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                min-width: 750px;
+            }
+
+            .card {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+        <div class="logo">EduSphere</div>
+
+        <a href="admin-dashboard.html">🏠 Dashboard</a>
+        <a href="students.html">👨‍🎓 Students</a>
+        <a href="teachers.html">👨‍🏫 Teachers</a>
+        <a href="classes.html">🏫 Classes</a>
+        <a href="attendance.html">📋 Attendance</a>
+        <a href="homework.html">📚 Homework</a>
+        <a href="syllabus.html">📖 Syllabus</a>
+        <a href="date-sheet.html" class="active">📅 Date Sheet</a>
+        <a href="results.html">📊 Results</a>
+        <a href="fees.html">💳 Fees</a>
+        <a href="notices.html">📢 Notices</a>
+        <a href="admissions.html">📄 Admissions</a>
+
+        <a href="index.html">← Back to Website</a>
+        <a href="login.html">↪ Logout</a>
+    </aside>
+
+    <main class="main">
+
+        <div class="top">
+            <h1>Date Sheet</h1>
+        </div>
+
+        <div class="card">
+
+            <h2>Add Exam</h2>
+
+            <br>
+
+            <div class="form-grid">
+
+                <select id="class_id">
+                    <option value="">Select Class</option>
+                </select>
+
+                <input type="text" id="subject" placeholder="Subject">
+
+                <input type="date" id="exam_date">
+
+                <input type="text" id="exam_time" placeholder="Exam Time">
+
+                <input type="text" id="room" placeholder="Room">
+
+            </div>
+
+            <div class="form-btn">
+                <button class="btn" onclick="addDateSheet()">Add Exam</button>
+            </div>
+
+            <div id="message" class="message"></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>Exam Date Sheet</h2>
+
+            <br>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Subject</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Room</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="dateSheetTable">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+async function loadClasses() {
+
+    try {
+
+        const response = await fetch("/api/classes");
+        const data = await response.json();
+
+        const select = document.getElementById("class_id");
+
+        select.innerHTML = '<option value="">Select Class</option>';
+
+        data.forEach(item => {
+
+            const option = document.createElement("option");
+
+            option.value = item.id;
+
+            option.textContent =
+                item.class_name +
+                (item.section ? " - " + item.section : "");
+
+            select.appendChild(option);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+}
+
+
+async function loadDateSheet() {
+
+    try {
+
+        const response = await fetch("/api/date-sheet");
+        const data = await response.json();
+
+        const table = document.getElementById("dateSheetTable");
+
+        table.innerHTML = "";
+
+        data.forEach(item => {
+
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+
+                <td>${item.class_name || "-"}</td>
+
+                <td>${item.subject || "-"}</td>
+
+                <td>${item.exam_date || "-"}</td>
+
+                <td>${item.exam_time || "-"}</td>
+
+                <td>${item.room || "-"}</td>
+
+                <td>
+
+                    <button class="delete-btn"
+                        onclick="deleteDateSheet(${item.id})">
+                        Delete
+                    </button>
+
+                </td>
+
+            `;
+
+            table.appendChild(row);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+async function addDateSheet() {
+
+    const class_id =
+        document.getElementById("class_id").value;
+
+    const subject =
+        document.getElementById("subject").value.trim();
+
+    const exam_date =
+        document.getElementById("exam_date").value;
+
+    const exam_time =
+        document.getElementById("exam_time").value.trim();
+
+    const room =
+        document.getElementById("room").value.trim();
+
+
+    if (!class_id || !subject || !exam_date) {
+
+        document.getElementById("message").innerText =
+            "Please select class, subject and exam date.";
+
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch("/api/date-sheet", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                class_id: class_id,
+                subject: subject,
+                exam_date: exam_date,
+                exam_time: exam_time,
+                room: room
+
+            })
+
+        });
+
+
+        const result = await response.json();
+
+
+        if (response.ok) {
+
+            document.getElementById("message").innerText =
+                "Exam added successfully.";
+
+            document.getElementById("subject").value = "";
+            document.getElementById("exam_date").value = "";
+            document.getElementById("exam_time").value = "";
+            document.getElementById("room").value = "";
+
+            loadDateSheet();
+
+        } else {
+
+            document.getElementById("message").innerText =
+                result.error || "Failed to add exam.";
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById("message").innerText =
+            "Server error.";
+
+    }
+
+}
+
+
+async function deleteDateSheet(id) {
+
+    if (!confirm("Delete this exam?")) {
+        return;
+    }
+
+
+    try {
+
+        const response = await fetch(
+            "/api/date-sheet/" + id,
+            {
+                method: "DELETE"
+            }
+        );
+
+
+        if (response.ok) {
+
+            loadDateSheet();
+
+        } else {
+
+            alert("Could not delete exam.");
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+loadClasses();
+loadDateSheet();
+
+</script>
+
+</body>
+</html>

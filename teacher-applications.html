@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Applications | EduSphere</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <div class="logo-icon">E</div>
+            <div>
+                <h2>EduSphere</h2>
+                <span>Smart School</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="admin-dashboard.html">🏠 Dashboard</a>
+            <a href="students.html">👨‍🎓 Students</a>
+            <a href="teachers.html">👩‍🏫 Teachers</a>
+            <a href="classes.html">🏫 Classes</a>
+            <a href="attendance.html">📋 Attendance</a>
+            <a href="homework.html">📚 Homework & Diary</a>
+            <a href="syllabus.html">📖 Syllabus</a>
+            <a href="date-sheet.html">🗓 Date Sheet</a>
+            <a href="results.html">📊 Results</a>
+            <a href="fees.html">💰 Fees</a>
+            <a href="notices.html">📢 Notices</a>
+
+            <a href="teacher-applications.html" class="active">
+                📝 Teacher Applications
+            </a>
+
+            <a href="#">💬 Messages</a>
+            <a href="#">⚙️ Settings</a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="index.html">🌐 Back to Website</a>
+            <a href="login.html">🚪 Logout</a>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="notification">
+                    🔔
+                    <span class="notification-dot"></span>
+                </div>
+
+                <div class="admin-profile">
+                    <div class="profile-avatar">A</div>
+                    <div>
+                        <strong>Admin</strong>
+                        <small>Administrator</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- PAGE CONTENT -->
+        <section class="page-content">
+
+            <div class="page-header">
+
+                <div>
+                    <h1>Teacher Applications</h1>
+                    <p>Manage and review teacher job applications.</p>
+                </div>
+
+                <button class="primary-btn" onclick="openApplicationModal()">
+                    + Add Application
+                </button>
+
+            </div>
+
+
+            <!-- STATS -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div>
+                        <span>Total Applications</span>
+                        <h2 id="totalApplications">24</h2>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div>
+                        <span>Pending</span>
+                        <h2 id="pendingApplications">12</h2>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div>
+                        <span>Shortlisted</span>
+                        <h2 id="shortlistedApplications">7</h2>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">❌</div>
+                    <div>
+                        <span>Rejected</span>
+                        <h2 id="rejectedApplications">5</h2>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- FILTERS -->
+            <div class="content-card">
+
+                <div class="filter-bar">
+
+                    <input
+                        type="text"
+                        id="searchApplication"
+                        placeholder="Search applicant..."
+                        onkeyup="filterApplications()"
+                    >
+
+                    <select id="subjectFilter" onchange="filterApplications()">
+                        <option value="">All Subjects</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="English">English</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                    </select>
+
+                    <select id="statusFilter" onchange="filterApplications()">
+                        <option value="">All Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Shortlisted">Shortlisted</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+
+                </div>
+
+
+                <!-- TABLE -->
+                <div class="table-container">
+
+                    <table id="applicationsTable">
+
+                        <thead>
+                            <tr>
+                                <th>Applicant</th>
+                                <th>Qualification</th>
+                                <th>Subject</th>
+                                <th>Experience</th>
+                                <th>Applied Date</th>
+                                <th>CV</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="applicationsBody">
+
+                            <tr>
+                                <td>
+                                    <strong>Sarah Khan</strong><br>
+                                    <small>sarah.khan@email.com</small>
+                                </td>
+                                <td>BS Computer Science</td>
+                                <td>Computer Science</td>
+                                <td>2 Years</td>
+                                <td>28 Sep 2026</td>
+                                <td>
+                                    <button class="small-btn" onclick="viewCV('Sarah Khan')">
+                                        View CV
+                                    </button>
+                                </td>
+                                <td>
+                                    <span class="status-badge pending">Pending</span>
+                                </td>
+                                <td>
+                                    <button class="action-btn" onclick="viewApplication('Sarah Khan')">
+                                        View
+                                    </button>
+                                    <button class="action-btn" onclick="editApplication(this)">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>
+                                    <strong>Ali Raza</strong><br>
+                                    <small>ali.raza@email.com</small>
+                                </td>
+                                <td>MS Mathematics</td>
+                                <td>Mathematics</td>
+                                <td>4 Years</td>
+                                <td>26 Sep 2026</td>
+                                <td>
+                                    <button class="small-btn" onclick="viewCV('Ali Raza')">
+                                        View CV
+                                    </button>
+                                </td>
+                                <td>
+                                    <span class="status-badge shortlisted">
+                                        Shortlisted
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="action-btn" onclick="viewApplication('Ali Raza')">
+                                        View
+                                    </button>
+                                    <button class="action-btn" onclick="editApplication(this)">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>
+                                    <strong>Ayesha Malik</strong><br>
+                                    <small>ayesha.malik@email.com</small>
+                                </td>
+                                <td>BS English</td>
+                                <td>English</td>
+                                <td>1 Year</td>
+                                <td>24 Sep 2026</td>
+                                <td>
+                                    <button class="small-btn" onclick="viewCV('Ayesha Malik')">
+                                        View CV
+                                    </button>
+                                </td>
+                                <td>
+                                    <span class="status-badge rejected">
+                                        Rejected
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="action-btn" onclick="viewApplication('Ayesha Malik')">
+                                        View
+                                    </button>
+                                    <button class="action-btn" onclick="editApplication(this)">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>
+                                    <strong>Hamza Ahmed</strong><br>
+                                    <small>hamza.ahmed@email.com</small>
+                                </td>
+                                <td>BS Physics</td>
+                                <td>Physics</td>
+                                <td>3 Years</td>
+                                <td>22 Sep 2026</td>
+                                <td>
+                                    <button class="small-btn" onclick="viewCV('Hamza Ahmed')">
+                                        View CV
+                                    </button>
+                                </td>
+                                <td>
+                                    <span class="status-badge pending">
+                                        Pending
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="action-btn" onclick="viewApplication('Hamza Ahmed')">
+                                        View
+                                    </button>
+                                    <button class="action-btn" onclick="editApplication(this)">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>
+                                    <strong>Maria Shah</strong><br>
+                                    <small>maria.shah@email.com</small>
+                                </td>
+                                <td>BS Chemistry</td>
+                                <td>Chemistry</td>
+                                <td>2 Years</td>
+                                <td>20 Sep 2026</td>
+                                <td>
+                                    <button class="small-btn" onclick="viewCV('Maria Shah')">
+                                        View CV
+                                    </button>
+                                </td>
+                                <td>
+                                    <span class="status-badge shortlisted">
+                                        Shortlisted
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="action-btn" onclick="viewApplication('Maria Shah')">
+                                        View
+                                    </button>
+                                    <button class="action-btn" onclick="editApplication(this)">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td>
+                                    <strong>Usman Tariq</strong><br>
+                                    <small>usman.tariq@email.com</small>
+                                </td>
+                                <td>BS Computer Science</td>
+                                <td>Computer Science</td>
+                                <td>1 Year</td>
+                                <td>18 Sep 2026</td>
+                                <td>
+                                    <button class="small-btn" onclick="viewCV('Usman Tariq')">
+                                        View CV
+                                    </button>
+                                </td>
+                                <td>
+                                    <span class="status-badge pending">
+                                        Pending
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="action-btn" onclick="viewApplication('Usman Tariq')">
+                                        View
+                                    </button>
+                                    <button class="action-btn" onclick="editApplication(this)">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ADD APPLICATION MODAL -->
+<div class="modal" id="applicationModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>Add Teacher Application</h2>
+                <p>Add applicant information manually.</p>
+            </div>
+
+            <button class="close-btn" onclick="closeApplicationModal()">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="applicationForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Applicant Name</label>
+                    <input type="text" id="applicantName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="applicantEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Qualification</label>
+                    <input type="text" id="qualification" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Subject</label>
+                    <select id="applicationSubject" required>
+                        <option value="">Select Subject</option>
+                        <option>Computer Science</option>
+                        <option>Mathematics</option>
+                        <option>English</option>
+                        <option>Physics</option>
+                        <option>Chemistry</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Experience</label>
+                    <input type="text" id="experience" placeholder="e.g. 2 Years" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Applied Date</label>
+                    <input type="date" id="appliedDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="applicationStatus" required>
+                        <option value="Pending">Pending</option>
+                        <option value="Shortlisted">Shortlisted</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>CV</label>
+                    <input type="file" id="applicantCV" accept=".pdf,.doc,.docx">
+                </div>
+
+            </div>
+
+
+            <div class="form-group full-width">
+                <label>Additional Notes</label>
+                <textarea id="applicationNotes" rows="4"
+                    placeholder="Write notes about the applicant..."></textarea>
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button type="button" class="secondary-btn"
+                    onclick="closeApplicationModal()">
+                    Cancel
+                </button>
+
+                <button type="submit" class="primary-btn">
+                    Save Application
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* SIDEBAR */
+
+    function toggleSidebar() {
+        document.querySelector(".sidebar").classList.toggle("show");
+    }
+
+
+    /* MODAL */
+
+    function openApplicationModal() {
+        document.getElementById("applicationModal").classList.add("show");
+
+        document.getElementById("appliedDate").value =
+            new Date().toISOString().split("T")[0];
+    }
+
+
+    function closeApplicationModal() {
+        document.getElementById("applicationModal").classList.remove("show");
+        document.getElementById("applicationForm").reset();
+    }
+
+
+    /* ADD APPLICATION */
+
+    document.getElementById("applicationForm").addEventListener("submit", function(e) {
+
+        e.preventDefault();
+
+        const name = document.getElementById("applicantName").value;
+        const email = document.getElementById("applicantEmail").value;
+        const qualification = document.getElementById("qualification").value;
+        const subject = document.getElementById("applicationSubject").value;
+        const experience = document.getElementById("experience").value;
+        const date = document.getElementById("appliedDate").value;
+        const status = document.getElementById("applicationStatus").value;
+
+        const formattedDate = new Date(date).toLocaleDateString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
+
+        const statusClass = status.toLowerCase();
+
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+
+            <td>
+                <strong>${name}</strong><br>
+                <small>${email}</small>
+            </td>
+
+            <td>${qualification}</td>
+
+            <td>${subject}</td>
+
+            <td>${experience}</td>
+
+            <td>${formattedDate}</td>
+
+            <td>
+                <button class="small-btn"
+                    onclick="viewCV('${name}')">
+                    View CV
+                </button>
+            </td>
+
+            <td>
+                <span class="status-badge ${statusClass}">
+                    ${status}
+                </span>
+            </td>
+
+            <td>
+                <button class="action-btn"
+                    onclick="viewApplication('${name}')">
+                    View
+                </button>
+
+                <button class="action-btn"
+                    onclick="editApplication(this)">
+                    Edit
+                </button>
+            </td>
+
+        `;
+
+
+        document.getElementById("applicationsBody").appendChild(row);
+
+        updateApplicationStats();
+
+        closeApplicationModal();
+
+        alert("Teacher application added successfully!");
+
+    });
+
+
+    /* SEARCH + FILTER */
+
+    function filterApplications() {
+
+        const search =
+            document.getElementById("searchApplication")
+            .value
+            .toLowerCase();
+
+        const subject =
+            document.getElementById("subjectFilter").value;
+
+        const status =
+            document.getElementById("statusFilter").value;
+
+
+        const rows =
+            document.querySelectorAll("#applicationsBody tr");
+
+
+        rows.forEach(row => {
+
+            const text = row.innerText.toLowerCase();
+
+            const rowSubject = row.children[2].innerText;
+            const rowStatus = row.children[6].innerText.trim();
+
+
+            const matchesSearch =
+                text.includes(search);
+
+            const matchesSubject =
+                subject === "" ||
+                rowSubject === subject;
+
+            const matchesStatus =
+                status === "" ||
+                rowStatus === status;
+
+
+            if (
+                matchesSearch &&
+                matchesSubject &&
+                matchesStatus
+            ) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+
+        });
+
+    }
+
+
+    /* UPDATE STATS */
+
+    function updateApplicationStats() {
+
+        const rows =
+            document.querySelectorAll("#applicationsBody tr");
+
+
+        let pending = 0;
+        let shortlisted = 0;
+        let rejected = 0;
+
+
+        rows.forEach(row => {
+
+            const status =
+                row.children[6].innerText.trim();
+
+
+            if (status === "Pending") {
+                pending++;
+            }
+
+            if (status === "Shortlisted") {
+                shortlisted++;
+            }
+
+            if (status === "Rejected") {
+                rejected++;
+            }
+
+        });
+
+
+        document.getElementById("totalApplications").innerText =
+            rows.length;
+
+        document.getElementById("pendingApplications").innerText =
+            pending;
+
+        document.getElementById("shortlistedApplications").innerText =
+            shortlisted;
+
+        document.getElementById("rejectedApplications").innerText =
+            rejected;
+
+    }
+
+
+    /* VIEW APPLICATION */
+
+    function viewApplication(name) {
+
+        alert(
+            "Application Details\n\n" +
+            "Applicant: " + name +
+            "\n\nFull applicant details will be connected to the database later."
+        );
+
+    }
+
+
+    /* VIEW CV */
+
+    function viewCV(name) {
+
+        alert(
+            "CV Preview\n\n" +
+            "CV of " + name +
+            "\n\nActual CV file preview/download will work after backend file upload is connected."
+        );
+
+    }
+
+
+    /* EDIT */
+
+    function editApplication(button) {
+
+        alert(
+            "Edit Application\n\n" +
+            "Application editing will be connected to the database later."
+        );
+
+    }
+
+
+    /* CLOSE MODAL WHEN CLICKING OUTSIDE */
+
+    window.addEventListener("click", function(e) {
+
+        const modal =
+            document.getElementById("applicationModal");
+
+        if (e.target === modal) {
+            closeApplicationModal();
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

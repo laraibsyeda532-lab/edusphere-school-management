@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notices - EduSphere</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#1f2937;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    width:240px;
+    height:100vh;
+    background:#172554;
+    color:white;
+    padding:20px 0;
+    overflow-y:auto;
+}
+
+.logo{
+    font-size:23px;
+    font-weight:bold;
+    padding:0 22px 25px;
+}
+
+.logo span{
+    color:#60a5fa;
+}
+
+.menu a{
+    display:block;
+    padding:12px 22px;
+    color:#dbeafe;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.menu a:hover,
+.menu a.active{
+    background:#2563eb;
+    color:white;
+}
+
+.main{
+    margin-left:240px;
+    padding:28px;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.header h1{
+    font-size:28px;
+}
+
+.header p{
+    color:#6b7280;
+    margin-top:5px;
+}
+
+.notice-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+
+.card h3{
+    color:#6b7280;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.card strong{
+    font-size:27px;
+}
+
+.notice-list{
+    display:grid;
+    gap:16px;
+}
+
+.notice{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+    border-left:4px solid #2563eb;
+}
+
+.notice-top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:10px;
+}
+
+.notice h2{
+    font-size:18px;
+}
+
+.notice-date{
+    color:#64748b;
+    font-size:13px;
+}
+
+.notice p{
+    color:#475569;
+    line-height:1.6;
+    margin-bottom:12px;
+}
+
+.tag{
+    display:inline-block;
+    padding:5px 10px;
+    background:#dbeafe;
+    color:#1d4ed8;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.actions{
+    margin-top:
